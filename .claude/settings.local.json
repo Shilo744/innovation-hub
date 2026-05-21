@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(anthropic-skills:skill-creator)",
+      "Skill(anthropic-skills:skill-creator:*)",
+      "Bash(mkdir -p \"C:/claude code/inevation hab/.claude/skills/web-design\" && mkdir -p \"C:/claude code/inevation hab/mockups\")"
+    ]
+  }
+}

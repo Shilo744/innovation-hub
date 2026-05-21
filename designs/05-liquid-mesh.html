@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · Liquid Mesh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0828;
+    --paper:#FBF8F1;
+    --c1:#1F3FE0;
+    --c2:#5E2BD4;
+    --c3:#C447FF;
+    --c4:#FF5BA4;
+    --c5:#FFB14A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Heebo','Sora',system-ui,sans-serif;background:var(--paper);color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
+
+  /* mesh hero background */
+  .mesh{position:fixed;inset:24px;border-radius:36px;overflow:hidden;z-index:0;
+    background:
+      radial-gradient(60% 60% at 20% 25%, var(--c3) 0%, transparent 60%),
+      radial-gradient(50% 60% at 80% 30%, var(--c4) 0%, transparent 60%),
+      radial-gradient(70% 60% at 50% 100%, var(--c2) 0%, transparent 65%),
+      radial-gradient(60% 50% at 10% 90%, var(--c1) 0%, transparent 60%),
+      radial-gradient(45% 45% at 90% 90%, var(--c5) 0%, transparent 60%),
+      linear-gradient(135deg, var(--c1), var(--c2) 60%, var(--c3));
+    filter:saturate(1.05);
+    animation:breathe 14s ease-in-out infinite}
+  @keyframes breathe{0%,100%{filter:saturate(1.05) hue-rotate(0)}50%{filter:saturate(1.15) hue-rotate(8deg)}}
+  .mesh::before{content:"";position:absolute;inset:0;backdrop-filter:contrast(1.05);background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.06) 1px, transparent 0);background-size:18px 18px}
+  .mesh::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,8,40,0) 60%, rgba(10,8,40,.35))}
+
+  /* slim nav */
+  .nav{position:fixed;top:40px;left:40px;right:40px;z-index:50;height:56px;
+    display:flex;align-items:center;gap:18px;padding:0 22px;border-radius:999px;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+    backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+    color:#fff;box-shadow:0 30px 70px -20px rgba(15,5,60,.45)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px;font-family:'Sora'}
+  .brand img{height:30px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35))}
+  .links{display:flex;gap:22px;margin-inline-start:auto;font-size:14px;font-weight:600}
+  .links a{color:#fff;opacity:.85;text-decoration:none}
+  .links a:hover{opacity:1}
+  .tools{display:flex;gap:8px;align-items:center}
+  .ic{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;color:#fff;cursor:pointer}
+  .lang{height:36px;padding:0 16px;border-radius:999px;border:0;background:#fff;color:var(--ink);font-family:'Sora';font-weight:800;font-size:13px;letter-spacing:1px;cursor:pointer}
+
+  /* hero */
+  main{position:relative;z-index:10;height:100vh;display:grid;align-items:center;padding:120px 7vw 80px;color:#fff}
+  .badge{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;
+    background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);font-family:'Sora';font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:700;backdrop-filter:blur(10px)}
+  .badge .d{width:6px;height:6px;border-radius:50%;background:#FFE36B;box-shadow:0 0 14px #FFE36B}
+
+  h1{font-family:'Heebo';font-weight:900;font-size:clamp(56px,10vw,168px);line-height:.9;letter-spacing:-.035em;margin:22px 0 4px;text-shadow:0 4px 30px rgba(15,5,60,.35)}
+  h1 .out{
+    -webkit-text-stroke:2px #fff;color:transparent;
+    font-weight:800;
+  }
+  h1 .it{font-family:'Sora';font-style:italic;font-weight:400}
+  .slog{font-family:'Sora';font-size:14px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:#FFE36B;margin:18px 0 8px}
+  .lead{max-width:620px;font-size:18px;line-height:1.7;color:rgba(255,255,255,.92);margin:14px 0 30px}
+  .ctas{display:flex;gap:14px;flex-wrap:wrap}
+  .pri{padding:18px 32px;border:0;border-radius:999px;background:#FFFFFF;color:var(--ink);font-family:'Sora';font-weight:800;font-size:15px;letter-spacing:.5px;cursor:pointer;box-shadow:0 18px 50px -10px rgba(0,0,0,.4)}
+  .pri:hover{transform:translateY(-2px);transition:.15s}
+  .gho{padding:18px 26px;border-radius:999px;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.08);color:#fff;font-family:'Sora';font-weight:600;font-size:14.5px;cursor:pointer;backdrop-filter:blur(8px)}
+
+  /* floating logo */
+  .float-logo{position:fixed;right:7vw;bottom:90px;width:min(360px,28vw);z-index:8;
+    filter:drop-shadow(0 30px 60px rgba(0,0,0,.45));
+    animation:wobble 10s ease-in-out infinite}
+  @keyframes wobble{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(3deg) translateY(-12px)}}
+
+  .foot{position:fixed;left:40px;right:40px;bottom:18px;z-index:20;display:flex;justify-content:space-between;color:rgba(255,255,255,.85);font-family:'Sora';font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase}
+
+  @media (max-width:900px){.links{display:none}.float-logo{display:none}}
+</style>
+</head>
+<body>
+  <div class="mesh" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <div class="brand"><img src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">Innovation Hub</div>
+    <div class="links">
+      <a>אודות</a><a>תוכניות</a><a>צוות</a><a>אירועים</a><a>עדכונים</a><a>אקוסיסטם</a>
+    </div>
+    <div class="tools">
+      <button class="ic" aria-label="נגישות"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M19 13l-5-1v9M5 13l5-1M9 22V15M15 22l-1-7"/></svg></button>
+      <button class="lang">EN</button>
+    </div>
+  </nav>
+
+  <img class="float-logo" src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">
+
+  <main>
+    <div>
+      <span class="badge"><span class="d"></span>Hub of Resilience Innovation</span>
+      <h1>
+        <span class="out">חוסן</span>
+        <span class="it">·</span>
+        חדשנות
+        <span class="it">·</span>
+        <span class="out">השפעה</span>
+      </h1>
+      <div class="slog">From Trauma to Opportunity</div>
+      <p class="lead">אנחנו הופכים אתגרים אנושיים לטכנולוגיות פורצות דרך. מאיצים, מומחים ושותפים גלובליים שמתחברים סביב מטרה אחת — חוסן אמיתי לעולם משתנה.</p>
+      <div class="ctas">
+        <button class="pri">Join the future →</button>
+        <button class="gho">▶ צפו בסיפור שלנו</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="foot">
+    <span>© 2026 Innovation Hub</span>
+    <span>v.05 · Liquid Mesh</span>
+  </div>
+</body>
+</html>

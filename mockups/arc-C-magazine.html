@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>מרכז חדשנות שדרות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --ink:#0F172A;
+    --ink-soft:#475569;
+    --mute:#94A3B8;
+    --hair:#E5E7EB;
+    --blue:#2E86D6;
+    --blue-dark:#1E4FB8;
+    --purple:#6B3AA0;
+    --paper:#F8FAFC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Assistant',system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .topbar{
+    position:fixed;top:0;right:0;left:0;z-index:50;height:80px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 56px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--hair);
+  }
+  .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink)}
+  .brand img{width:38px;height:auto;display:block}
+  .brand-text b{font-size:14.5px;font-weight:700;display:block;line-height:1.1}
+  .brand-text small{font-size:10.5px;font-weight:600;color:var(--mute);letter-spacing:.18em}
+  nav.primary{display:flex;gap:34px;font-size:13.5px;font-weight:600;align-items:center;height:100%}
+  nav.primary > a{color:var(--ink);text-decoration:none;cursor:pointer;position:relative;height:100%;display:flex;align-items:center}
+  nav.primary > a:hover{color:var(--blue-dark)}
+  .menu{position:absolute;top:100%;right:-18px;background:#fff;border:1px solid var(--hair);border-radius:8px;padding:8px 0;min-width:280px;opacity:0;visibility:hidden;transition:.18s;transform:translateY(-6px);box-shadow:0 20px 48px rgba(15,23,42,.10)}
+  nav.primary > a:hover .menu{opacity:1;visibility:visible;transform:translateY(0)}
+  .menu a{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;font-size:13.5px;color:var(--ink);text-decoration:none;font-weight:500}
+  .menu a:hover{background:var(--paper);color:var(--blue-dark)}
+  .menu a small{font-size:10px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .menu .head{padding:8px 18px 2px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);font-weight:700}
+  .menu .sub{background:var(--paper);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:4px 0;margin:6px 0}
+  .menu .sub a{padding-right:34px;font-size:12.5px;color:var(--ink-soft);font-weight:500}
+  .menu .sub a::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--blue);margin-left:10px;vertical-align:middle}
+  .tools{display:flex;align-items:center;gap:14px}
+  .tools .a11y{width:36px;height:36px;border:1px solid var(--hair);border-radius:50%;display:grid;place-items:center;font-size:14px;cursor:pointer;color:var(--ink);font-weight:700;background:#fff}
+  .tools .cta{background:var(--ink);color:#fff;border:0;padding:13px 24px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+  .tools .cta:hover{background:var(--blue-dark)}
+  /* Main */
+  main{padding-top:80px;max-width:1480px;margin:0 auto;padding-right:56px;padding-left:56px}
+  /* Title strip */
+  .title-strip{
+    padding:64px 0 40px;
+    display:grid;grid-template-columns:auto 1fr auto;gap:48px;align-items:end;
+    animation:rise 1s cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .title-strip h1{
+    font-weight:700;font-size:clamp(50px,6.5vw,108px);
+    line-height:.96;letter-spacing:-.035em;color:var(--ink);
+  }
+  .title-strip h1 .accent{color:var(--blue-dark)}
+  .title-strip .lede{
+    font-size:16.5px;line-height:1.6;color:var(--ink-soft);font-weight:400;
+    max-width:340px;padding-bottom:14px;
+  }
+  .title-strip .eyebrow{
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;
+    color:var(--blue-dark);
+    writing-mode:vertical-rl;transform:rotate(180deg);
+    align-self:end;padding-bottom:14px;
+    display:flex;align-items:center;gap:14px;
+  }
+  /* Tile grid */
+  .grid{
+    display:grid;grid-template-columns:1.5fr 1fr 1fr;
+    grid-template-rows:1fr;gap:18px;
+    height:calc(100vh - 80px - 250px - 80px);
+    min-height:420px;
+    padding-bottom:24px;
+    animation:rise 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .tile{
+    position:relative;overflow:hidden;cursor:pointer;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1);
+    display:flex;flex-direction:column;justify-content:flex-end;
+    color:#fff;padding:28px;
+  }
+  .tile:hover{transform:translateY(-4px)}
+  .tile::before{content:"";position:absolute;inset:0;z-index:1}
+  .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.05) 60%);z-index:2}
+  .tile > *{position:relative;z-index:3}
+  .tile.big::before{background:
+    radial-gradient(60% 50% at 20% 20%, rgba(46,134,214,.55), transparent 60%),
+    radial-gradient(60% 60% at 90% 90%, rgba(107,58,160,.5), transparent 60%),
+    linear-gradient(155deg,#0E2659 0%,#1A1F4B 60%,#3A1A6E 100%)}
+  .tile.t2::before{background:linear-gradient(160deg,#103663 0%,#1E4FB8 50%,#2E86D6 100%)}
+  .tile.t3::before{background:linear-gradient(160deg,#2E1F5A 0%,#553396 70%,#6B3AA0 100%)}
+  .tile .grid-overlay{position:absolute;inset:0;z-index:1;background-image:linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px);background-size:16.66% 100%;mix-blend-mode:overlay}
+  .tile .num{
+    position:absolute;top:22px;right:22px;
+    padding:7px 12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);
+    color:#fff;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
+    backdrop-filter:blur(8px);border-radius:999px;
+  }
+  .tile h3{font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.18;margin-bottom:8px}
+  .tile .desc{font-size:13.5px;color:rgba(255,255,255,.78);line-height:1.5;margin-bottom:16px;max-width:90%}
+  .tile .more{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px}
+  .tile .more::after{content:"→";transition:transform .25s}
+  .tile:hover .more::after{transform:translateX(-4px)}
+  /* Big tile: shows a play button */
+  .tile.big h3{font-size:32px;margin-bottom:10px;max-width:90%}
+  .tile.big .desc{font-size:15px;max-width:88%}
+  .tile.big .play{
+    position:absolute;top:36%;right:38px;
+    width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.95);
+    display:grid;place-items:center;
+    z-index:3;transition:transform .3s;
+  }
+  .tile.big .play::before{content:"";border-style:solid;border-width:12px 19px 12px 0;border-color:transparent var(--ink) transparent transparent;transform:translateX(3px)}
+  .tile.big:hover .play{transform:scale(1.06)}
+  /* Footer ribbon */
+  .ribbon{
+    border-top:1px solid var(--hair);
+    padding:24px 0;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:12px;color:var(--mute);font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  }
+  .ribbon .partners{display:flex;gap:32px;color:var(--ink-soft);font-weight:600;letter-spacing:.04em;text-transform:none;font-size:13px}
+  .ribbon .partners b{color:var(--mute);font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:11px}
+  /* Float */
+  .float{
+    position:fixed;bottom:28px;left:28px;z-index:60;max-width:360px;
+    background:var(--ink);color:#fff;border-radius:14px;padding:24px 26px;
+    box-shadow:0 26px 60px rgba(15,23,42,.30);
+    transform:translateY(20px);opacity:0;transition:.55s cubic-bezier(.2,.7,.2,1);
+  }
+  .float.show{transform:translateY(0);opacity:1}
+  .float::before{content:"";position:absolute;top:0;right:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:14px 14px 0 0}
+  .float .tag{font-size:10.5px;letter-spacing:.26em;color:var(--blue);font-weight:700;text-transform:uppercase;margin-bottom:10px}
+  .float p{font-size:15px;line-height:1.55;font-weight:500;margin-bottom:18px}
+  .float a{font-size:13px;font-weight:700;color:var(--ink);background:#fff;padding:11px 18px;border-radius:999px;text-decoration:none;display:inline-block}
+  .float .x{position:absolute;top:14px;left:18px;color:rgba(255,255,255,.5);cursor:pointer;font-size:18px;line-height:1}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><img src="../assets/logo.png" alt=""><div class="brand-text"><b>מרכז חדשנות שדרות</b><small>RHIH</small></div></a>
+  <nav class="primary">
+    <a>תוכניות
+      <div class="menu">
+        <div class="head">תוכניות דגל</div>
+        <a>מיטל · חדשנות בחוסן<small>4</small></a>
+        <div class="sub"><a>שיבא לשדרות</a><a>חממת ביטחון אזרחי</a><a>מעבדת בריאות הנפש</a><a>סטארטאפ סטודיו</a></div>
+        <a>תוכנית קהילה<small>2026</small></a>
+        <a>שותפויות בינלאומיות<small>EU</small></a>
+        <a>מלגות ומענקים<small>פתוח</small></a>
+      </div>
+    </a>
+    <a>אקוסיסטם<div class="menu"><a>שותפים</a><a>חברות תושבות</a><a>קרנות</a><a>מוסדות מחקר</a></div></a>
+    <a>צוות<div class="menu"><a>הנהלה</a><a>דירקטוריון</a><a>מנטורים</a><a>הצטרפו אלינו</a></div></a>
+    <a>אירועים<div class="menu"><a>קרובים</a><a>סדנאות</a><a>כנסים</a><a>ארכיון</a></div></a>
+    <a>עדכונים<div class="menu"><a>חדשות</a><a>במדיה</a><a>פרסומים</a><a>ניוזלטר</a></div></a>
+    <a>אודות<div class="menu"><a>החזון</a><a>הסיפור</a><a>מסמך הייסוד</a><a>קשר</a></div></a>
+  </nav>
+  <div class="tools"><span class="a11y">א</span><button class="cta">לתיאום פגישה ←</button></div>
+</header>
+
+<main>
+  <div class="title-strip">
+    <h1>מטראומה<br>ל<span class="accent">הזדמנות.</span></h1>
+    <p class="lede">מרכז חדשנות בריאות וחוסן שדרות מאחד יזמים, חוקרים ורופאים יחד עם הקהילה. עשורים של ידע מעשי הופכים לתעשייה.</p>
+    <div class="eyebrow">From Trauma to Opportunity · VOL 01</div>
+  </div>
+  <div class="grid">
+    <div class="tile big">
+      <div class="grid-overlay"></div>
+      <span class="num">סיפור המרכז</span>
+      <div class="play"></div>
+      <h3>זה לא רק על שדרות.<br>זה ממנה ואליה.</h3>
+      <p class="desc">צפו בסרטון הפתיחה — איך עשורים של ידיעה מעשית הופכים לפתרונות שמיוצאים.</p>
+      <span class="more">לצפייה · 2:14 דק׳</span>
+    </div>
+    <div class="tile t2">
+      <div class="grid-overlay"></div>
+      <span class="num">01</span>
+      <h3>מיטל — חממת חדשנות בחוסן</h3>
+      <p class="desc">ארבע תתי-תוכניות בתחומי בריאות הנפש, ביטחון אזרחי וטכנולוגיה רפואית.</p>
+      <span class="more">לפרטים</span>
+    </div>
+    <div class="tile t3">
+      <div class="grid-overlay"></div>
+      <span class="num">02</span>
+      <h3>שיבא לשדרות</h3>
+      <p class="desc">שיתוף פעולה רפואי עם מרכז שיבא. מחזור ראשון יוני 2026.</p>
+      <span class="more">להרשמה</span>
+    </div>
+  </div>
+  <div class="ribbon">
+    <span>גליון פתיחה · 2026</span>
+    <div class="partners"><b>שותפים אסטרטגיים ·</b><span>שיבא</span><span>בן-גוריון</span><span>משרד החדשנות</span><span>עיריית שדרות</span></div>
+    <span>שדרות · ישראל</span>
+  </div>
+</main>
+
+<div class="float" id="float">
+  <span class="x" onclick="document.getElementById('float').classList.remove('show')">×</span>
+  <div class="tag">הזמנה</div>
+  <p>הצטרפו אלינו לעיצוב מחדש של עתיד החדשנות בחוסן.</p>
+  <a>הצטרפו לרשת →</a>
+</div>
+
+<script>setTimeout(()=>document.getElementById('float').classList.add('show'),2000)</script>
+</body></html>

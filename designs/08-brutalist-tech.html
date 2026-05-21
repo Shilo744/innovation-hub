@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · Brutalist Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@500;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEEAE0;
+    --ink:#0A0E26;
+    --rule:rgba(10,14,38,.18);
+    --blue:#1A47FF;
+    --violet:#7733FF;
+    --cyan:#22D3F2;
+    --acid:#D5FF3D;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Heebo','Space Mono',system-ui,sans-serif;background:var(--paper);color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
+
+  /* ticker bar - slim floating */
+  .ticker{position:fixed;top:0;left:0;right:0;height:32px;background:var(--ink);color:var(--paper);display:flex;align-items:center;gap:40px;overflow:hidden;z-index:60;font-family:'Space Mono';font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;padding-inline:14px;border-bottom:2px solid var(--ink)}
+  .ticker .strip{display:flex;gap:40px;animation:slide 40s linear infinite;white-space:nowrap}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .ticker .dot{color:var(--acid)}
+
+  /* main nav */
+  .nav{position:fixed;top:38px;left:14px;right:14px;z-index:55;height:60px;
+    background:var(--paper);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);
+    display:flex;align-items:center;padding:0 16px;gap:18px}
+  .brand{display:flex;align-items:center;gap:12px;font-family:'Heebo';font-weight:900;font-size:18px;letter-spacing:.5px}
+  .brand img{height:32px}
+  .badge{font-family:'Space Mono';font-size:10px;letter-spacing:2px;padding:4px 8px;border:1.5px solid var(--ink);text-transform:uppercase;font-weight:700;background:var(--acid)}
+  .links{display:flex;gap:4px;margin-inline-start:auto;font-family:'Space Mono';font-size:12px;font-weight:700}
+  .links a{padding:8px 12px;border:1.5px solid var(--ink);text-decoration:none;color:var(--ink);text-transform:uppercase;letter-spacing:1.5px;background:var(--paper);transition:.1s}
+  .links a:hover{background:var(--ink);color:var(--paper)}
+  .tools{display:flex;gap:6px;margin-inline-start:10px}
+  .ic{width:38px;height:38px;border:1.5px solid var(--ink);background:var(--paper);font-family:'Space Mono';font-weight:700;cursor:pointer}
+  .lang{height:38px;padding:0 14px;border:1.5px solid var(--ink);background:var(--blue);color:var(--paper);font-family:'Space Mono';font-weight:700;font-size:12px;letter-spacing:1.5px;cursor:pointer}
+
+  /* hero — modular grid */
+  main{position:relative;z-index:10;height:100vh;padding:120px 18px 40px;
+    display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(8,1fr);gap:14px}
+  .block{border:2px solid var(--ink);padding:18px;position:relative;background:var(--paper);overflow:hidden}
+  .b-title{grid-column:1/8;grid-row:1/6;display:flex;flex-direction:column;justify-content:space-between;background:var(--paper)}
+  .b-logo{grid-column:8/13;grid-row:1/4;background:var(--ink);color:var(--paper);display:grid;place-items:center;overflow:hidden}
+  .b-logo img{width:65%;filter:drop-shadow(0 16px 30px rgba(0,0,0,.3));animation:logo 8s ease-in-out infinite}
+  @keyframes logo{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
+  .b-logo .label{position:absolute;top:12px;left:14px;font-family:'Space Mono';font-size:10px;letter-spacing:2px;color:var(--acid)}
+  .b-logo .label2{position:absolute;bottom:12px;right:14px;font-family:'Space Mono';font-size:10px;letter-spacing:2px;color:var(--cyan)}
+  .b-stat-a{grid-column:8/11;grid-row:4/6;background:var(--acid);color:var(--ink)}
+  .b-stat-b{grid-column:11/13;grid-row:4/6;background:var(--violet);color:var(--paper)}
+  .b-cta{grid-column:1/8;grid-row:6/9;background:var(--blue);color:var(--paper);display:flex;flex-direction:column;justify-content:space-between}
+  .b-slog{grid-column:8/13;grid-row:6/9;background:var(--paper);display:flex;flex-direction:column;justify-content:space-between}
+
+  .b-title h1{font-family:'Heebo';font-weight:900;font-size:clamp(50px,7.2vw,108px);line-height:.92;letter-spacing:-.025em;margin-top:8px}
+  .b-title h1 .acid{background:var(--acid);padding:0 .1em;display:inline-block}
+  .b-title h1 .vio{color:var(--violet)}
+  .b-title .meta{display:flex;justify-content:space-between;align-items:flex-end;font-family:'Space Mono';font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .b-title .meta .num{font-size:48px;font-weight:700;line-height:1;color:var(--violet)}
+
+  .b-stat-a .n,.b-stat-b .n{font-family:'Heebo';font-weight:900;font-size:54px;line-height:1}
+  .b-stat-a .l,.b-stat-b .l{font-family:'Space Mono';font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-top:auto}
+
+  .b-cta .slogan{font-family:'Space Mono';font-size:12px;letter-spacing:4px;text-transform:uppercase}
+  .b-cta h2{font-family:'Heebo';font-weight:800;font-size:clamp(28px,3vw,44px);line-height:1.05;margin:14px 0;letter-spacing:-.01em}
+  .b-cta .btn-row{display:flex;gap:10px;flex-wrap:wrap}
+  .b-cta button{padding:14px 22px;border:2px solid var(--paper);background:var(--paper);color:var(--ink);font-family:'Space Mono';font-weight:700;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.1s}
+  .b-cta button:hover{background:var(--acid)}
+  .b-cta .alt{background:transparent;color:var(--paper)}
+  .b-cta .alt:hover{background:var(--paper);color:var(--ink)}
+
+  .b-slog .row{display:flex;justify-content:space-between;font-family:'Space Mono';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink)}
+  .b-slog .big{font-family:'Heebo';font-weight:900;font-size:clamp(22px,2.4vw,32px);line-height:1.1;margin-top:14px;letter-spacing:-.01em}
+  .b-slog .arrow{font-size:42px;line-height:1;text-align:left;color:var(--violet);transform:scaleX(-1);font-family:'Space Mono'}
+
+  /* corner cuts */
+  .corner{position:absolute;width:12px;height:12px;background:var(--ink)}
+  .c-tl{top:-2px;right:-2px}.c-br{bottom:-2px;left:-2px}
+
+  @media (max-width:980px){
+    main{grid-template-columns:1fr;grid-template-rows:auto;height:auto;overflow:auto}
+    .b-title,.b-logo,.b-stat-a,.b-stat-b,.b-cta,.b-slog{grid-column:1;grid-row:auto}
+    .links{display:none}
+  }
+</style>
+</head>
+<body>
+  <div class="ticker"><div class="strip">
+    <span>★ FROM TRAUMA TO OPPORTUNITY</span><span class="dot">●</span>
+    <span>RESILIENCE INNOVATION HUB</span><span class="dot">●</span>
+    <span>EST. 2026 · TEL AVIV / SDEROT / GLOBAL</span><span class="dot">●</span>
+    <span>★ FROM TRAUMA TO OPPORTUNITY</span><span class="dot">●</span>
+    <span>RESILIENCE INNOVATION HUB</span><span class="dot">●</span>
+    <span>EST. 2026 · TEL AVIV / SDEROT / GLOBAL</span><span class="dot">●</span>
+  </div></div>
+
+  <nav class="nav">
+    <div class="brand"><img src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">Innovation Hub <span class="badge">v.26</span></div>
+    <div class="links"><a>אודות</a><a>תוכניות</a><a>צוות</a><a>אירועים</a><a>עדכונים</a><a>אקוסיסטם</a></div>
+    <div class="tools">
+      <button class="ic" aria-label="נגישות">A+</button>
+      <button class="lang">EN ↗</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="block b-title">
+      <div style="font-family:'Space Mono';font-size:12px;letter-spacing:3px;text-transform:uppercase">[001] · The Hub</div>
+      <h1>חדשנות.<br><span class="acid">חוסן.</span><br>השפעה <span class="vio">→</span></h1>
+      <div class="meta">
+        <div><div class="num">/02</div>resilience<br>innovation hub</div>
+        <div>est. 2026 · TLV·SDR·NYC</div>
+      </div>
+    </section>
+
+    <section class="block b-logo">
+      <span class="label">// logo.module</span>
+      <span class="label2">phoenix_v1</span>
+      <img src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">
+      <span class="corner c-tl"></span><span class="corner c-br"></span>
+    </section>
+
+    <section class="block b-stat-a">
+      <div class="n">142+</div>
+      <div class="l">startups<br>in ecosystem</div>
+    </section>
+
+    <section class="block b-stat-b">
+      <div class="n">04</div>
+      <div class="l">flagship<br>programs</div>
+    </section>
+
+    <section class="block b-cta">
+      <span class="slogan">From Trauma → Opportunity</span>
+      <h2>Join us in redefining<br>the future of resilience innovation.</h2>
+      <div class="btn-row">
+        <button>הצטרפו אלינו ←</button>
+        <button class="alt">▶ סרטון תדמית</button>
+      </div>
+    </section>
+
+    <section class="block b-slog">
+      <div class="row"><span>מ_טראומה</span><span>↗ to_opportunity</span></div>
+      <div class="big">בונים אקוסיסטם של חוסן — מחקר, יזמות ושותפים שמשנים מציאות.</div>
+      <div class="arrow">↘</div>
+    </section>
+  </main>
+</body>
+</html>

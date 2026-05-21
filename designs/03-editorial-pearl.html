@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · Editorial Pearl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;600;800&family=Fraunces:opsz,wght@9..144,400;9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F0E6;
+    --ink:#0C1230;
+    --ink-2:#3A4170;
+    --rule:#D9D3C2;
+    --blue:#1C3FB8;
+    --violet:#6B3FCF;
+    --accent:#C7811E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Heebo',system-ui,sans-serif;background:var(--paper);color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
+  .grain{position:fixed;inset:0;pointer-events:none;z-index:30;opacity:.08;mix-blend-mode:multiply;
+    background-image:radial-gradient(circle at 1px 1px,#000 1px,transparent 0);background-size:3px 3px}
+
+  /* slim nav */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:40;height:62px;
+    display:flex;align-items:center;gap:24px;padding:0 40px;
+    background:linear-gradient(180deg,rgba(244,240,230,.95),rgba(244,240,230,.78));
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+  .brand{display:flex;align-items:center;gap:12px;font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:18px;letter-spacing:.3px}
+  .brand img{height:30px;filter:drop-shadow(0 2px 4px rgba(28,63,184,.2))}
+  .small{font-family:'Heebo';font-size:10.5px;letter-spacing:3.5px;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+  .links{display:flex;gap:26px;margin-inline-start:auto;font-size:14px;font-weight:500}
+  .links a{color:var(--ink);text-decoration:none;position:relative;padding:6px 0}
+  .links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:right;transition:.3s}
+  .links a:hover::after{transform:scaleX(1)}
+  .tools{display:flex;gap:8px}
+  .ic{width:36px;height:36px;border:1px solid var(--ink);border-radius:50%;background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+  .lang{height:36px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--paper);border:0;font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:13px;letter-spacing:2px;cursor:pointer}
+
+  /* layout */
+  main{position:relative;z-index:5;height:100vh;display:grid;grid-template-columns:1.05fr .95fr;
+    padding:84px 40px 56px;gap:60px;align-items:center}
+
+  .col-l{position:relative;height:100%;display:flex;flex-direction:column;justify-content:center}
+  .issue{display:flex;align-items:baseline;gap:20px;font-family:'Frank Ruhl Libre',serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--ink-2);margin-bottom:22px}
+  .issue .v{color:var(--accent);font-weight:700}
+  .issue .rule{flex:1;height:1px;background:var(--ink);max-width:90px}
+
+  h1{font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:clamp(56px,8.4vw,128px);line-height:.95;letter-spacing:-.025em}
+  h1 em{font-style:italic;font-weight:500;color:var(--blue)}
+  h1 .uline{position:relative;display:inline-block}
+  h1 .uline::after{content:"";position:absolute;left:0;right:0;bottom:.05em;height:.18em;background:linear-gradient(90deg,var(--blue),var(--violet));opacity:.9;z-index:-1}
+
+  .deck{margin-top:28px;font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(18px,1.6vw,22px);line-height:1.55;color:var(--ink-2);max-width:560px}
+  .slogan{margin-top:22px;font-family:'Frank Ruhl Libre',serif;font-size:13px;letter-spacing:6px;text-transform:uppercase;color:var(--accent);font-weight:700}
+
+  .ctarow{margin-top:34px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .btn{padding:16px 28px;border-radius:0;cursor:pointer;font-family:'Heebo';font-weight:700;font-size:14px;letter-spacing:.5px;border:0}
+  .btn.dark{background:var(--ink);color:var(--paper)}
+  .btn.line{background:transparent;border:1px solid var(--ink);color:var(--ink)}
+  .btn:hover{transform:translate(-2px,-2px);transition:.15s;box-shadow:4px 4px 0 var(--ink)}
+
+  /* right column — visual */
+  .col-r{position:relative;height:100%;display:grid;place-items:center}
+  .frame{position:relative;width:min(440px,100%);aspect-ratio:.78;
+    background:linear-gradient(160deg,#1C3FB8 0%, #2A4DC9 35%, #6B3FCF 75%, #8B4DDB 100%);
+    box-shadow:18px 18px 0 var(--ink);
+    overflow:hidden}
+  .frame::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.18), transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(199,129,30,.35), transparent 50%);
+  }
+  .frame img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:78%;filter:drop-shadow(0 30px 50px rgba(0,0,0,.4)) brightness(1.1) saturate(1.1);z-index:2}
+  .frame .num{position:absolute;top:18px;right:22px;font-family:'Frank Ruhl Libre';font-size:14px;letter-spacing:3px;color:#FBEFD1;font-weight:700;z-index:3}
+  .frame .caption{position:absolute;left:22px;bottom:18px;font-family:'Fraunces',serif;font-style:italic;color:#FBEFD1;font-size:14px;z-index:3;max-width:70%;line-height:1.4}
+
+  .sidebar{position:absolute;left:-12px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:left center;
+    font-family:'Frank Ruhl Libre',serif;font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+
+  /* footer rule */
+  .foot{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;justify-content:space-between;
+    padding:14px 40px;border-top:1px solid var(--rule);background:var(--paper);
+    font-family:'Frank Ruhl Libre',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-2)}
+
+  @media (max-width:900px){
+    main{grid-template-columns:1fr;padding-top:90px}
+    .col-r{display:none}
+    .links{display:none}
+  }
+</style>
+</head>
+<body>
+  <div class="grain"></div>
+
+  <nav class="nav">
+    <div class="brand"><img src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">Innovation Hub<span class="small" style="margin-inline-start:14px;border-inline-start:1px solid var(--rule);padding-inline-start:14px">Est. 2026</span></div>
+    <div class="links">
+      <a href="#about">About</a><a href="#programs">תוכניות</a>
+      <a href="#team">צוות</a><a href="#events">אירועים</a>
+      <a href="#updates">עדכונים</a><a href="#eco">אקוסיסטם</a>
+    </div>
+    <div class="tools">
+      <button class="ic" aria-label="נגישות">A</button>
+      <button class="lang">EN</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="col-l">
+      <div class="issue"><span class="v">Vol. 01</span><span class="rule"></span><span>Resilience Quarterly</span></div>
+      <h1>מ<em>טראומה</em><br>אל <span class="uline">הזדמנות</span>.</h1>
+      <p class="deck">מכון חדשנות שבו רופאים, חוקרים, יזמים ושותפים אסטרטגיים מתאחדים סביב שאלה אחת — איך הופכים את הימים הקשים ביותר לתשתית של חוסן עתידי?</p>
+      <div class="slogan">From Trauma to Opportunity</div>
+      <div class="ctarow">
+        <button class="btn dark">Join the movement →</button>
+        <button class="btn line">↓ Watch the film</button>
+      </div>
+    </section>
+    <section class="col-r">
+      <span class="sidebar">Innovation · Resilience · Impact</span>
+      <div class="frame">
+        <span class="num">N°01</span>
+        <img src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">
+        <span class="caption">"כל משבר טומן בחובו פוטנציאל לפריצת דרך."</span>
+      </div>
+    </section>
+  </main>
+
+  <div class="foot">
+    <span>© 2026 Innovation Hub · All rights reserved</span>
+    <span>v.03 — Editorial Pearl</span>
+  </div>
+</body>
+</html>

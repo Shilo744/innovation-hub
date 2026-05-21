@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>מרכז חדשנות שדרות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --ink:#0F172A;
+    --ink-soft:#475569;
+    --mute:#94A3B8;
+    --hair:#E5E7EB;
+    --blue:#2E86D6;
+    --blue-dark:#1E4FB8;
+    --purple:#6B3AA0;
+    --paper:#F8FAFC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Assistant',system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;overflow-y:auto;
+  }
+  /* Top bar */
+  .topbar{
+    position:fixed;top:0;right:0;left:0;z-index:50;
+    height:80px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 56px;
+    background:rgba(255,255,255,.94);backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--hair);
+  }
+  .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink)}
+  .brand img{width:38px;height:auto;display:block}
+  .brand-text{display:flex;flex-direction:column;line-height:1.15}
+  .brand-text b{font-size:14.5px;font-weight:700;letter-spacing:.005em}
+  .brand-text small{font-size:10.5px;font-weight:600;color:var(--mute);letter-spacing:.18em;margin-top:2px}
+  nav.primary{display:flex;gap:34px;font-size:13.5px;font-weight:600;letter-spacing:.005em;align-items:center;height:100%}
+  nav.primary > a{color:var(--ink);text-decoration:none;cursor:pointer;position:relative;height:100%;display:flex;align-items:center}
+  nav.primary > a:hover{color:var(--blue-dark)}
+  .menu{position:absolute;top:100%;right:-18px;background:#fff;border:1px solid var(--hair);border-radius:8px;padding:8px 0;min-width:280px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s;transform:translateY(-6px);box-shadow:0 20px 48px rgba(15,23,42,.10)}
+  nav.primary > a:hover .menu{opacity:1;visibility:visible;transform:translateY(0)}
+  .menu a{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;font-size:13.5px;color:var(--ink);text-decoration:none;font-weight:500}
+  .menu a:hover{background:var(--paper);color:var(--blue-dark)}
+  .menu a small{font-size:10px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .menu .head{padding:8px 18px 2px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);font-weight:700}
+  .menu .sub{background:var(--paper);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:4px 0;margin:6px 0}
+  .menu .sub a{padding-right:34px;font-size:12.5px;color:var(--ink-soft);font-weight:500}
+  .menu .sub a::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--blue);margin-left:10px;vertical-align:middle}
+  .tools{display:flex;align-items:center;gap:14px}
+  .tools .a11y{width:36px;height:36px;border:1px solid var(--hair);border-radius:50%;display:grid;place-items:center;font-size:14px;cursor:pointer;color:var(--ink);font-weight:700;background:#fff}
+  .tools .a11y:hover{border-color:var(--blue)}
+  .tools .cta{
+    background:var(--ink);color:#fff;border:0;
+    padding:13px 24px;font-size:13px;font-weight:600;letter-spacing:.03em;
+    cursor:pointer;font-family:inherit;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:background .25s;
+  }
+  .tools .cta:hover{background:var(--blue-dark)}
+  /* Hero */
+  main{padding-top:80px}
+  .hero{
+    min-height:calc(100vh - 80px);
+    display:flex;flex-direction:column;justify-content:center;
+    padding:80px 56px 64px;
+    max-width:1440px;margin:0 auto;
+    position:relative;
+  }
+  .eyebrow{
+    font-size:12.5px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;
+    color:var(--blue-dark);
+    display:flex;align-items:center;gap:14px;
+    margin-bottom:34px;
+    animation:rise .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--hair);max-width:180px}
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px rgba(46,134,214,.15)}
+  @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  h1{
+    font-weight:700;
+    font-size:clamp(56px,8vw,124px);
+    line-height:1;letter-spacing:-.035em;
+    margin-bottom:36px;color:var(--ink);
+    max-width:1200px;
+    animation:rise 1.05s cubic-bezier(.2,.7,.2,1);
+  }
+  h1 .accent{color:var(--blue-dark)}
+  .lede{
+    font-size:20px;line-height:1.6;color:var(--ink-soft);font-weight:400;
+    max-width:680px;margin-bottom:42px;
+    animation:rise 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .cta-row{
+    display:flex;align-items:center;gap:32px;
+    animation:rise 1.35s cubic-bezier(.2,.7,.2,1);
+  }
+  .video-trigger{
+    background:transparent;border:0;cursor:pointer;font-family:inherit;
+    display:inline-flex;align-items:center;gap:16px;
+    color:var(--ink);font-size:15px;font-weight:600;letter-spacing:.01em;
+  }
+  .video-trigger .ring{
+    width:54px;height:54px;border-radius:50%;
+    background:var(--ink);
+    display:grid;place-items:center;
+    transition:transform .25s, background .25s;
+  }
+  .video-trigger .ring::before{
+    content:"";border-style:solid;border-width:9px 14px 9px 0;
+    border-color:transparent #fff transparent transparent;transform:translateX(3px);
+  }
+  .video-trigger:hover .ring{background:var(--blue-dark);transform:scale(1.06)}
+  .arrow-link{
+    color:var(--ink);text-decoration:none;font-size:15px;font-weight:600;
+    display:inline-flex;align-items:center;gap:10px;
+    border-bottom:1.5px solid var(--ink);padding-bottom:4px;
+  }
+  .arrow-link:hover{color:var(--blue-dark);border-color:var(--blue-dark)}
+  /* Ecosystem section */
+  .eco{
+    padding:80px 56px 100px;background:var(--paper);
+    border-top:1px solid var(--hair);
+  }
+  .eco-inner{max-width:1440px;margin:0 auto}
+  .eco-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:40px;flex-wrap:wrap;gap:24px;
+  }
+  .eco-head h2{font-size:36px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--ink)}
+  .eco-head h2 span{color:var(--mute);font-weight:400}
+  .eco-head p{font-size:16px;color:var(--ink-soft);max-width:460px;line-height:1.55}
+  .eco-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{
+    background:#fff;border:1px solid var(--hair);
+    overflow:hidden;cursor:pointer;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s;
+    display:flex;flex-direction:column;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:0 24px 50px rgba(15,23,42,.10);border-color:transparent}
+  .card .media{
+    aspect-ratio:16/9;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#1E3A5F 0%,#2D5F8E 45%,#4B3787 100%);
+  }
+  .card.b1 .media{background:linear-gradient(135deg,#0E2659 0%,#1E4FB8 100%)}
+  .card.b2 .media{background:linear-gradient(135deg,#2E86D6 0%,#6B3AA0 100%)}
+  .card.b3 .media{background:linear-gradient(135deg,#1A1F4B 0%,#3D2A6E 100%)}
+  .card .media::before{
+    content:"";position:absolute;inset:0;
+    background-image:linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size:8.33% 100%;mix-blend-mode:overlay;
+  }
+  .card .media::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(80% 80% at 30% 20%, rgba(255,255,255,.18), transparent 60%);
+  }
+  .card .num{
+    position:absolute;top:18px;right:18px;z-index:2;
+    color:#fff;font-size:11px;font-weight:700;letter-spacing:.22em;
+    padding:6px 11px;border:1px solid rgba(255,255,255,.3);border-radius:999px;
+    backdrop-filter:blur(8px);
+  }
+  .card .body{padding:24px 26px 28px}
+  .card .body h3{font-size:21px;font-weight:700;letter-spacing:-.01em;color:var(--ink);margin-bottom:8px}
+  .card .body p{font-size:14.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:18px}
+  .card .body .more{
+    font-size:13px;font-weight:700;color:var(--ink);letter-spacing:.02em;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .card:hover .body .more{color:var(--blue-dark)}
+  .card .body .more::after{content:"→";transition:transform .25s}
+  .card:hover .body .more::after{transform:translateX(-4px)}
+  /* Float CTA */
+  .float{
+    position:fixed;bottom:28px;left:28px;z-index:60;max-width:360px;
+    background:var(--ink);color:#fff;border-radius:14px;
+    padding:24px 26px;
+    box-shadow:0 26px 60px rgba(15,23,42,.30);
+    transform:translateY(20px);opacity:0;transition:.55s cubic-bezier(.2,.7,.2,1);
+  }
+  .float.show{transform:translateY(0);opacity:1}
+  .float::before{content:"";position:absolute;top:0;right:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:14px 14px 0 0}
+  .float .tag{font-size:10.5px;letter-spacing:.26em;color:var(--blue);font-weight:700;text-transform:uppercase;margin-bottom:10px}
+  .float p{font-size:15px;line-height:1.55;font-weight:500;margin-bottom:18px}
+  .float a{font-size:13px;font-weight:700;color:var(--ink);background:#fff;padding:11px 18px;border-radius:999px;text-decoration:none;display:inline-block}
+  .float .x{position:absolute;top:14px;left:18px;color:rgba(255,255,255,.5);cursor:pointer;font-size:18px;line-height:1}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#">
+    <img src="../assets/logo.png" alt="">
+    <div class="brand-text"><b>מרכז חדשנות שדרות</b><small>RHIH</small></div>
+  </a>
+  <nav class="primary">
+    <a>תוכניות
+      <div class="menu">
+        <div class="head">תוכניות דגל</div>
+        <a>מיטל · חדשנות בחוסן<small>4</small></a>
+        <div class="sub">
+          <a>שיבא לשדרות</a><a>חממת ביטחון אזרחי</a><a>מעבדת בריאות הנפש</a><a>סטארטאפ סטודיו</a>
+        </div>
+        <a>תוכנית קהילה<small>2026</small></a>
+        <a>שותפויות בינלאומיות<small>EU</small></a>
+        <a>מלגות ומענקים<small>פתוח</small></a>
+      </div>
+    </a>
+    <a>אקוסיסטם<div class="menu"><a>שותפים</a><a>חברות תושבות</a><a>קרנות</a><a>מוסדות מחקר</a></div></a>
+    <a>צוות<div class="menu"><a>הנהלה</a><a>דירקטוריון</a><a>מנטורים</a><a>הצטרפו אלינו</a></div></a>
+    <a>אירועים<div class="menu"><a>קרובים</a><a>סדנאות</a><a>כנסים</a><a>ארכיון</a></div></a>
+    <a>עדכונים<div class="menu"><a>חדשות</a><a>במדיה</a><a>פרסומים</a><a>ניוזלטר</a></div></a>
+    <a>אודות<div class="menu"><a>החזון</a><a>הסיפור</a><a>מסמך הייסוד</a><a>קשר</a></div></a>
+  </nav>
+  <div class="tools">
+    <span class="a11y">א</span>
+    <button class="cta">לתיאום פגישה ←</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span>מטראומה להזדמנות</div>
+    <h1>אנחנו מניעים<br>חדשנות בחוסן <span class="accent">ובבריאות.</span></h1>
+    <p class="lede">מרכז חדשנות שדרות מאחד יזמים, חוקרים ורופאים עם הקהילה — להפוך עשורים של ידע מעשי על חיים תחת איום לפתרונות שמיוצאים: בבריאות הנפש, בביטחון אזרחי ובחינוך מסתגל.</p>
+    <div class="cta-row">
+      <button class="video-trigger"><span class="ring"></span>הסיפור של המרכז · 2:14</button>
+      <a class="arrow-link">קראו את מסמך הייסוד ←</a>
+    </div>
+  </section>
+
+  <section class="eco">
+    <div class="eco-inner">
+      <div class="eco-head">
+        <h2>האקוסיסטם <span>שלנו</span></h2>
+        <p>שלוש זרועות שמובילות יחד את המרכז — חוקרים ורופאים, יזמים וסטארטאפים, שותפים תעשייתיים בינלאומיים.</p>
+      </div>
+      <div class="eco-grid">
+        <div class="card b1">
+          <div class="media"><span class="num">01</span></div>
+          <div class="body"><h3>חוקרים ורופאים</h3><p>אנשי מקצוע ממוסדות הבריאות והאקדמיה שמובילים מחקר יישומי בקרבת הקהילה.</p><span class="more">הכירו את הצוות</span></div>
+        </div>
+        <div class="card b2">
+          <div class="media"><span class="num">02</span></div>
+          <div class="body"><h3>יזמים וסטארטאפים</h3><p>מייסדים שמפתחים פתרונות לחוסן אזרחי, בריאות נפש וטכנולוגיה רפואית מותאמת.</p><span class="more">חברות בתוכנית</span></div>
+        </div>
+        <div class="card b3">
+          <div class="media"><span class="num">03</span></div>
+          <div class="body"><h3>שותפים בינלאומיים</h3><p>מוסדות, קרנות, וגופי תעשייה שמלווים את המרכז ופותחים שווקים בעולם.</p><span class="more">רשימת שותפים</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="float" id="float">
+  <span class="x" onclick="document.getElementById('float').classList.remove('show')">×</span>
+  <div class="tag">הזמנה</div>
+  <p>הצטרפו אלינו לעיצוב מחדש של עתיד החדשנות בחוסן.</p>
+  <a>הצטרפו לרשת →</a>
+</div>
+
+<script>setTimeout(()=>document.getElementById('float').classList.add('show'),2000)</script>
+</body></html>

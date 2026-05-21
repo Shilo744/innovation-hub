@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub — From Trauma to Opportunity</title>
+<meta name="description" content="A global resilience innovation hub connecting clinicians, entrepreneurs, and strategic partners to turn trauma into opportunity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap" rel="stylesheet">
+<style>
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  CONNECTOR — site chrome only.                            ║
+   ║  Every content screen lives in its own file under         ║
+   ║  /sections and is loaded here as a lazy iframe, in order. ║
+   ╚══════════════════════════════════════════════════════════╝ */
+:root{
+  --bg-0:#061B30;--bg-1:#0C2D52;--bg-2:#144577;
+  --ink:#FFFFFF;--ink-2:#D6E2EE;--dim:#9AB1C7;--dim-2:#6B859A;--ink-dark:#0D2436;--ink-mid:#3F546A;
+  --teal:#46C9C2;--teal-2:#5EE0D5;--teal-deep:#287E78;--gold:#F2C94C;
+  --line:rgba(180,210,225,.13);--rule:rgba(13,36,54,.10);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-0);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.no-scroll{overflow:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+body.fs-lg{font-size:18px}body.fs-xl{font-size:20px}
+body.hc{filter:contrast(1.12) saturate(1.15)}
+body.ul-links a{text-decoration:underline}
+
+/* screens + iframes */
+.screen{position:relative;width:100%;display:block}
+.screen iframe{display:block;width:100%;border:0;background:var(--bg-0);color-scheme:normal}
+.screen.dark iframe{background:var(--bg-0)}
+.screen.light iframe{background:#fff}
+
+/* ── NAV ── */
+.nav{position:fixed;top:16px;left:20px;right:20px;z-index:80;height:58px;display:flex;align-items:center;gap:22px;padding:0 20px;border-radius:16px;background:rgba(6,27,48,.55);border:1px solid var(--line);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);box-shadow:0 24px 50px -22px rgba(0,0,0,.5);transition:background .3s, border-color .3s, top .3s, height .3s}
+.nav.scrolled{background:rgba(6,27,48,.92);border-color:rgba(94,224,213,.15);height:54px;top:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16.5px;color:#fff}
+.brand img{height:32px;filter:drop-shadow(0 4px 10px rgba(31,93,160,.55))}
+.brand span{white-space:nowrap}
+.nav-links{display:flex;gap:22px;margin-left:auto;font-size:14px;color:var(--ink-2);font-weight:500;list-style:none}
+.nav-links > li{position:relative}
+.nav-links a{padding:6px 0;opacity:.88;transition:.2s;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.nav-links a:hover{opacity:1;color:var(--teal-2)}
+.caret{font-size:9px;opacity:.7}
+.menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(6px);min-width:260px;padding:8px;border-radius:14px;background:rgba(6,27,48,.96);border:1px solid var(--line);backdrop-filter:blur(20px);box-shadow:0 30px 60px -20px rgba(0,0,0,.6);opacity:0;visibility:hidden;transition:.2s}
+.nav-links > li:hover .menu, .nav-links > li:focus-within .menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.menu a{display:block;padding:10px 14px;border-radius:10px;font-size:13.5px;font-weight:500;color:var(--ink-2);transition:.15s}
+.menu a:hover{background:rgba(94,224,213,.10);color:var(--teal-2)}
+.menu .heb{font-family:'Heebo',sans-serif;direction:rtl;text-align:right}
+.tools{display:flex;gap:8px;align-items:center}
+.ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);transition:.2s}
+.ic:hover{background:rgba(255,255,255,.10);border-color:rgba(94,224,213,.30)}
+.lang{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);font-weight:600;font-size:12.5px;transition:.2s}
+.lang:hover{border-color:rgba(94,224,213,.30)}
+.cta-nav{height:40px;padding:0 20px;border-radius:999px;background:var(--teal);color:#04102E;font-weight:700;font-size:13.5px;transition:.2s}
+.cta-nav:hover{background:var(--teal-2);transform:translateY(-1px)}
+.burger{display:none;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--line);align-items:center;justify-content:center;color:var(--ink)}
+.burger span{display:block;width:16px;height:2px;background:currentColor;position:relative}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;right:0;height:2px;background:currentColor}
+.burger span::before{top:-5px}.burger span::after{top:5px}
+
+/* ── A11Y PANEL ── */
+.a11y{position:fixed;top:84px;right:22px;z-index:90;width:280px;padding:18px;border-radius:14px;background:rgba(6,27,48,.96);border:1px solid var(--line);backdrop-filter:blur(20px);box-shadow:0 30px 60px -20px rgba(0,0,0,.6);transform:translateX(calc(100% + 40px));transition:transform .25s;color:#fff}
+.a11y.open{transform:translateX(0)}
+.a11y h4{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal-2);font-weight:800;margin-bottom:14px}
+.a11y .row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink-2)}
+.a11y .row:first-of-type{border-top:0}
+.a11y .btns{display:flex;gap:6px}
+.a11y .btn-s{padding:6px 12px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink);font-size:12px;font-weight:700;transition:.2s}
+.a11y .btn-s:hover,.a11y .btn-s.on{background:var(--teal);color:#04102E;border-color:var(--teal)}
+
+/* ── SIDE DOT NAV ── */
+.dotnav{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:75;display:flex;flex-direction:column;gap:14px;align-items:center}
+.dotnav button{position:relative;width:11px;height:11px;border-radius:50%;background:rgba(120,150,175,.35);border:1px solid transparent;transition:.25s;cursor:pointer}
+.dotnav button::after{content:attr(data-label);position:absolute;right:24px;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-dark);background:#fff;border:1px solid var(--rule);padding:5px 10px;border-radius:8px;box-shadow:0 10px 24px -14px rgba(13,36,54,.25);opacity:0;pointer-events:none;transition:.2s}
+.dotnav button:hover::after{opacity:1}
+.dotnav button:hover{background:var(--teal);transform:scale(1.2)}
+.dotnav button.active{background:var(--teal);box-shadow:0 0 0 4px rgba(70,201,194,.20);height:24px;border-radius:6px}
+.dotnav.on-dark button{background:rgba(255,255,255,.30)}
+.dotnav.on-dark button.active{background:var(--teal-2);box-shadow:0 0 0 4px rgba(94,224,213,.18)}
+.dotnav.on-dark button::after{color:#fff;background:rgba(6,27,48,.92);border-color:var(--line)}
+@media (max-width:900px){.dotnav{display:none}}
+
+/* ── STATS MARQUEE (thin connector strip between hero & about) ── */
+.stats-band{position:relative;background:#03121F;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;overflow:hidden}
+.stats-track{display:flex;gap:60px;animation:stats-scroll 45s linear infinite;white-space:nowrap;width:max-content}
+@keyframes stats-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.stats-item{display:inline-flex;align-items:center;gap:14px;font-family:'Manrope';font-weight:800;font-size:18px;letter-spacing:-.01em;color:var(--ink-2)}
+.stats-item .num{color:var(--teal-2);font-size:24px}
+.stats-item .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);margin-right:6px;flex-shrink:0}
+body.reduce-motion .stats-track{animation:none}
+
+/* ── FOOTER ── */
+.footer{background:#03161F;color:var(--ink-2);padding:70px var(--pad) 30px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:48px;max-width:1280px;margin:0 auto;padding-bottom:50px;border-bottom:1px solid rgba(255,255,255,.08)}
+.foot-brand{display:flex;align-items:center;gap:12px;margin-bottom:14px;font-family:'Manrope';font-weight:800;font-size:20px;color:#fff}
+.foot-brand img{height:36px}
+.foot-about{font-size:14px;line-height:1.65;color:var(--dim);max-width:340px}
+.foot-col h5{font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--teal-2);font-weight:800;margin-bottom:18px}
+.foot-col a{display:block;padding:6px 0;font-size:13.5px;color:var(--ink-2);transition:color .2s}
+.foot-col a:hover{color:var(--teal-2)}
+.foot-bottom{max-width:1280px;margin:0 auto;padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;font-size:12.5px;color:var(--dim-2)}
+.social{display:flex;gap:10px;margin-top:22px}
+.social a{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.05);display:grid;place-items:center;color:var(--ink-2);transition:.2s}
+.social a:hover{background:var(--teal);color:#04102E}
+
+/* ── MODAL ── */
+.modal-back{position:fixed;inset:0;z-index:100;background:rgba(4,16,30,.78);backdrop-filter:blur(8px);display:grid;place-items:center;padding:24px;opacity:0;visibility:hidden;transition:.25s}
+.modal-back.open{opacity:1;visibility:visible}
+.modal-card{position:relative;max-width:540px;width:100%;padding:42px;border-radius:22px;background:linear-gradient(160deg, var(--bg-1), var(--bg-2));border:1px solid var(--line);box-shadow:0 50px 100px -30px rgba(0,0,0,.7);text-align:center;transform:translateY(20px) scale(.96);transition:.3s;color:#fff}
+.modal-back.open .modal-card{transform:translateY(0) scale(1)}
+.modal-card::before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 50% 0%, rgba(70,201,194,.30), transparent 60%);pointer-events:none}
+.modal-card > *{position:relative;z-index:2}
+.modal-card .close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--line);color:#fff;display:grid;place-items:center;font-size:18px;line-height:1;z-index:5}
+.modal-card .close:hover{background:rgba(255,255,255,.12)}
+.modal-card .star{width:60px;height:60px;margin:0 auto 18px;border-radius:50%;background:var(--teal);display:grid;place-items:center;color:#04102E;box-shadow:0 14px 30px -8px rgba(70,201,194,.5)}
+.modal-card .tag{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px}
+.modal-card h3{font-family:'Manrope';font-weight:800;font-size:clamp(22px,2.4vw,30px);line-height:1.2;letter-spacing:-.015em;margin-bottom:14px;color:#fff}
+.modal-card h3 .b{color:var(--teal-2)}
+.modal-card p{color:var(--ink-2);font-size:15px;line-height:1.65;margin-bottom:24px}
+.modal-card .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-primary{height:50px;padding:0 26px;border-radius:999px;background:var(--teal);color:#04102E;font-weight:700;font-size:14.5px;transition:.2s;box-shadow:0 14px 35px -12px rgba(70,201,194,.5);display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--teal-2);transform:translateY(-2px)}
+.modal-card .ghost-btn{height:50px;padding:0 22px;border-radius:999px;background:transparent;border:1px solid var(--line);color:#fff;font-weight:600;font-size:14px;transition:.2s}
+.modal-card .ghost-btn:hover{border-color:rgba(94,224,213,.45)}
+
+@media (max-width:1200px){.nav-links{display:none}.burger{display:flex}}
+@media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+@media (max-width:600px){.foot-grid{grid-template-columns:1fr}.modal-card{padding:32px 24px}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav" aria-label="Main navigation">
+  <a href="#top" class="brand"><img src="logo.png" alt="Innovation Hub logo"><span>Innovation Hub</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li>
+      <a>Programs <span class="caret">▾</span></a>
+      <div class="menu">
+        <a href="#programs">Resilience Accelerator</a>
+        <a href="#programs" class="heb">שיבא לשדרות — Sheba to Sderot</a>
+        <a href="#programs">Immediate Implementation</a>
+        <a href="#programs">MEITAL</a>
+      </div>
+    </li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#updates">Updates</a></li>
+    <li><a href="#ecosystem">Ecosystem</a></li>
+  </ul>
+  <div class="tools">
+    <button class="ic" id="a11yBtn" aria-label="Accessibility menu" title="Accessibility">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M19 13l-5-1v9M5 13l5-1M9 22V15M15 22l-1-7"/></svg>
+    </button>
+    <button class="lang" aria-label="עברית" title="Switch to Hebrew">עב</button>
+    <button class="cta-nav" data-action="open-modal">Contact Us</button>
+    <button class="burger" aria-label="Open menu"><span></span></button>
+  </div>
+</nav>
+
+<aside class="a11y" id="a11yPanel" aria-hidden="true">
+  <h4>Accessibility</h4>
+  <div class="row"><span>Text size</span><div class="btns">
+    <button class="btn-s on" data-fs="">A</button>
+    <button class="btn-s" data-fs="fs-lg">A+</button>
+    <button class="btn-s" data-fs="fs-xl">A++</button>
+  </div></div>
+  <div class="row"><span>High contrast</span><button class="btn-s" id="hcBtn">Off</button></div>
+  <div class="row"><span>Underline links</span><button class="btn-s" id="ulBtn">Off</button></div>
+  <div class="row"><span>Reduce motion</span><button class="btn-s" id="rmBtn">Off</button></div>
+</aside>
+
+<nav class="dotnav" id="dotnav" aria-label="Section navigation"></nav>
+
+<!-- ============================================================
+     SCREENS — each section is its own file, loaded in order.
+     Hero loads eagerly; the rest lazy-load as the visitor nears.
+============================================================ -->
+<div class="screen dark" id="top">
+  <iframe data-id="hero" data-fixed src="sections/01-hero.html?v=2" title="Hero" style="height:100vh;min-height:680px"></iframe>
+</div>
+
+<div class="stats-band" aria-hidden="true">
+  <div class="stats-track">
+    <span class="stats-item"><span class="dot"></span><span class="num">150+</span> STARTUPS</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">36</span> GLOBAL PARTNERS</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">12</span> COUNTRIES</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">4</span> FLAGSHIP PROGRAMS</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">$240M+</span> RAISED BY PORTFOLIO</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">8</span> YEARS OF IMPACT</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">150+</span> STARTUPS</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">36</span> GLOBAL PARTNERS</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">12</span> COUNTRIES</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">4</span> FLAGSHIP PROGRAMS</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">$240M+</span> RAISED BY PORTFOLIO</span>
+    <span class="stats-item"><span class="dot"></span><span class="num">8</span> YEARS OF IMPACT</span>
+  </div>
+</div>
+
+<div class="screen light" id="about"><iframe data-id="about" loading="lazy" src="sections/02-about.html?v=2" title="About" style="height:100vh"></iframe></div>
+<div class="screen light" id="team"><iframe data-id="team" loading="lazy" src="sections/03-team.html?v=2" title="Team" style="height:120vh"></iframe></div>
+<div class="screen light" id="programs"><iframe data-id="programs" loading="lazy" src="sections/04-programs.html?v=2" title="Programs" style="height:110vh"></iframe></div>
+<div class="screen light" id="events"><iframe data-id="events" loading="lazy" src="sections/05-events.html?v=2" title="Events" style="height:100vh"></iframe></div>
+<div class="screen light" id="updates"><iframe data-id="updates" loading="lazy" src="sections/06-updates.html?v=2" title="Updates" style="height:100vh"></iframe></div>
+<div class="screen light" id="ecosystem"><iframe data-id="ecosystem" loading="lazy" src="sections/07-ecosystem.html?v=2" title="Ecosystem" style="height:200vh"></iframe></div>
+<div class="screen dark" id="closing"><iframe data-id="closing" loading="lazy" src="sections/08-closing.html?v=2" title="Contact" style="height:70vh"></iframe></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="foot-grid">
+    <div>
+      <div class="foot-brand"><img src="logo.png" alt="">Innovation Hub</div>
+      <p class="foot-about">A global resilience innovation hub turning the hardest human challenges into the next generation of breakthrough technologies.</p>
+      <div class="social">
+        <a aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14M8.34 18.34V10.67H5.67v7.67h2.67M7 9.5a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1m11.34 8.84v-4.2c0-2.32-1.24-3.4-2.9-3.4-1.34 0-1.94.74-2.27 1.26v-1.07h-2.67v7.67h2.67v-4.28c0-.39.03-.77.14-1.04.31-.77 1.01-1.57 2.19-1.57 1.55 0 2.17 1.18 2.17 2.91v3.98h2.67"/></svg></a>
+        <a aria-label="X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.43 8.49L23 22h-6.94l-5.43-7.1L4.4 22H1.14l7.94-9.07L1.5 2h7.12l4.92 6.48L18.244 2Zm-2.43 18h1.9L7.27 4H5.27l10.544 16Z"/></svg></a>
+        <a aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.27 5 12 5 12 5s-6.27 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26.2 26.2 0 0 0 2 12a26.2 26.2 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.73 19 12 19 12 19s6.27 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26.2 26.2 0 0 0 22 12a26.2 26.2 0 0 0-.4-4.8M10 15V9l5.2 3-5.2 3Z"/></svg></a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Explore</h5>
+      <a href="#about">About</a><a href="#team">Team</a><a href="#programs">Programs</a><a href="#events">Events</a>
+    </div>
+    <div class="foot-col">
+      <h5>Programs</h5>
+      <a href="#programs">Resilience Accelerator</a>
+      <a href="#programs" style="font-family:'Heebo';direction:rtl">שיבא לשדרות</a>
+      <a href="#programs">Immediate Implementation</a>
+      <a href="#programs">MEITAL</a>
+    </div>
+    <div class="foot-col">
+      <h5>Contact</h5>
+      <a href="mailto:hello@innovationhub.org">hello@innovationhub.org</a>
+      <a href="#">+972 3 530 5000</a>
+      <a href="#">Sheba Medical Center, Ramat Gan</a>
+      <a href="#">Sderot Innovation Wing</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Innovation Hub. All rights reserved.</span>
+    <span><a href="#">Terms of Use</a> · <a href="#">Privacy Policy</a> · <a href="#">Accessibility Statement</a></span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-back" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-card">
+    <button class="close" aria-label="Close" data-action="close-modal">×</button>
+    <div class="star">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+    </div>
+    <div class="tag">Join the movement</div>
+    <h3 id="modalTitle">Join us in redefining the future of <span class="b">resilience innovation.</span></h3>
+    <p>We're always looking for clinicians, founders, partners and visionaries who share our mission. Get in touch — let's build what comes next together.</p>
+    <div class="row">
+      <button class="btn-primary" data-action="close-modal">Get in touch →</button>
+      <button class="ghost-btn" data-action="close-modal">Maybe later</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CONNECTOR LOGIC — talks to the section iframes via postMessage.
+============================================================ */
+const SECTIONS=[
+  {id:'top',label:'Home'},{id:'about',label:'About'},{id:'team',label:'Team'},
+  {id:'programs',label:'Programs'},{id:'events',label:'Events'},{id:'updates',label:'Updates'},
+  {id:'ecosystem',label:'Ecosystem'},{id:'closing',label:'Contact'}
+];
+const darkIds=new Set(['top','closing']);
+const frames={};
+document.querySelectorAll('iframe[data-id]').forEach(f=>frames[f.dataset.id]=f);
+
+function post(frame,msg){ if(frame&&frame.contentWindow){ try{frame.contentWindow.postMessage(msg,'*');}catch(e){} } }
+
+/* ---- accessibility state shared with every section ---- */
+const a11y={fs:'',ul:false,rm:false};
+function sendA11yTo(frame){ post(frame,{t:'ih:a11y',fs:a11y.fs,ul:a11y.ul,rm:a11y.rm}); }
+function broadcastA11y(){ Object.values(frames).forEach(sendA11yTo); }
+
+/* ---- message bus ---- */
+const visible=new Set();
+addEventListener('message',e=>{
+  const d=e.data||{};
+  if(d.t==='ih:h'){ const f=frames[d.id]; if(f&&!f.hasAttribute('data-fixed')) f.style.height=d.h+'px'; }
+  else if(d.t==='ih:ready'){ const f=frames[d.id]; if(f){ sendA11yTo(f); if(visible.has(d.id)) post(f,{t:'ih:enter'}); } }
+  else if(d.t==='ih:key'){ moveSection(d.key); }
+  else if(d.t==='ih:nav'){ scrollToId(d.to); }
+  else if(d.t==='ih:modal'){ openModal(); }
+});
+
+/* ---- enter/leave: drives section reveals + the About video ---- */
+const io=new IntersectionObserver(ents=>{
+  ents.forEach(en=>{
+    const f=en.target.querySelector('iframe'); if(!f) return;
+    const id=f.dataset.id;
+    if(en.isIntersecting){ if(!visible.has(id)){ visible.add(id); post(f,{t:'ih:enter'}); } }
+    else if(visible.has(id)){ visible.delete(id); post(f,{t:'ih:leave'}); }
+  });
+},{threshold:0.01});
+document.querySelectorAll('.screen').forEach(s=>io.observe(s));
+
+/* ---- nav scroll state ---- */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+/* ---- accessibility panel ---- */
+const a11yBtn=document.getElementById('a11yBtn');
+const a11yPanel=document.getElementById('a11yPanel');
+a11yBtn.addEventListener('click',e=>{e.stopPropagation();const o=a11yPanel.classList.toggle('open');a11yPanel.setAttribute('aria-hidden',!o);});
+document.addEventListener('click',e=>{if(!a11yPanel.contains(e.target)&&!a11yBtn.contains(e.target))a11yPanel.classList.remove('open');});
+document.querySelectorAll('[data-fs]').forEach(b=>b.addEventListener('click',()=>{
+  document.body.classList.remove('fs-lg','fs-xl');
+  if(b.dataset.fs) document.body.classList.add(b.dataset.fs);
+  document.querySelectorAll('[data-fs]').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  a11y.fs=b.dataset.fs; broadcastA11y();
+}));
+document.getElementById('hcBtn').addEventListener('click',e=>{const o=document.body.classList.toggle('hc');e.target.textContent=o?'On':'Off';e.target.classList.toggle('on',o);});
+document.getElementById('ulBtn').addEventListener('click',e=>{const o=document.body.classList.toggle('ul-links');e.target.textContent=o?'On':'Off';e.target.classList.toggle('on',o);a11y.ul=o;broadcastA11y();});
+document.getElementById('rmBtn').addEventListener('click',e=>{
+  const o=e.target.classList.toggle('on');e.target.textContent=o?'On':'Off';
+  document.body.classList.toggle('reduce-motion',o);
+  document.documentElement.style.setProperty('scroll-behavior',o?'auto':'smooth');
+  a11y.rm=o; broadcastA11y();
+});
+
+/* ---- modal ---- */
+const modal=document.getElementById('modal');
+function openModal(){modal.classList.add('open');document.body.classList.add('no-scroll');}
+function closeModal(){modal.classList.remove('open');document.body.classList.remove('no-scroll');}
+document.querySelectorAll('[data-action="open-modal"]').forEach(b=>b.addEventListener('click',openModal));
+document.querySelectorAll('[data-action="close-modal"]').forEach(b=>b.addEventListener('click',closeModal));
+modal.addEventListener('click',e=>{if(e.target===modal) closeModal();});
+addEventListener('keydown',e=>{if(e.key==='Escape') closeModal();});
+
+/* ---- side dot nav + arrow-key navigation ---- */
+const els=SECTIONS.map(s=>document.getElementById(s.id));
+const dotnav=document.getElementById('dotnav');
+dotnav.innerHTML=SECTIONS.map((s,i)=>`<button data-i="${i}" data-label="${s.label}" aria-label="${s.label}"></button>`).join('');
+const dots=[...dotnav.querySelectorAll('button')];
+function scrollToId(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+dots.forEach((d,i)=>d.addEventListener('click',()=>els[i].scrollIntoView({behavior:'smooth'})));
+function currentIndex(){
+  const mid=scrollY+innerHeight*0.4; let idx=0;
+  els.forEach((el,i)=>{ if(el&&el.offsetTop<=mid) idx=i; });
+  return idx;
+}
+function syncDots(){
+  const idx=currentIndex();
+  dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+  dotnav.classList.toggle('on-dark',darkIds.has(SECTIONS[idx].id));
+}
+syncDots();
+addEventListener('scroll',syncDots,{passive:true});
+addEventListener('resize',syncDots,{passive:true});
+
+let locking=false;
+function moveSection(key){
+  if(locking) return; locking=true; setTimeout(()=>locking=false,650);
+  const idx=currentIndex();
+  const dir=(key==='ArrowDown'||key==='PageDown')?1:-1;
+  const next=Math.max(0,Math.min(els.length-1,idx+dir));
+  els[next].scrollIntoView({behavior:'smooth'});
+}
+addEventListener('keydown',e=>{
+  if(['ArrowDown','PageDown','ArrowUp','PageUp'].includes(e.key)){
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName)) return;
+    e.preventDefault(); moveSection(e.key);
+  }
+});
+</script>
+</body>
+</html>

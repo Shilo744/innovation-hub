@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDEROT.HUB — Innovation, From the South</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #0A0E1A;
+    color: #E8E8E8;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124, 158, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124, 158, 255, 0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 158, 255, 0.15) 0%, transparent 70%);
+    top: -200px;
+    left: -200px;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(40px);
+  }
+  .glow-2 {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 122, 89, 0.12) 0%, transparent 70%);
+    bottom: 10%;
+    right: -150px;
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(40px);
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10, 14, 26, 0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(124, 158, 255, 0.15);
+  }
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+  }
+  .logo .bracket { color: #7C9EFF; }
+  .logo .dot { color: #FF7A59; }
+  nav ul { display: flex; gap: 2.5rem; list-style: none; }
+  nav ul a {
+    text-decoration: none;
+    color: #B8B8C8;
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: #7C9EFF; }
+  nav ul a::before { content: "// "; color: #444; }
+  .cta {
+    background: linear-gradient(135deg, #7C9EFF 0%, #5A7FE0 100%);
+    color: #0A0E1A;
+    padding: 0.7rem 1.6rem;
+    border: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 3rem 8rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #6B7080;
+  }
+  .hero-meta .label { color: #FF7A59; }
+  .hero-meta .val { color: #B8B8C8; }
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 2.5rem;
+    background: linear-gradient(180deg, #FFFFFF 0%, #8B95B8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(135deg, #7C9EFF 0%, #FF7A59 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    font-size: 1.2rem;
+    color: #B8B8C8;
+    max-width: 600px;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, #7C9EFF 0%, #5A7FE0 100%);
+    color: #0A0E1A;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: transform 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(124, 158, 255, 0.3);
+    color: #E8E8E8;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .terminal-card {
+    margin-top: 4rem;
+    background: #0F1424;
+    border: 1px solid rgba(124, 158, 255, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 700px;
+  }
+  .terminal-head {
+    background: #161B30;
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(124, 158, 255, 0.1);
+  }
+  .term-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .term-dot:nth-child(1) { background: #FF5F57; }
+  .term-dot:nth-child(2) { background: #FEBC2E; }
+  .term-dot:nth-child(3) { background: #28C840; }
+  .terminal-body {
+    padding: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    direction: ltr;
+    text-align: left;
+  }
+  .terminal-body .prompt { color: #7C9EFF; }
+  .terminal-body .cmd { color: #E8E8E8; }
+  .terminal-body .out { color: #6B7080; margin: 0.3rem 0; }
+  .terminal-body .ok { color: #28C840; }
+  .terminal-body .warn { color: #FEBC2E; }
+  .terminal-body .accent { color: #FF7A59; }
+  .blink::after {
+    content: "_";
+    animation: blink 1s step-start infinite;
+    color: #7C9EFF;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #FF7A59;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+  }
+  .section-label::before { content: "// "; color: #444; }
+  .programs {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .programs h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 4rem;
+    color: #FFFFFF;
+    max-width: 700px;
+  }
+  .programs h2 .blue { color: #7C9EFF; }
+  .program-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .program {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(124, 158, 255, 0.15);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .program:hover {
+    border-color: rgba(124, 158, 255, 0.5);
+    background: rgba(124, 158, 255, 0.04);
+    transform: translateY(-4px);
+  }
+  .program::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #7C9EFF, #FF7A59);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .program:hover::before { opacity: 1; }
+  .program-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #6B7080;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .program-meta .status {
+    color: #28C840;
+    background: rgba(40, 200, 64, 0.1);
+    padding: 0.15rem 0.6rem;
+    border-radius: 3px;
+  }
+  .program-meta .status.closed {
+    color: #FF7A59;
+    background: rgba(255, 122, 89, 0.1);
+  }
+  .program h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+  }
+  .program p {
+    font-size: 0.95rem;
+    color: #B8B8C8;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+  }
+  .program-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #7C9EFF;
+    text-decoration: none;
+  }
+  .program-link::after { content: " →"; }
+  .stats-strip {
+    position: relative;
+    z-index: 1;
+    padding: 4rem 3rem;
+    border-top: 1px solid rgba(124, 158, 255, 0.15);
+    border-bottom: 1px solid rgba(124, 158, 255, 0.15);
+    background: rgba(124, 158, 255, 0.02);
+  }
+  .stats-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .stat-block { text-align: right; }
+  .stat-block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #6B7080;
+    margin-bottom: 0.8rem;
+  }
+  .stat-block .label::before { content: "› "; color: #FF7A59; }
+  .stat-block .number {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    background: linear-gradient(135deg, #FFFFFF 0%, #7C9EFF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-block .delta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: #28C840;
+    margin-top: 0.5rem;
+  }
+  .cta-section {
+    position: relative;
+    z-index: 1;
+    padding: 8rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(180deg, #FFFFFF 0%, #7C9EFF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .cta-section p {
+    font-size: 1.2rem;
+    color: #B8B8C8;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 3rem;
+    border-top: 1px solid rgba(124, 158, 255, 0.15);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: #6B7080;
+  }
+  .footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-inner .status { color: #28C840; }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero, .programs, .stats-strip, .cta-section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .program-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-inner { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow"></div>
+<div class="glow-2"></div>
+
+<nav>
+  <div class="logo"><span class="bracket">[</span>SDEROT<span class="dot">.</span>HUB<span class="bracket">]</span></div>
+  <ul>
+    <li><a href="#">programs</a></li>
+    <li><a href="#">community</a></li>
+    <li><a href="#">labs</a></li>
+    <li><a href="#">apply</a></li>
+  </ul>
+  <a href="#" class="cta">join_hub()</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-meta">
+    <span><span class="label">// location</span> <span class="val">31.52°N, 34.59°E</span></span>
+    <span><span class="label">// status</span> <span class="val">active · cohort 04</span></span>
+    <span><span class="label">// since</span> <span class="val">2023</span></span>
+  </div>
+  <h1>
+    Innovation,<br>
+    <span class="accent">from the south.</span>
+  </h1>
+  <p class="hero-sub">
+    האב חדשנות שדרות — תשתית טכנולוגית, קהילתית והון אנושי לסטארטאפים ויזמים שבונים את הדור הבא של הטכנולוגיה הישראלית. ישר מהדרום.
+  </p>
+  <div class="hero-actions">
+    <a href="#" class="btn-primary">./apply --cohort=05</a>
+    <a href="#" class="btn-ghost">read docs →</a>
+  </div>
+
+  <div class="terminal-card">
+    <div class="terminal-head">
+      <span class="term-dot"></span>
+      <span class="term-dot"></span>
+      <span class="term-dot"></span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="prompt">sderot-hub:~$</span> <span class="cmd">status --all</span></div>
+      <div class="out">→ scanning hub network...</div>
+      <div class="out"><span class="ok">✓</span> active startups: <span class="accent">120</span></div>
+      <div class="out"><span class="ok">✓</span> community members: <span class="accent">2,400</span></div>
+      <div class="out"><span class="ok">✓</span> capital raised 2025: <span class="accent">$18M</span></div>
+      <div class="out"><span class="warn">!</span> cohort 05 applications open: <span class="accent">deadline 2026-07-15</span></div>
+      <div><span class="prompt">sderot-hub:~$</span> <span class="blink"></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div class="stat-block">
+      <div class="label">active_startups</div>
+      <div class="number">120</div>
+      <div class="delta">+23% YoY</div>
+    </div>
+    <div class="stat-block">
+      <div class="label">capital_raised</div>
+      <div class="number">$18M</div>
+      <div class="delta">+8M from 2024</div>
+    </div>
+    <div class="stat-block">
+      <div class="label">mentors_active</div>
+      <div class="number">45</div>
+      <div class="delta">across 12 countries</div>
+    </div>
+    <div class="stat-block">
+      <div class="label">graduation_rate</div>
+      <div class="number">87%</div>
+      <div class="delta">cohorts 01-03</div>
+    </div>
+  </div>
+</div>
+
+<section class="programs">
+  <div class="section-label">PROGRAMS / 02</div>
+  <h2>תוכניות שמייצרות <span class="blue">פלט אמיתי</span>, לא רק presentations.</h2>
+  <div class="program-grid">
+    <div class="program">
+      <div class="program-meta">
+        <span>PRGM_01 · ACCELERATOR</span>
+        <span class="status">applications open</span>
+      </div>
+      <h3>Sderot Accelerator</h3>
+      <p>מסלול 16 שבועות לסטארטאפים בשלב Pre-Seed. כולל $50K השקעת זרע, ליווי, וגישה למשקיעים.</p>
+      <a href="#" class="program-link">apply now</a>
+    </div>
+    <div class="program">
+      <div class="program-meta">
+        <span>PRGM_02 · LAB</span>
+        <span class="status">open daily</span>
+      </div>
+      <h3>Prototype Lab</h3>
+      <p>סדנה מאובזרת — מדפסות תלת־ממד, חיתוך לייזר, סביבת פיתוח חומרה. חופשי לחברי קהילה.</p>
+      <a href="#" class="program-link">access info</a>
+    </div>
+    <div class="program">
+      <div class="program-meta">
+        <span>PRGM_03 · YOUTH</span>
+        <span class="status closed">opens september</span>
+      </div>
+      <h3>Youth Founders School</h3>
+      <p>שנתון יזמות לגילאי 14–18 משדרות והסביבה. למידה דרך פרויקטים אמיתיים, בליווי מנטורים.</p>
+      <a href="#" class="program-link">join waitlist</a>
+    </div>
+    <div class="program">
+      <div class="program-meta">
+        <span>PRGM_04 · COWORK</span>
+        <span class="status">members only</span>
+      </div>
+      <h3>Plus Membership</h3>
+      <p>גישה מלאה למרחב, אירועי קהילה, וקישורים מובנים לאקדמיה ולתעשייה. החל מ-₪290/חודש.</p>
+      <a href="#" class="program-link">view plans</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="section-label">JOIN / 03</div>
+  <h2>בונים משהו? בואו לבנות אצלנו.</h2>
+  <p>בין אם אתם בשלב רעיון, אבטיפוס או חברה שצומחת — יש פה מקום בשבילכם.</p>
+  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+    <a href="#" class="btn-primary">./schedule_visit()</a>
+    <a href="#" class="btn-ghost">browse cohorts →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 sderot.hub · innovation infrastructure for the Israeli south</div>
+    <div><span class="status">●</span> all systems operational · uptime 99.97%</div>
+  </div>
+</footer>
+
+</body>
+</html>

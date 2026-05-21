@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Innovation Hub · Aurora Tech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#EAF1FF;
+    --ink-dim:#A6B3D6;
+    --bg-0:#04071A;
+    --bg-1:#080F2E;
+    --cyan:#2BC8F2;
+    --blue:#3D7BFF;
+    --violet:#8A4DFF;
+    --magenta:#C24BFF;
+    --gold:#F2B544;
+    --line:rgba(180,200,255,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Heebo','Space Grotesk',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--bg-0);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* aurora canvas */
+  .stage{
+    position:fixed;inset:0;
+    background:
+      radial-gradient(1200px 700px at 20% 30%, rgba(43,200,242,.25), transparent 60%),
+      radial-gradient(900px 600px at 80% 70%, rgba(138,77,255,.30), transparent 60%),
+      radial-gradient(700px 500px at 60% 20%, rgba(194,75,255,.18), transparent 60%),
+      linear-gradient(180deg,#04071A 0%, #060A22 100%);
+    z-index:0;
+  }
+  .stage::after{
+    content:"";position:absolute;inset:0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(180,200,255,.08) 1px, transparent 0);
+    background-size:24px 24px;
+    mask-image:radial-gradient(ellipse at 50% 50%, #000 40%, transparent 80%);
+  }
+  .aurora{
+    position:fixed;inset:-20% -10%;z-index:1;pointer-events:none;
+    filter:blur(60px);opacity:.85;
+    background:
+      conic-gradient(from 120deg at 30% 40%, transparent 0 30%, rgba(61,123,255,.6) 35%, rgba(138,77,255,.7) 55%, rgba(43,200,242,.55) 75%, transparent 90% 100%);
+    animation:swirl 22s linear infinite;
+  }
+  @keyframes swirl{
+    0%{transform:translate3d(0,0,0) rotate(0deg) scale(1.1)}
+    50%{transform:translate3d(2%, -2%,0) rotate(180deg) scale(1.2)}
+    100%{transform:translate3d(0,0,0) rotate(360deg) scale(1.1)}
+  }
+
+  /* slim floating navbar */
+  .nav{
+    position:fixed;top:18px;right:18px;left:18px;z-index:50;
+    height:54px;display:flex;align-items:center;gap:18px;
+    padding:0 18px;border-radius:999px;
+    background:rgba(8,12,38,.55);
+    border:1px solid var(--line);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    box-shadow:0 20px 60px -20px rgba(0,0,0,.6);
+  }
+  .nav .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.5px}
+  .nav .brand img{height:30px;width:auto;filter:drop-shadow(0 0 12px rgba(61,123,255,.55))}
+  .nav .links{display:flex;gap:22px;margin-inline-start:auto;font-size:14px;color:var(--ink-dim)}
+  .nav .links a{color:inherit;text-decoration:none;transition:color .2s}
+  .nav .links a:hover{color:var(--ink)}
+  .nav .tools{display:flex;gap:8px;align-items:center}
+  .icon-btn{
+    width:36px;height:36px;border-radius:50%;
+    display:grid;place-items:center;cursor:pointer;
+    background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink-dim);
+    transition:.2s;
+  }
+  .icon-btn:hover{color:var(--ink);background:rgba(255,255,255,.08)}
+  .lang{
+    height:36px;padding:0 14px;border-radius:999px;
+    background:linear-gradient(120deg,var(--cyan),var(--violet));
+    color:#0A0F2C;font-weight:700;font-size:12.5px;letter-spacing:.5px;
+    border:none;cursor:pointer;
+  }
+
+  /* hero */
+  main{position:relative;z-index:5;height:100vh;display:grid;place-items:center;padding:100px 6vw 60px;text-align:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:6px 14px;border-radius:999px;
+    background:rgba(255,255,255,.04);border:1px solid var(--line);
+    font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:3px;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+  h1{
+    font-family:'Heebo',sans-serif;font-weight:900;
+    font-size:clamp(42px,7.2vw,108px);line-height:1.02;letter-spacing:-.02em;margin:22px 0 14px;
+  }
+  h1 .grad{
+    background:linear-gradient(110deg,var(--cyan) 0%, var(--blue) 35%, var(--violet) 70%, var(--magenta) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .slogan{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(15px,1.4vw,18px);
+    color:var(--ink-dim);letter-spacing:6px;text-transform:uppercase;margin:18px 0 8px;
+  }
+  .lead{
+    max-width:720px;margin:18px auto 32px;
+    font-size:clamp(16px,1.35vw,19px);line-height:1.7;color:var(--ink-dim);
+  }
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn-primary{
+    position:relative;padding:16px 30px;border-radius:999px;border:0;cursor:pointer;
+    background:linear-gradient(110deg,var(--cyan),var(--violet));
+    color:#06081C;font-weight:700;font-size:15px;letter-spacing:.3px;
+    box-shadow:0 18px 50px -12px rgba(138,77,255,.55), 0 0 0 1px rgba(255,255,255,.15) inset;
+    transition:transform .15s;
+  }
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{
+    padding:16px 26px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);
+    color:var(--ink);cursor:pointer;font-weight:500;font-size:14.5px;
+  }
+
+  /* floating logo glow */
+  .glow-logo{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:min(560px,55vmin);opacity:.12;z-index:2;
+    filter:drop-shadow(0 0 60px rgba(138,77,255,.5));
+    animation:bob 9s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translate(-50%,-52%)}50%{transform:translate(-50%,-48%)}}
+
+  /* bottom orbit + scroll hint */
+  .meta{
+    position:fixed;left:0;right:0;bottom:22px;z-index:6;
+    display:flex;justify-content:space-between;align-items:center;padding:0 32px;
+    font-family:'Space Grotesk',sans-serif;font-size:12px;color:var(--ink-dim);letter-spacing:2.5px;text-transform:uppercase;
+  }
+  .scroll{display:flex;align-items:center;gap:10px}
+  .scroll .bar{width:1px;height:32px;background:linear-gradient(180deg,transparent,var(--cyan),transparent);animation:flow 2.2s linear infinite}
+  @keyframes flow{0%{transform:translateY(-40%)}100%{transform:translateY(40%)}}
+
+  @media (max-width:780px){
+    .nav .links{display:none}
+    .meta{padding:0 18px}
+  }
+</style>
+</head>
+<body>
+  <div class="stage"></div>
+  <div class="aurora" aria-hidden="true"></div>
+  <img class="glow-logo" src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="" aria-hidden="true">
+
+  <nav class="nav" aria-label="ראשי">
+    <div class="brand">
+      <img src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="לוגו Innovation Hub">
+      <span>Innovation Hub</span>
+    </div>
+    <div class="links">
+      <a href="#about">אודות</a>
+      <a href="#programs">תוכניות</a>
+      <a href="#team">צוות</a>
+      <a href="#events">אירועים</a>
+      <a href="#updates">עדכונים</a>
+      <a href="#ecosystem">אקוסיסטם</a>
+    </div>
+    <div class="tools">
+      <button class="icon-btn" aria-label="נגישות" title="נגישות">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M19 13l-5-1v9M5 13l5-1M9 22V15M15 22l-1-7"/></svg>
+      </button>
+      <button class="lang" aria-label="Switch to English">EN</button>
+    </div>
+  </nav>
+
+  <main>
+    <div>
+      <span class="eyebrow"><span class="dot"></span>Resilience · Innovation · Impact</span>
+      <h1>מ<span class="grad">חוסן</span> ל<span class="grad">פריצת דרך</span></h1>
+      <div class="slogan">From Trauma to Opportunity</div>
+      <p class="lead">מרכז החדשנות שמחבר בין מומחים קליניים, סטארטאפים ושותפים אסטרטגיים — כדי להפוך אתגרים של חוסן להזדמנויות של מחר.</p>
+      <div class="cta-row">
+        <button class="btn-primary">הצטרפו אלינו ←</button>
+        <button class="btn-ghost">צפו בסרטון התדמית</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="meta">
+    <span>Innovation Hub © 2026</span>
+    <div class="scroll"><span>SCROLL</span><span class="bar"></span></div>
+    <span>v.01 · Aurora Tech</span>
+  </div>
+</body>
+</html>

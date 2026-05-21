@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>News & Updates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#061B30;--ink:#FFFFFF;--ink-2:#D6E2EE;
+  --bg-light:#FFFFFF;--bg-alt:#F5F8FA;
+  --ink-dark:#0D2436;--ink-mid:#3F546A;
+  --teal-deep:#287E78;--teal:#46C9C2;--teal-2:#5EE0D5;--gold:#F2C94C;
+  --line:rgba(13,36,54,.08);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-0);color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+.reveal{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}
+.reveal.d2{transition-delay:.3s}
+
+.hero-banner{
+  background: var(--bg-0);
+  color: var(--ink);
+  padding: 130px var(--pad) 70px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner .eyebrow{color:var(--teal-2)}
+.hero-banner h2.headline{color:var(--ink)}
+.hero-banner h2.headline .accent{color:var(--teal-2)}
+.hero-banner .section-head .right{color:var(--ink-2)}
+
+.bg-glow{
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(94,224,213,.08), transparent 50%), radial-gradient(circle at 20% 80%, rgba(242,201,76,.04), transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.updates-content{
+  position: relative;
+  padding: 56px var(--pad) 96px;
+  background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-alt) 100%);
+}
+.container{max-width:1200px;margin:0 auto}
+
+.section-head{max-width:1200px;margin:0 auto 56px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:end}
+.section-head .left{max-width:640px}
+.section-head .right{align-self:end;font-size:15.5px;line-height:1.7;max-width:440px;color:var(--ink-mid)}
+.eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--teal-deep);font-weight:800;margin-bottom:16px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor;opacity:.7}
+h2.headline{font-family:'Manrope';font-weight:800;font-size:clamp(32px,3.8vw,52px);line-height:1.05;letter-spacing:-.02em}
+h2.headline .accent{color:var(--teal-deep)}
+
+
+.updates-grid{display:grid;grid-template-columns:1.5fr 0.9fr;gap:48px;align-items:stretch}
+.press-list{display:flex;flex-direction:column;gap:16px}
+
+.press{display:grid;grid-template-columns:110px 1fr auto;gap:24px;align-items:center;padding:22px 28px;background:#fff;border:1px solid var(--line);border-radius:14px;cursor:pointer;transition:all .3s cubic-bezier(.25,.8,.25,1);position:relative;overflow:hidden;box-shadow:0 8px 24px -10px rgba(13,36,54,.05)}
+.press::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal-deep);transform:scaleY(0);transition:.25s;transform-origin:bottom}
+.press:hover{background:#fff;border-color:var(--teal);box-shadow:0 24px 45px -20px rgba(13,36,54,.12);transform:translateX(-6px)}
+.press:hover::before{transform:scaleY(1);transform-origin:top}
+
+.press .logo{height:44px;display:grid;place-items:center;font-family:'Manrope';font-weight:800;font-size:12px;letter-spacing:1.5px;color:var(--ink-dark);background:var(--bg-alt);border:1px solid var(--line);border-radius:8px;text-transform:uppercase;text-align:center;padding:0 8px}
+.press .body strong{display:block;font-size:16px;color:var(--ink-dark);line-height:1.45;font-weight:700}
+.press .body strong.he{font-family:'Heebo',sans-serif;direction:rtl;text-align:right}
+.press .body .meta-row{margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.press .body .meta-row.he{direction:rtl;justify-content:flex-start}
+.press .body .meta-row span{font-size:12.5px;color:var(--ink-mid);letter-spacing:.3px}
+.press .body .meta-row .tag{padding:3px 8px;background:rgba(70,201,194,.10);color:var(--teal-deep);border-radius:6px;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
+
+.press .arrow{width:40px;height:40px;border-radius:50%;background:var(--bg-alt);display:grid;place-items:center;color:var(--ink-dark);transition:.25s;flex-shrink:0;font-size:18px;line-height:1}
+.press:hover .arrow{background:var(--ink-dark);color:#fff;transform:rotate(-12deg)}
+
+.press-more{margin-top:12px;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;color:var(--teal-deep);font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:999px;background:rgba(70,201,194,.08);transition:all .2s;border:1px solid transparent}
+.press-more:hover{background:var(--teal-deep);color:#fff;border-color:var(--teal-deep)}
+.press-more::after{content:"→";transition:transform .2s}
+.press-more:hover::after{transform:translateX(4px)}
+
+.newsletter{padding:42px 36px;background:linear-gradient(160deg, #061B30 0%, #0C2D52 70%, var(--teal-deep) 130%);color:#fff;border-radius:var(--radius);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;box-shadow:0 35px 70px -25px rgba(6,27,48,.4)}
+.newsletter::before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 30% 80%, rgba(70,201,194,.25), transparent 60%);pointer-events:none}
+.newsletter::after{content:"";position:absolute;top:-40px;right:-40px;width:150px;height:150px;border-radius:50%;border:1px dashed rgba(94,224,213,.35);animation:nl-spin 30s linear infinite;pointer-events:none}
+@keyframes nl-spin{to{transform:rotate(360deg)}}
+.newsletter > *{position:relative;z-index:2}
+
+.newsletter .tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:12px;display:inline-flex;align-items:center;gap:8px}
+.newsletter .tag::before{content:"";width:18px;height:1px;background:var(--gold)}
+.newsletter h3{font-family:'Manrope';font-weight:800;font-size:28px;line-height:1.15;letter-spacing:-.02em;margin-bottom:12px;color:#fff}
+.newsletter p{color:var(--ink-2);font-size:14.5px;line-height:1.65;margin-bottom:24px;max-width:340px}
+
+.newsletter form{display:flex;gap:10px;flex-direction:column}
+.newsletter input{height:50px;padding:0 18px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.08);color:#fff;font-family:inherit;font-size:14px;outline:none;transition:.2s}
+.newsletter input::placeholder{color:rgba(255,255,255,.5)}
+.newsletter input:focus{border-color:var(--teal-2);background:rgba(255,255,255,.15)}
+
+.newsletter button{height:50px;padding:0 22px;border-radius:12px;background:var(--gold);color:#0E1530;font-weight:800;font-size:14.5px;transition:.2s;letter-spacing:.3px}
+.newsletter button:hover{background:#f6df84;transform:translateY(-1px)}
+
+.newsletter .tiny{margin-top:16px;font-size:11.5px;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:6px}
+.newsletter .tiny::before{content:"✓";color:var(--teal-2);font-weight:700}
+
+@media (max-width:1200px){
+  .section-head{grid-template-columns:1fr;gap:20px}
+  .updates-grid{grid-template-columns:1fr;gap:40px}
+}
+@media (max-width:650px){
+  .press{grid-template-columns:1fr;text-align:left;gap:16px;padding:20px}
+  .press .logo{width:fit-content}
+  .press .arrow{display:none}
+}
+</style>
+</head>
+<body>
+<header class="hero-banner">
+  <div class="bg-glow"></div>
+  <div class="container" style="position:relative; z-index:2;">
+    <div class="section-head">
+      <div class="left">
+        <div class="eyebrow">Updates & News</div>
+        <h2 class="headline reveal">Recent <span class="accent">News & Press.</span></h2>
+      </div>
+      <div class="right reveal d1">Latest media coverage, cohort announcement briefs, and ecosystem highlights from our programs.</div>
+    </div>
+  </div>
+</header>
+<section class="updates-content">
+  <div class="container">
+    <div class="updates-grid">
+      <!-- PRESS ARTICLES -->
+      <div class="press-list reveal">
+        
+        <article class="press" data-action="open-modal">
+          <div class="logo">Forbes</div>
+          <div class="body">
+            <strong>Innovation Hub raises $42M to scale its resilience accelerator globally</strong>
+            <div class="meta-row"><span class="tag">Funding</span><span>May 14, 2026 · Forbes Health</span></div>
+          </div>
+          <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </article>
+
+        <article class="press" data-action="open-modal">
+          <div class="logo">TechCrunch</div>
+          <div class="body">
+            <strong>How a small-city hub became a blueprint for resilience innovation worldwide</strong>
+            <div class="meta-row"><span class="tag">Feature</span><span>April 27, 2026 · TechCrunch Tech</span></div>
+          </div>
+          <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </article>
+
+        <article class="press" data-action="open-modal">
+          <div class="logo">Calcalist</div>
+          <div class="body">
+            <strong class="he">שיבא לשדרות: המודל הישראלי שמייצא חוסן לעולם</strong>
+            <div class="meta-row he"><span class="tag">עברית</span><span>אפריל 12, 2026 · כלכליסט</span></div>
+          </div>
+          <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </article>
+
+        <article class="press" data-action="open-modal">
+          <div class="logo">Wired</div>
+          <div class="body">
+            <strong>Inside the four-program approach reshaping how trauma becomes opportunity</strong>
+            <div class="meta-row"><span class="tag">Profile</span><span>March 30, 2026 · WIRED Magazine</span></div>
+          </div>
+          <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </article>
+
+        <button class="press-more" data-action="open-modal">All press coverage</button>
+      </div>
+
+      <!-- NEWSLETTER -->
+      <div class="newsletter reveal d1">
+        <div class="tag">Monthly Newsletter</div>
+        <h3>The Resilience Brief</h3>
+        <p>A focused monthly update — programs, portfolio milestones and the field stories shaping our work. No spam, just substance.</p>
+        <form id="newsletterForm">
+          <input type="email" required placeholder="your@email.com" aria-label="Email address">
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="tiny">Sent monthly. Unsubscribe anytime.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.getElementById('newsletterForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Subscribed ✓';
+  btn.style.background = '#46C9C2';
+  btn.style.color = '#fff';
+  btn.disabled = true;
+});
+</script>
+<script src="_bridge.js" data-frame="updates"></script>
+</body>
+</html>

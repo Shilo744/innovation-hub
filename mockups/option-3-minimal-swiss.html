@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>האב חדשנות לחוסן ובריאות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#FFFFFF;
+    --ink:#0A0F2C;
+    --soft:#646A85;
+    --rule:#0A0F2C;
+    --line:rgba(10,15,44,.12);
+    --blue:#1E3A8A;
+    --purple:#7C3AED;
+    --tint:#F4F4F1;
+  }
+  html,body{background:var(--bg);color:var(--ink);font-family:'Heebo',sans-serif;line-height:1.5;overflow-x:hidden;font-weight:400}
+  a{color:inherit;text-decoration:none}
+  .serif{font-family:'Frank Ruhl Libre',serif}
+  .mono{font-variant-numeric:tabular-nums;letter-spacing:.02em}
+
+  /* Grid lines decoration */
+  .grid-overlay{
+    position:fixed;inset:0;pointer-events:none;z-index:1;
+    background-image:
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:calc(100%/12) 100%;
+    opacity:.5
+  }
+
+  /* NAV */
+  .nav{
+    position:fixed;top:14px;left:14px;right:14px;z-index:100;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(14px);
+    border:1px solid var(--line);border-radius:4px;
+    padding:12px 24px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:30px
+  }
+  .nav-brand{display:flex;align-items:center;gap:12px;font-weight:600;font-size:13px;letter-spacing:.02em}
+  .nav-brand svg{width:26px;height:30px}
+  .nav-brand small{display:block;font-size:10px;color:var(--soft);letter-spacing:.2em;text-transform:uppercase;margin-top:2px}
+  .nav-links{display:flex;justify-content:center;gap:34px}
+  .nav-links a{font-size:13px;font-weight:500;transition:color .2s;position:relative}
+  .nav-links a::after{content:"";position:absolute;bottom:-4px;right:0;width:0;height:1px;background:var(--ink);transition:width .3s}
+  .nav-links a:hover::after{width:100%}
+  .nav-right{display:flex;align-items:center;gap:18px}
+  .lang{font-size:11px;font-weight:600;letter-spacing:.15em;color:var(--soft);cursor:pointer}
+  .lang:hover{color:var(--ink)}
+  .nav-cta{padding:8px 18px;border:1px solid var(--ink);font-size:12px;font-weight:600;letter-spacing:.05em;transition:all .25s}
+  .nav-cta:hover{background:var(--ink);color:#fff}
+
+  /* HERO */
+  .hero{height:100vh;padding:0 5vw;display:grid;grid-template-rows:auto 1fr auto;position:relative;padding-top:120px;padding-bottom:40px}
+  .hero-meta{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--soft);padding-bottom:20px;border-bottom:1px solid var(--ink)}
+  .hero-meta span:first-child::before{content:"●  ";color:var(--purple)}
+  .hero-body{display:grid;grid-template-columns:1fr 1.3fr;gap:60px;align-items:center;padding:30px 0}
+  .hero-left h1{
+    font-family:'Frank Ruhl Libre',serif;
+    font-size:clamp(56px,9vw,164px);font-weight:400;line-height:.86;letter-spacing:-.04em
+  }
+  .hero-left h1 em{font-style:italic;color:var(--purple);font-weight:500}
+  .hero-left h1 span{display:block}
+  .hero-right{display:flex;flex-direction:column;justify-content:center;gap:32px;padding-right:8%}
+  .hero-num{font-family:'Frank Ruhl Libre',serif;font-size:12px;letter-spacing:.3em;color:var(--soft);text-transform:uppercase}
+  .hero-text{font-size:18px;line-height:1.6;max-width:430px;color:var(--ink)}
+  .hero-text strong{font-weight:600;color:var(--purple)}
+  .hero-en-slogan{font-family:'Frank Ruhl Libre',serif;font-style:italic;font-size:22px;color:var(--ink);padding-top:18px;border-top:1px solid var(--line);max-width:430px}
+  .hero-foot{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;align-items:center;border-top:1px solid var(--ink);padding-top:18px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);gap:30px}
+  .hero-foot .label{font-weight:600;color:var(--ink)}
+  .hero-foot .num{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;text-transform:none;letter-spacing:-.02em;color:var(--ink);margin-bottom:4px}
+
+  .hero-logo-floater{
+    position:absolute;left:5vw;top:50%;transform:translateY(-50%);
+    width:240px;opacity:.13;z-index:0
+  }
+
+  /* Section base */
+  section{padding:120px 5vw;position:relative;z-index:2}
+  .sec-hdr{display:grid;grid-template-columns:auto 1fr;gap:80px;align-items:start;padding-bottom:60px;margin-bottom:60px;border-bottom:1px solid var(--ink)}
+  .sec-num{font-family:'Frank Ruhl Libre',serif;font-size:84px;font-weight:400;line-height:1;letter-spacing:-.04em}
+  .sec-num em{font-style:italic;color:var(--purple)}
+  .sec-title-block .sec-eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--soft);margin-bottom:14px}
+  .sec-title-block h2{font-family:'Frank Ruhl Libre',serif;font-size:clamp(36px,4.5vw,64px);font-weight:400;line-height:1;letter-spacing:-.02em;max-width:720px}
+  .sec-title-block h2 em{font-style:italic;color:var(--purple)}
+
+  /* ABOUT */
+  .about-row{display:grid;grid-template-columns:1.4fr 1fr;gap:80px;align-items:start}
+  .video-block{position:relative;aspect-ratio:16/10;background:var(--ink);overflow:hidden}
+  .video-block::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(30,58,138,.7),rgba(124,58,237,.7))}
+  .video-block::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 50% 50%,transparent 30%,rgba(0,0,0,.4) 100%)}
+  .play{position:absolute;top:50%;right:50%;transform:translate(50%,-50%);width:80px;height:80px;border:1px solid rgba(255,255,255,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;transition:all .3s}
+  .play:hover{background:#fff}
+  .play:hover svg{fill:var(--ink)}
+  .play svg{width:24px;height:24px;fill:#fff;margin-right:-4px;transition:fill .3s}
+  .video-meta{position:absolute;bottom:18px;right:18px;color:#fff;font-size:10px;letter-spacing:.25em;text-transform:uppercase;z-index:2}
+  .video-meta::before{content:"";display:inline-block;width:6px;height:6px;background:#fff;border-radius:50%;margin-left:8px;vertical-align:middle}
+  .about-copy{font-size:17px;line-height:1.7;color:var(--ink)}
+  .about-copy p{margin-bottom:20px}
+  .about-pull{font-family:'Frank Ruhl Libre',serif;font-size:24px;line-height:1.3;font-style:italic;color:var(--purple);padding:18px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin:30px 0}
+  .about-list{list-style:none;padding:0;margin-top:20px}
+  .about-list li{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:14px;font-weight:500}
+  .about-list li span:last-child{color:var(--soft);font-weight:400}
+
+  /* TEAM */
+  .team-control{display:flex;gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin-bottom:50px}
+  .tab{flex:1;padding:24px 20px;font-size:13px;font-weight:500;color:var(--soft);cursor:pointer;border-left:1px solid var(--line);text-align:right;background:#fff;transition:all .25s;display:flex;justify-content:space-between;align-items:baseline}
+  .tab:first-child{border-left:1px solid var(--line)}
+  .tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .tab .tab-num{font-family:'Frank Ruhl Libre',serif;font-size:18px}
+  .tab.active .tab-num{color:var(--purple)}
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .member{padding:30px 24px 30px 0;border-left:1px solid var(--line);transition:background .3s;cursor:pointer}
+  .member:last-child{border-left:none}
+  .member:hover{background:var(--tint)}
+  .m-photo{aspect-ratio:1;background:linear-gradient(135deg,var(--blue),var(--purple));margin-bottom:18px;display:flex;align-items:center;justify-content:center;position:relative}
+  .m-photo svg{width:48%;opacity:.55}
+  .m-photo::after{content:"";position:absolute;top:14px;right:14px;font-family:'Frank Ruhl Libre',serif;color:rgba(255,255,255,.7);font-size:12px;letter-spacing:.2em}
+  .m-num{font-size:11px;color:var(--soft);letter-spacing:.2em;margin-bottom:6px}
+  .m-name{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:500;line-height:1.1;margin-bottom:6px}
+  .m-role{font-size:13px;color:var(--soft);margin-bottom:14px}
+  .m-links{display:flex;gap:10px;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+  .m-links a{color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px}
+  .m-links a:hover{color:var(--purple);border-color:var(--purple)}
+
+  /* PROGRAMS */
+  .programs{background:var(--ink);color:#fff}
+  .programs .sec-hdr{border-bottom-color:#fff}
+  .programs .sec-num,.programs .sec-title-block h2{color:#fff}
+  .programs .sec-num em,.programs .sec-title-block h2 em{color:#A78BFA}
+  .programs-list{border-top:1px solid rgba(255,255,255,.2)}
+  .program-row{display:grid;grid-template-columns:120px 1fr 1.3fr auto;gap:40px;align-items:center;padding:36px 0;border-bottom:1px solid rgba(255,255,255,.2);cursor:pointer;transition:padding .3s}
+  .program-row:hover{padding-right:20px;background:linear-gradient(to left,rgba(167,139,250,.06),transparent)}
+  .p-num{font-family:'Frank Ruhl Libre',serif;font-size:36px;font-weight:400}
+  .p-num em{color:#A78BFA;font-style:italic}
+  .p-name{font-family:'Frank Ruhl Libre',serif;font-size:36px;font-weight:400;line-height:1;letter-spacing:-.01em}
+  .p-name em{color:#A78BFA;font-style:italic}
+  .p-desc{font-size:14px;color:rgba(255,255,255,.7);line-height:1.6;max-width:480px}
+  .p-cta{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+
+  /* EVENTS */
+  .events-wrap{display:grid;grid-template-columns:1fr;gap:0;border-top:1px solid var(--ink)}
+  .event-row{display:grid;grid-template-columns:120px 1.4fr 1fr 0.6fr 100px;gap:30px;align-items:center;padding:28px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:all .3s}
+  .event-row:hover{background:var(--tint);padding-right:20px}
+  .ev-date{font-family:'Frank Ruhl Libre',serif;font-size:18px;color:var(--purple)}
+  .ev-name{font-family:'Frank Ruhl Libre',serif;font-size:24px;font-weight:400;line-height:1.15}
+  .ev-loc{font-size:13px;color:var(--soft)}
+  .ev-loc::before{content:"◇ ";color:var(--purple)}
+  .ev-tag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line);padding:5px 10px;text-align:center;border-radius:0}
+  .ev-tag.now{color:var(--ink);border-color:var(--ink)}
+  .ev-go{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;text-align:left}
+
+  /* UPDATES */
+  .updates{background:var(--tint)}
+  .updates-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:60px}
+  .press-list{border-top:1px solid var(--ink)}
+  .press-row{padding:24px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr 80px;gap:24px;align-items:center;cursor:pointer;transition:padding .3s}
+  .press-row:hover{padding-right:14px}
+  .press-source{font-size:11px;letter-spacing:.2em;color:var(--purple);text-transform:uppercase;margin-bottom:6px}
+  .press-title{font-family:'Frank Ruhl Libre',serif;font-size:18px;line-height:1.3}
+  .press-quote{font-size:14px;color:var(--soft);font-style:italic;line-height:1.5}
+  .press-date{font-family:'Frank Ruhl Libre',serif;font-size:14px;color:var(--soft);text-align:left}
+  .news-card{border:1px solid var(--ink);padding:36px;align-self:start;background:#fff}
+  .news-card-num{font-size:11px;letter-spacing:.3em;color:var(--purple);text-transform:uppercase;margin-bottom:18px}
+  .news-card h3{font-family:'Frank Ruhl Libre',serif;font-size:32px;line-height:1.05;margin-bottom:14px;font-weight:400}
+  .news-card h3 em{color:var(--purple);font-style:italic}
+  .news-card p{font-size:14px;color:var(--soft);margin-bottom:24px;line-height:1.5}
+  .news-card input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--ink);padding:12px 0;font-family:inherit;font-size:14px;margin-bottom:6px}
+  .news-card input:focus{outline:none;border-color:var(--purple)}
+  .news-card button{margin-top:20px;width:100%;background:var(--ink);color:#fff;border:none;padding:14px;font-family:inherit;font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .3s}
+  .news-card button:hover{background:var(--purple)}
+
+  /* ECOSYSTEM */
+  .eco-control{display:flex;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);margin-bottom:60px}
+  .eco-tab{flex:1;padding:20px;font-size:13px;font-weight:500;color:var(--soft);cursor:pointer;border-left:1px solid var(--line);background:#fff;transition:all .3s;display:flex;justify-content:space-between;align-items:baseline}
+  .eco-tab:first-child{border-left:none}
+  .eco-tab.active{background:var(--ink);color:#fff}
+  .eco-tab .count{font-family:'Frank Ruhl Libre',serif;font-size:14px;color:var(--purple)}
+  .eco-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--line)}
+  .eco-cell{aspect-ratio:1.5;border-left:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;align-items:start;justify-content:space-between;padding:20px;transition:all .3s;cursor:pointer}
+  .eco-cell:hover{background:var(--tint)}
+  .eco-cell:nth-child(5n){border-left:1px solid var(--line)}
+  .eco-cell .eco-name{font-family:'Frank Ruhl Libre',serif;font-size:18px}
+  .eco-cell .eco-num{font-size:10px;letter-spacing:.2em;color:var(--soft)}
+
+  /* Footer */
+  footer{background:var(--ink);color:#fff;padding:80px 5vw 30px}
+  .foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;padding-bottom:60px;border-bottom:1px solid rgba(255,255,255,.2)}
+  .foot-brand{display:flex;align-items:start;gap:14px;margin-bottom:20px}
+  .foot-brand svg{width:42px;height:48px}
+  .foot-brand h4{font-family:'Frank Ruhl Libre',serif;font-size:22px;font-weight:400;line-height:1.1}
+  .foot-brand small{display:block;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.2em;margin-top:4px;text-transform:uppercase}
+  .foot-col h5{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:20px;font-weight:600}
+  .foot-col a{display:block;padding:5px 0;color:rgba(255,255,255,.85);font-size:13px}
+  .foot-col a:hover{color:#a78bfa}
+  .foot-bot{padding-top:24px;display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.05em}
+
+  /* CTA */
+  .cta-pop{
+    position:fixed;bottom:-200px;left:50%;transform:translateX(-50%);
+    background:#fff;border:1px solid var(--ink);
+    padding:18px 22px;display:flex;align-items:center;gap:18px;z-index:999;
+    box-shadow:0 20px 60px rgba(0,0,0,.15);transition:bottom .6s cubic-bezier(.2,.9,.3,1.2);max-width:560px
+  }
+  .cta-pop.show{bottom:24px}
+  .cta-pop-line{width:32px;height:1px;background:var(--purple)}
+  .cta-pop-text{font-family:'Frank Ruhl Libre',serif;font-size:16px;line-height:1.3;font-style:italic}
+  .cta-pop-text em{color:var(--purple)}
+  .cta-pop button{background:var(--ink);color:#fff;border:none;padding:11px 18px;font-family:inherit;font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;white-space:nowrap}
+  .cta-pop .close{background:transparent;color:var(--soft);padding:8px;font-size:18px;letter-spacing:0}
+
+  .a11y{position:fixed;bottom:18px;right:18px;width:46px;height:46px;border-radius:0;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:90}
+
+  @media (max-width:900px){
+    .nav-links{display:none}
+    .hero-body{grid-template-columns:1fr;gap:30px}
+    .hero-foot{grid-template-columns:1fr 1fr;gap:14px}
+    .about-row,.updates-grid{grid-template-columns:1fr}
+    .team-grid{grid-template-columns:1fr 1fr}
+    .program-row,.event-row,.press-row{grid-template-columns:1fr;gap:6px}
+    .eco-grid{grid-template-columns:1fr 1fr}
+    .foot-top{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="55%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <symbol id="logo" viewBox="0 0 120 140">
+      <g fill="url(#logoGrad)">
+        <path d="M60 8 Q52 24 56 44 Q58 54 60 60 Q62 54 64 44 Q68 24 60 8 Z"/>
+        <path d="M58 14 Q42 32 46 70 Q52 60 56 46 Q58 30 58 14 Z"/>
+        <path d="M62 14 Q78 32 74 70 Q68 60 64 46 Q62 30 62 14 Z"/>
+        <path d="M50 24 Q28 48 32 92 Q44 80 48 60 Q50 40 50 24 Z"/>
+        <path d="M70 24 Q92 48 88 92 Q76 80 72 60 Q70 40 70 24 Z"/>
+        <path d="M40 44 Q16 72 26 112 Q40 96 42 76 Q42 56 40 44 Z"/>
+        <path d="M80 44 Q104 72 94 112 Q80 96 78 76 Q78 56 80 44 Z"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="grid-overlay"></div>
+
+<nav class="nav">
+  <a href="#" class="nav-brand">
+    <svg><use href="#logo"/></svg>
+    <div>חוסן ובריאות<small>Innovation Hub</small></div>
+  </a>
+  <div class="nav-links">
+    <a href="#about">אודות</a>
+    <a href="#team">צוות</a>
+    <a href="#programs">תוכניות</a>
+    <a href="#events">אירועים</a>
+    <a href="#updates">עדכונים</a>
+    <a href="#ecosystem">אקוסיסטם</a>
+  </div>
+  <div class="nav-right">
+    <span class="lang">HE / EN</span>
+    <a class="nav-cta" href="#">הצטרפו</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-meta">
+    <span>RESILIENCE × HEALTH × INNOVATION</span>
+    <span>EST. 2024 · שדרות, ישראל</span>
+  </div>
+  <div class="hero-body">
+    <div class="hero-left">
+      <h1>
+        <span>מטראומה</span>
+        <span><em>להזדמנות.</em></span>
+      </h1>
+    </div>
+    <div class="hero-right">
+      <div class="hero-num">— 00 / OPENING STATEMENT</div>
+      <p class="hero-text">
+        האב <strong>חדשנות לחוסן ובריאות</strong> הוקם כדי להפוך תובנות מהשטח לכלים פורצי דרך — מאיץ פתרונות עבור דור שלם שעבר טראומה.
+      </p>
+      <p class="hero-en-slogan">"From Trauma to Opportunity"</p>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <div>
+      <div class="num">48+</div>
+      <div>סטארטאפים</div>
+    </div>
+    <div>
+      <div class="num">04</div>
+      <div>תוכניות</div>
+    </div>
+    <div>
+      <div class="num">$12M</div>
+      <div>השקעות 2026</div>
+    </div>
+    <div>
+      <div class="num">21</div>
+      <div>שותפים גלובליים</div>
+    </div>
+    <div>
+      <a href="#about" style="font-weight:600;color:var(--ink);font-size:11px;letter-spacing:.2em">↓ גלילה</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-hdr">
+    <div class="sec-num">0<em>1</em></div>
+    <div class="sec-title-block">
+      <div class="sec-eyebrow">About — אודות</div>
+      <h2>מקום שבו <em>חוסן</em><br>פוגש <em>חדשנות.</em></h2>
+    </div>
+  </div>
+  <div class="about-row">
+    <div>
+      <div class="video-block">
+        <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="video-meta">VISION FILM · 02:48</div>
+      </div>
+    </div>
+    <div class="about-copy">
+      <p>האב חדשנות לחוסן ובריאות הוקם כתשובה לרגע שבו הציבור הישראלי נדרש להמציא את עצמו מחדש.</p>
+      <p class="about-pull">"שמים את ישראל במרכז העולמי של חדשנות החוסן והבריאות."</p>
+      <p>אנחנו מחברים בין יזמים, חוקרים, אנשי טיפול וקהילות — והופכים תובנות מהשטח לכלים פורצי דרך.</p>
+      <ul class="about-list">
+        <li><span>תחומי פעילות</span><span>בריאות נפש · חוסן קהילתי · שיקום</span></li>
+        <li><span>שותפות אסטרטגית</span><span>בית החולים שיבא</span></li>
+        <li><span>מיקום</span><span>שדרות · עוטף עזה</span></li>
+        <li><span>שנת הקמה</span><span>2024</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="sec-hdr">
+    <div class="sec-num">0<em>2</em></div>
+    <div class="sec-title-block">
+      <div class="sec-eyebrow">Team — צוות</div>
+      <h2>האנשים <em>שמובילים</em><br>את השינוי.</h2>
+    </div>
+  </div>
+  <div class="team-control">
+    <div class="tab active">ניהול<span class="tab-num">/04</span></div>
+    <div class="tab">דירקטוריון<span class="tab-num">/07</span></div>
+    <div class="tab">מומחים<span class="tab-num">/12</span></div>
+  </div>
+  <div class="team-grid">
+    <div class="member">
+      <div class="m-photo"><svg><use href="#logo"/></svg></div>
+      <div class="m-num">— 01</div>
+      <div class="m-name">פרופ' שירה<br>לוי</div>
+      <div class="m-role">מנכ"לית והמייסדת</div>
+      <div class="m-links"><a href="#">LinkedIn</a><a href="#">Email</a></div>
+    </div>
+    <div class="member">
+      <div class="m-photo"><svg><use href="#logo"/></svg></div>
+      <div class="m-num">— 02</div>
+      <div class="m-name">ד"ר עידן<br>ברק</div>
+      <div class="m-role">סמנכ"ל מחקר</div>
+      <div class="m-links"><a href="#">LinkedIn</a><a href="#">Email</a></div>
+    </div>
+    <div class="member">
+      <div class="m-photo"><svg><use href="#logo"/></svg></div>
+      <div class="m-num">— 03</div>
+      <div class="m-name">נועה<br>אדלשטיין</div>
+      <div class="m-role">ראש תוכניות האצה</div>
+      <div class="m-links"><a href="#">LinkedIn</a><a href="#">Email</a></div>
+    </div>
+    <div class="member">
+      <div class="m-photo"><svg><use href="#logo"/></svg></div>
+      <div class="m-num">— 04</div>
+      <div class="m-name">יואב<br>כהן</div>
+      <div class="m-role">סמנכ"ל שותפויות</div>
+      <div class="m-links"><a href="#">LinkedIn</a><a href="#">Email</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="sec-hdr">
+    <div class="sec-num">0<em>3</em></div>
+    <div class="sec-title-block">
+      <div class="sec-eyebrow" style="color:rgba(255,255,255,.5)">Programs — תוכניות</div>
+      <h2>ארבע <em>תוכניות</em>,<br>מטרה אחת.</h2>
+    </div>
+  </div>
+  <div class="programs-list">
+    <div class="program-row">
+      <div class="p-num">0<em>1</em></div>
+      <div class="p-name">Resilience <em>Accelerator</em></div>
+      <div class="p-desc">מאיץ בינלאומי לסטארטאפים בתחומי החוסן ובריאות הנפש. 16 שבועות, ליווי צמוד, חיבור לקרנות עולמיות.</div>
+      <div class="p-cta">קראו עוד <span>↗</span></div>
+    </div>
+    <div class="program-row">
+      <div class="p-num">0<em>2</em></div>
+      <div class="p-name">Sheba to <em>Sderot</em></div>
+      <div class="p-desc">המחברת בין מחקר רפואי מתקדם של בית החולים שיבא לבין הצרכים בשטח בעוטף עזה.</div>
+      <div class="p-cta">קראו עוד <span>↗</span></div>
+    </div>
+    <div class="program-row">
+      <div class="p-num">0<em>3</em></div>
+      <div class="p-name">Immediate <em>Implementation</em></div>
+      <div class="p-desc">זרוע יישום מהיר לפתרונות מוכחים — מטכנולוגיה למסגרת טיפולית תוך שבועות.</div>
+      <div class="p-cta">קראו עוד <span>↗</span></div>
+    </div>
+    <div class="program-row">
+      <div class="p-num">0<em>4</em></div>
+      <div class="p-name"><em>MEITAL</em></div>
+      <div class="p-desc">פלטפורמה רב-תכניתית: מחקר, הכשרה, קהילה והערכת אימפקט — בית אחד לכל יוזמה שמתחילה בשטח.</div>
+      <div class="p-cta">קראו עוד <span>↗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="sec-hdr">
+    <div class="sec-num">0<em>4</em></div>
+    <div class="sec-title-block">
+      <div class="sec-eyebrow">Events — אירועים</div>
+      <h2><em>נפגשים</em>, בונים,<br>משנים.</h2>
+    </div>
+  </div>
+  <div class="events-wrap">
+    <div class="event-row">
+      <div class="ev-date">02 ⁄ 06</div>
+      <div class="ev-name">Resilience Summit 2026</div>
+      <div class="ev-loc">שיבא, תל השומר</div>
+      <div class="ev-tag now">קרוב</div>
+      <div class="ev-go">הרשמה →</div>
+    </div>
+    <div class="event-row">
+      <div class="ev-date">14 ⁄ 05</div>
+      <div class="ev-name">Demo Day — Cohort III</div>
+      <div class="ev-loc">שדרות</div>
+      <div class="ev-tag now">קרוב</div>
+      <div class="ev-go">הרשמה →</div>
+    </div>
+    <div class="event-row">
+      <div class="ev-date">28 ⁄ 04</div>
+      <div class="ev-name">Open Lab — חוסן קהילתי</div>
+      <div class="ev-loc">ירושלים</div>
+      <div class="ev-tag">עבר</div>
+      <div class="ev-go">סיכום →</div>
+    </div>
+    <div class="event-row">
+      <div class="ev-date">12 ⁄ 04</div>
+      <div class="ev-name">Investor Roundtable</div>
+      <div class="ev-loc">ניו יורק</div>
+      <div class="ev-tag">עבר</div>
+      <div class="ev-go">סיכום →</div>
+    </div>
+  </div>
+</section>
+
+<!-- UPDATES -->
+<section class="updates" id="updates">
+  <div class="sec-hdr">
+    <div class="sec-num">0<em>5</em></div>
+    <div class="sec-title-block">
+      <div class="sec-eyebrow">Updates — עדכונים</div>
+      <h2>מה <em>חדש</em><br>אצלנו.</h2>
+    </div>
+  </div>
+  <div class="updates-grid">
+    <div>
+      <div class="sec-eyebrow" style="margin-bottom:16px">— בעיתונות / Press</div>
+      <div class="press-list">
+        <div class="press-row">
+          <div>
+            <div class="press-source">Calcalist · כלכליסט</div>
+            <div class="press-title">"חוסן ובריאות" גייסו 12 מ' ש'</div>
+          </div>
+          <div class="press-quote">"מבית גידול שכבר היום משנה את הדרך בה ישראל מתמודדת עם טראומה."</div>
+          <div class="press-date">04 / 26</div>
+        </div>
+        <div class="press-row">
+          <div>
+            <div class="press-source">TheMarker · דה מרקר</div>
+            <div class="press-title">ההאב בשדרות שמייצא ידע לעולם</div>
+          </div>
+          <div class="press-quote">"שיתוף פעולה נדיר בין רפואה ציבורית ויזמות."</div>
+          <div class="press-date">03 / 26</div>
+        </div>
+        <div class="press-row">
+          <div>
+            <div class="press-source">YNET · ידיעות</div>
+            <div class="press-title">איך הופכים טראומה להזדמנות?</div>
+          </div>
+          <div class="press-quote">"הכלים שמייצרים פה ילכו עם הדור הזה לשנים."</div>
+          <div class="press-date">02 / 26</div>
+        </div>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="news-card-num">— Newsletter / ניוזלטר</div>
+      <h3>הצטרפו<br><em>לרשימה.</em></h3>
+      <p>אחת לחודש — סיכומי תוכניות, אירועים קרובים, הזדמנויות שותפות.</p>
+      <form onsubmit="event.preventDefault();this.querySelector('button').innerText='✓ נרשמתם'">
+        <input type="text" placeholder="שם מלא">
+        <input type="email" placeholder="כתובת אימייל">
+        <button type="submit">הרשמה</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section id="ecosystem">
+  <div class="sec-hdr">
+    <div class="sec-num">0<em>6</em></div>
+    <div class="sec-title-block">
+      <div class="sec-eyebrow">Ecosystem — אקוסיסטם</div>
+      <h2>הרשת <em>שמאחורינו.</em></h2>
+    </div>
+  </div>
+  <div class="eco-control">
+    <div class="eco-tab active">פורטפוליו<span class="count">/48</span></div>
+    <div class="eco-tab">חבילות ערך<span class="count">/12</span></div>
+    <div class="eco-tab">שותפים<span class="count">/21</span></div>
+  </div>
+  <div class="eco-grid">
+    <div class="eco-cell"><span class="eco-num">— 01</span><span class="eco-name">MindBridge</span></div>
+    <div class="eco-cell"><span class="eco-num">— 02</span><span class="eco-name">Resilio</span></div>
+    <div class="eco-cell"><span class="eco-num">— 03</span><span class="eco-name">HealHive</span></div>
+    <div class="eco-cell"><span class="eco-num">— 04</span><span class="eco-name">Calmly</span></div>
+    <div class="eco-cell"><span class="eco-num">— 05</span><span class="eco-name">Neuravia</span></div>
+    <div class="eco-cell"><span class="eco-num">— 06</span><span class="eco-name">Otef Tech</span></div>
+    <div class="eco-cell"><span class="eco-num">— 07</span><span class="eco-name">StableMind</span></div>
+    <div class="eco-cell"><span class="eco-num">— 08</span><span class="eco-name">Aurora Health</span></div>
+    <div class="eco-cell"><span class="eco-num">— 09</span><span class="eco-name">TraumaIQ</span></div>
+    <div class="eco-cell"><span class="eco-num">— 10</span><span class="eco-name">+38 נוספים</span></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="foot-brand">
+        <svg><use href="#logo"/></svg>
+        <div>
+          <h4>חוסן ובריאות</h4>
+          <small>Innovation Hub</small>
+        </div>
+      </div>
+      <p style="color:rgba(255,255,255,.55);font-size:13px;max-width:300px;line-height:1.6">
+        מאיצים פתרונות חדשנות בתחום החוסן והבריאות. From Trauma to Opportunity.
+      </p>
+    </div>
+    <div class="foot-col">
+      <h5>Navigate</h5>
+      <a href="#about">אודות</a>
+      <a href="#team">צוות</a>
+      <a href="#programs">תוכניות</a>
+      <a href="#events">אירועים</a>
+    </div>
+    <div class="foot-col">
+      <h5>Programs</h5>
+      <a href="#">Resilience Accelerator</a>
+      <a href="#">Sheba to Sderot</a>
+      <a href="#">Immediate Implementation</a>
+      <a href="#">MEITAL</a>
+    </div>
+    <div class="foot-col">
+      <h5>Contact</h5>
+      <a href="mailto:hello@rhihub.org">hello@rhihub.org</a>
+      <a href="#">+972 8 123 4567</a>
+      <a href="#">שדרות, ישראל</a>
+      <a href="#">LinkedIn ↗</a>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span>© 2026 Resilience & Health Innovation Hub</span>
+    <span>נגישות · תנאי שימוש · פרטיות</span>
+  </div>
+</footer>
+
+<div class="cta-pop" id="ctaPop">
+  <div class="cta-pop-line"></div>
+  <div class="cta-pop-text"><em>Join us</em> in redefining the future of resilience innovation</div>
+  <button onclick="document.getElementById('ctaPop').classList.remove('show')">הצטרפו</button>
+  <button class="close" onclick="document.getElementById('ctaPop').classList.remove('show')">×</button>
+</div>
+
+<div class="a11y" title="נגישות">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="5" r="2"/><path d="M5 8h14M12 8v6M9 14l-3 7M15 14l3 7"/></svg>
+</div>
+
+<script>
+  setTimeout(() => document.getElementById('ctaPop').classList.add('show'), 2000);
+  document.querySelectorAll('.tab,.eco-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      t.parentElement.querySelectorAll(t.classList.contains('eco-tab')?'.eco-tab':'.tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>מרכז חדשנות שדרות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBFBFD;
+    --paper:#F1F3FA;
+    --ink:#0B1A3A;
+    --ink-soft:#3F4B6B;
+    --mute:#828BA5;
+    --blue:#1E4FB8;
+    --blue-light:#2E86D6;
+    --purple:#6B3AA0;
+    --line:rgba(11,26,58,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Assistant',system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);font-weight:400;
+    -webkit-font-smoothing:antialiased;overflow:hidden;
+  }
+  .mark{
+    width:38px;height:38px;
+    background:url('../hab%20logo.jpeg') 50% 47% / 280% auto no-repeat;
+    border-radius:8px;flex-shrink:0;
+  }
+  /* Topbar */
+  .topbar{
+    position:fixed;top:0;right:0;left:0;z-index:50;
+    height:72px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 44px;background:var(--bg);border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand-text{display:flex;flex-direction:column;line-height:1.15}
+  .brand-text b{font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:.01em}
+  .brand-text small{font-size:10.5px;font-weight:600;color:var(--mute);letter-spacing:.18em}
+  nav.primary{display:flex;gap:30px;font-size:13.5px;font-weight:600;letter-spacing:.01em}
+  nav.primary > a{color:var(--ink);text-decoration:none;cursor:pointer;position:relative;padding:6px 0}
+  nav.primary > a::after{content:"";position:absolute;right:0;left:0;bottom:0;height:2px;background:var(--blue);transform:scaleX(0);transition:.25s;transform-origin:right}
+  nav.primary > a:hover::after{transform:scaleX(1)}
+  .menu{position:absolute;top:34px;right:-16px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 0;min-width:280px;opacity:0;visibility:hidden;transition:.18s;transform:translateY(-6px);box-shadow:0 18px 40px rgba(11,26,58,.10)}
+  nav.primary > a:hover .menu{opacity:1;visibility:visible;transform:translateY(0)}
+  .menu a{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;font-size:13px;color:var(--ink);text-decoration:none;font-weight:500}
+  .menu a:hover{background:var(--paper);color:var(--blue)}
+  .menu a small{font-size:10px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .menu .head{padding:6px 18px 2px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);font-weight:700}
+  .menu .sub{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:4px 0;margin:6px 0}
+  .menu .sub a{padding-right:34px;font-size:12.5px;color:var(--ink-soft)}
+  .menu .sub a::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--blue);margin-left:10px;vertical-align:middle}
+  .tools{display:flex;align-items:center;gap:14px}
+  .tools .a11y{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-size:14px;cursor:pointer;color:var(--ink);font-weight:700;background:#fff}
+  .tools .cta{
+    background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;border:0;
+    padding:11px 22px;font-size:13px;font-weight:600;letter-spacing:.03em;
+    border-radius:999px;cursor:pointer;font-family:inherit;
+    box-shadow:0 10px 24px rgba(30,79,184,.25);
+  }
+  /* Layout */
+  main{
+    height:100vh;padding-top:72px;
+    display:grid;grid-template-columns:120px 1fr 380px;
+    position:relative;
+  }
+  .rail{
+    border-left:1px solid var(--line);
+    padding:32px 16px;
+    display:flex;flex-direction:column;justify-content:space-between;align-items:center;
+    font-size:10.5px;color:var(--mute);font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  }
+  .rail .v{writing-mode:vertical-rl;transform:rotate(180deg);color:var(--ink);font-family:'Frank Ruhl Libre',serif;font-weight:500;font-style:italic;text-transform:none;letter-spacing:.04em;font-size:14px}
+  .rail .vol{color:var(--blue);font-weight:800}
+  /* Center */
+  .stage{
+    padding:50px 64px 36px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;
+  }
+  .marks{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--mute);font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+  .marks b{color:var(--ink);font-weight:800}
+  .marks .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 14px;background:rgba(46,134,214,.08);border:1px solid rgba(30,79,184,.2);border-radius:999px;
+    color:var(--blue);
+  }
+  .marks .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px rgba(46,134,214,.18)}
+  .center-body{display:grid;grid-template-columns:1fr;gap:0;margin:auto 0}
+  h1{
+    font-family:'Frank Ruhl Libre',serif;
+    font-weight:500;
+    font-size:clamp(64px,8.4vw,140px);
+    line-height:.96;letter-spacing:-.022em;color:var(--ink);
+    margin-bottom:28px;
+    animation:rise 1s cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  h1 em{font-style:italic;color:var(--blue)}
+  h1 .b{font-weight:700}
+  .deck{
+    font-family:'Frank Ruhl Libre',serif;font-style:italic;font-weight:400;
+    font-size:22px;line-height:1.4;color:var(--ink-soft);
+    max-width:680px;margin-bottom:30px;
+    animation:rise 1.15s cubic-bezier(.2,.7,.2,1);
+  }
+  .lede{
+    font-size:16.5px;line-height:1.66;color:var(--ink-soft);
+    max-width:600px;margin-bottom:32px;font-weight:400;
+    animation:rise 1.3s cubic-bezier(.2,.7,.2,1);
+    column-count:2;column-gap:40px;column-rule:1px solid var(--line);
+  }
+  .ctas{display:flex;align-items:center;gap:18px;animation:rise 1.45s cubic-bezier(.2,.7,.2,1)}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;
+    padding:15px 26px;font-size:14px;font-weight:600;letter-spacing:.02em;
+    border:0;border-radius:999px;cursor:pointer;font-family:inherit;
+    box-shadow:0 14px 30px rgba(30,79,184,.28);
+  }
+  .btn-text{
+    background:transparent;color:var(--ink);
+    padding:15px 0;font-size:14px;font-weight:600;letter-spacing:.02em;
+    border:0;cursor:pointer;font-family:inherit;
+    border-bottom:1.5px solid var(--blue);
+  }
+  /* Right column — sidebar like a journal */
+  .side{
+    border-right:1px solid var(--line);
+    padding:50px 36px 36px;
+    background:var(--paper);
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .side h3{
+    font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute);font-weight:700;
+    margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;
+  }
+  .side h3 b{font-family:'Frank Ruhl Libre',serif;color:var(--ink);font-style:italic;font-weight:500;text-transform:none;letter-spacing:.02em;font-size:13px}
+  .item{padding:16px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:.25s}
+  .item:last-of-type{border-bottom:0}
+  .item:hover{padding-right:8px}
+  .item .lbl{font-size:10.5px;color:var(--blue);font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .item .lbl::before{content:"";width:18px;height:1px;background:var(--blue)}
+  .item .t{font-size:15.5px;font-weight:600;color:var(--ink);line-height:1.32;margin-bottom:6px}
+  .item .s{font-size:12.5px;color:var(--mute);font-weight:500}
+  .play-block{
+    margin-top:20px;padding:18px;border-radius:14px;
+    background:#fff;border:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;cursor:pointer;
+  }
+  .play-block .circle{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:grid;place-items:center;color:#fff;flex-shrink:0}
+  .play-block .circle::before{content:"";border-style:solid;border-width:7px 11px 7px 0;border-color:transparent #fff transparent transparent;transform:translateX(2px)}
+  .play-block .t{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.25}
+  .play-block .s{font-size:11.5px;color:var(--mute);font-weight:500;margin-top:2px}
+  /* Bottom strip */
+  .strip{
+    position:fixed;bottom:0;right:0;left:0;
+    padding:14px 44px;background:var(--bg);
+    border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:11px;color:var(--mute);font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    z-index:6;
+  }
+  .strip .partners{display:flex;gap:24px;color:var(--ink-soft);font-weight:600;letter-spacing:.08em;text-transform:none;font-size:12.5px}
+  .strip .partners b{color:var(--mute);font-weight:600}
+  /* Float */
+  .float{
+    position:fixed;bottom:64px;left:32px;z-index:60;max-width:340px;
+    background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:22px 24px;
+    box-shadow:0 20px 50px rgba(11,26,58,.14);
+    transform:translateY(20px);opacity:0;transition:.55s cubic-bezier(.2,.7,.2,1);
+  }
+  .float.show{transform:translateY(0);opacity:1}
+  .float::before{content:"";position:absolute;top:0;right:0;left:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:16px 16px 0 0}
+  .float .tag{font-family:'Frank Ruhl Libre',serif;font-style:italic;font-weight:500;font-size:14px;color:var(--blue);margin-bottom:8px}
+  .float p{font-size:15px;line-height:1.5;font-weight:500;color:var(--ink);margin-bottom:14px}
+  .float a{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue),var(--purple));padding:10px 18px;border-radius:999px;text-decoration:none;display:inline-block}
+  .float .x{position:absolute;top:14px;left:18px;color:var(--mute);cursor:pointer;font-size:18px;line-height:1}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="mark"></span>
+    <div class="brand-text"><b>מרכז חדשנות שדרות</b><small>RHIH · EST 2024</small></div>
+  </div>
+  <nav class="primary">
+    <a>תוכניות
+      <div class="menu">
+        <div class="head">תוכניות דגל</div>
+        <a>מיטל · חדשנות בחוסן<small>4</small></a>
+        <div class="sub">
+          <a>שיבא לשדרות</a><a>חממת ביטחון אזרחי</a><a>מעבדת בריאות הנפש</a><a>סטארטאפ סטודיו</a>
+        </div>
+        <a>תוכנית קהילה<small>2026</small></a>
+        <a>שותפויות בינלאומיות<small>EU</small></a>
+        <a>מלגות ומענקים<small>פתוח</small></a>
+      </div>
+    </a>
+    <a>צוות<div class="menu"><a>הנהלה</a><a>דירקטוריון</a><a>מנטורים</a><a>הצטרפו אלינו</a></div></a>
+    <a>אירועים<div class="menu"><a>קרובים</a><a>סדנאות</a><a>כנסים</a><a>ארכיון</a></div></a>
+    <a>עדכונים<div class="menu"><a>חדשות</a><a>במדיה</a><a>פרסומים</a><a>ניוזלטר</a></div></a>
+    <a>אקוסיסטם<div class="menu"><a>שותפים</a><a>חברות תושבות</a><a>קרנות</a><a>מוסדות מחקר</a></div></a>
+    <a>אודות<div class="menu"><a>החזון</a><a>הסיפור</a><a>מסמך הייסוד</a><a>קשר</a></div></a>
+  </nav>
+  <div class="tools">
+    <span class="a11y">א</span>
+    <button class="cta">לתיאום פגישה ←</button>
+  </div>
+</header>
+
+<main>
+  <div class="rail">
+    <span class="vol">VOL 01</span>
+    <span class="v">From Trauma to Opportunity</span>
+    <span>SDE · 2026</span>
+  </div>
+  <section class="stage">
+    <div class="marks">
+      <span><b>01</b> / 06 גליון פתיחה</span>
+      <span class="badge"><span class="dot"></span>חי · 14.06</span>
+      <span>שדרות · ישראל</span>
+    </div>
+    <div class="center-body">
+      <h1>חוסן הוא <em>תשתית</em><br><span class="b">של עתיד אזורי.</span></h1>
+      <p class="deck">"מי שחי את האזור הזה יודע משהו שאחרים רק קוראים עליו. המטרה היא להפוך את הידיעה הזו לתעשייה." — מתוך מסמך הייסוד.</p>
+      <p class="lede">מרכז חדשנות בריאות וחוסן שדרות מאחד יזמים, חוקרים ורופאים יחד עם הקהילה — להפוך עשורים של ידע מעשי על חיים תחת איום לפתרונות שמיוצאים: בבריאות הנפש, בביטחון אזרחי ובחינוך מסתגל. אנחנו בונים מערכת אקולוגית שבה רעיון מקומי הופך, תוך כשנה, לחברה פעילה עם שותפים בינלאומיים.</p>
+      <div class="ctas">
+        <button class="btn-primary">הכירו את המרכז</button>
+        <button class="btn-text">קראו את מסמך הייסוד ←</button>
+      </div>
+    </div>
+    <span></span>
+  </section>
+  <aside class="side">
+    <div>
+      <h3>במרכז כעת<b>גיליון 01</b></h3>
+      <div class="item">
+        <div class="lbl">תוכנית · פעיל</div>
+        <div class="t">מיטל — חממת חדשנות בחוסן</div>
+        <div class="s">ארבע תתי-תוכניות בתחומי בריאות הנפש, ביטחון אזרחי וטכנולוגיה.</div>
+      </div>
+      <div class="item">
+        <div class="lbl">שיתוף · הרשמה פתוחה</div>
+        <div class="t">שיבא לשדרות</div>
+        <div class="s">שיתוף פעולה רפואי עם מרכז שיבא. מחזור ראשון יוני 2026.</div>
+      </div>
+      <div class="item">
+        <div class="lbl">קול קורא · עד 30.06</div>
+        <div class="t">סטארטאפ סטודיו · עונה II</div>
+        <div class="s">בניית חברות מהיסוד עם פוקוס על טכנולוגיות חוסן אזרחי.</div>
+      </div>
+    </div>
+    <div class="play-block">
+      <span class="circle"></span>
+      <div><div class="t">סיפור המרכז</div><div class="s">סרטון · 2:14 דקות</div></div>
+    </div>
+  </aside>
+</main>
+
+<div class="strip">
+  <span>© 2026 מרכז חדשנות שדרות</span>
+  <div class="partners"><b>שותפים אסטרטגיים ·</b><span>שיבא</span><span>בן-גוריון</span><span>משרד החדשנות</span><span>עיריית שדרות</span></div>
+  <span>גלילה ↓</span>
+</div>
+
+<div class="float" id="float">
+  <span class="x" onclick="document.getElementById('float').classList.remove('show')">×</span>
+  <div class="tag">הזמנה</div>
+  <p>הצטרפו אלינו לעיצוב מחדש של עתיד החדשנות בחוסן.</p>
+  <a>הצטרפו לרשת →</a>
+</div>
+
+<script>setTimeout(()=>document.getElementById('float').classList.add('show'),2000)</script>
+</body></html>

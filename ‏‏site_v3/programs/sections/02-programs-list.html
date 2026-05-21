@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Programs List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-light:#FFFFFF;--bg-alt:#F5F8FA;
+  --ink-dark:#0D2436;--ink-mid:#3F546A;
+  --teal-deep:#287E78;--teal:#46C9C2;--teal-2:#5EE0D5;--gold:#F2C94C;
+  --line:rgba(13,36,54,.08);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-light);color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+.reveal{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}
+.reveal.d2{transition-delay:.3s}
+
+section{position:relative;padding:90px var(--pad);background:linear-gradient(180deg, var(--bg-light) 0%, var(--bg-alt) 100%)}
+.container{max-width:1200px;margin:0 auto}
+
+.programs-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:auto auto;gap:20px}
+.programs-grid .prog:nth-child(1){grid-row:1/3}
+.programs-grid .prog:nth-child(4){grid-column:2/4}
+
+.prog{position:relative;padding:36px;border-radius:var(--radius);background:#fff;border:1px solid var(--line);overflow:hidden;transition:all .3s cubic-bezier(.25,.8,.25,1);display:flex;flex-direction:column;box-shadow:0 8px 30px -10px rgba(13,36,54,.06)}
+.prog:hover{transform:translateY(-6px);border-color:var(--teal);box-shadow:0 30px 60px -25px rgba(13,36,54,.15)}
+.prog::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 100% 0%, rgba(70,201,194,.08), transparent 50%);opacity:0;transition:.3s;pointer-events:none}
+.prog:hover::before{opacity:1}
+
+.prog.featured{background:linear-gradient(160deg, #082636, #114577);border-color:transparent;color:#fff;box-shadow:0 15px 40px -15px rgba(8,38,54,.4)}
+.prog.featured:hover{box-shadow:0 35px 70px -25px rgba(8,38,54,.55)}
+.prog.featured::before{background:radial-gradient(circle at 100% 0%, rgba(94,224,213,.15), transparent 50%)}
+
+.prog .ix{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;position:relative;z-index:2}
+.prog .badge{font-size:10.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:6px;background:rgba(40,126,120,.08);color:var(--teal-deep);border:1px solid rgba(40,126,120,.15)}
+.prog.featured .badge{background:rgba(94,224,213,.12);color:var(--teal-2);border-color:rgba(94,224,213,.25)}
+.prog .badge.heb{background:rgba(242,201,76,.12);color:#B8841E;border-color:rgba(242,201,76,.25)}
+.prog .num{font-family:'Manrope';font-weight:800;font-size:38px;color:rgba(40,126,120,.20);line-height:1;letter-spacing:-.03em}
+.prog.featured .num{color:rgba(94,224,213,.25)}
+
+.prog h3{font-family:'Manrope';font-weight:800;font-size:24px;line-height:1.2;letter-spacing:-.015em;margin-bottom:14px;position:relative;z-index:2;color:var(--ink-dark)}
+.prog.featured h3{font-size:34px;color:#fff;margin-bottom:18px}
+.prog h3.he{font-family:'Heebo',sans-serif;direction:rtl;text-align:right}
+
+.prog p{color:var(--ink-mid);font-size:14.5px;line-height:1.65;flex:1;position:relative;z-index:2}
+.prog.featured p{color:var(--ink-2);font-size:15.5px}
+.prog p.he{font-family:'Heebo',sans-serif;direction:rtl;text-align:right}
+
+.prog .more{margin-top:24px;display:inline-flex;align-items:center;gap:8px;color:var(--teal-deep);font-size:13.5px;font-weight:700;letter-spacing:.3px;width:fit-content;background:transparent;padding:0;transition:.2s}
+.prog.featured .more{color:var(--teal-2)}
+.prog .more::after{content:"→";transition:transform .2s;display:inline-block}
+.prog .more:hover::after{transform:translateX(5px)}
+
+.prog.featured .vis{position:absolute;right:-40px;bottom:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle at 35% 35%, rgba(70,201,194,.18), transparent 60%);z-index:1;pointer-events:none}
+.prog.featured .vis::before{content:"";position:absolute;inset:25px;border-radius:50%;border:1px dashed rgba(94,224,213,.35);animation:prog-spin 30s linear infinite}
+.prog.featured .vis::after{content:"";position:absolute;inset:70px;border-radius:50%;border:1px dashed rgba(242,201,76,.25);animation:prog-spin 18s linear infinite reverse}
+@keyframes prog-spin{to{transform:rotate(360deg)}}
+
+.prog .sublist{margin-top:20px;display:none;border-top:1px solid var(--line);padding-top:18px;position:relative;z-index:2}
+.prog.open .sublist{display:block;animation:prog-fade .25s ease}
+@keyframes prog-fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.prog .sublist .item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.prog .sublist .item:last-child{border-bottom:0}
+.prog .sublist .item .dot{flex:0 0 8px;height:8px;border-radius:50%;background:var(--teal-deep);margin-top:6px}
+.prog .sublist .item .body{font-size:14px;line-height:1.55;color:var(--ink-mid)}
+.prog .sublist .item .body strong{display:block;color:var(--ink-dark);font-weight:700;margin-bottom:2px}
+.prog .sublist .item .body span{color:var(--ink-mid);font-size:13px}
+
+@media (max-width:1200px){
+  .programs-grid{grid-template-columns:1fr 1fr}
+  .programs-grid .prog:nth-child(1){grid-row:auto;grid-column:1/3}
+  .programs-grid .prog:nth-child(4){grid-column:1/3}
+}
+@media (max-width:650px){
+  .programs-grid{grid-template-columns:1fr}
+  .programs-grid .prog:nth-child(1),.programs-grid .prog:nth-child(4){grid-column:auto}
+}
+</style>
+</head>
+<body>
+<section>
+  <div class="container">
+    <div class="programs-grid">
+      
+      <!-- PROGRAM 1 -->
+      <article class="prog featured reveal">
+        <div class="vis" aria-hidden="true"></div>
+        <div class="ix">
+          <span class="badge">Flagship · Accelerator</span>
+          <span class="num">01</span>
+        </div>
+        <h3>Resilience Accelerator</h3>
+        <p>Our flagship equity-free program for early-stage startups building the next generation of resilience technologies — from mental health platforms and crisis-response infrastructure to clinical recovery tools. Six months of deep operator support, clinical pilot pathways, investor introductions, and a global community of founders.</p>
+        <button class="more" data-action="open-modal">Learn more</button>
+      </article>
+
+      <!-- PROGRAM 2 -->
+      <article class="prog reveal d1">
+        <div class="ix">
+          <span class="badge heb">עברית בלבד · Hebrew only</span>
+          <span class="num">02</span>
+        </div>
+        <h3 class="he">שיבא לשדרות</h3>
+        <p class="he">תכנית דגל ייחודית המופעלת בשיתוף פעולה הדוק בין המרכז הרפואי שיבא, עיריית שדרות והאב החדשנות. התכנית מביאה את מיטב הקלינאים, החוקרים והיזמים המובילים אל הקו הראשון של חוסן בריאותי קהילתי, ומקדמת פיילוטים מקומיים עם פוטנציאל אימפקט גלובלי. מתחילים בשדרות, מגיעים לעולם.</p>
+        <button class="more" data-action="open-modal">קרא עוד</button>
+      </article>
+
+      <!-- PROGRAM 3 -->
+      <article class="prog reveal d2">
+        <div class="ix">
+          <span class="badge">Deployment</span>
+          <span class="num">03</span>
+        </div>
+        <h3>Immediate Implementation</h3>
+        <p>A rapid-deployment track that takes vetted, ready-to-use clinical and operational solutions and routes them straight to the frontlines of community care within weeks. Designed for times when speed matters most and crisis response cannot wait for traditional development timelines.</p>
+        <button class="more" data-action="open-modal">Learn more</button>
+      </article>
+
+      <!-- PROGRAM 4 -->
+      <article class="prog reveal d1" id="meital">
+        <div class="ix">
+          <span class="badge">Umbrella · 4 sub-programs</span>
+          <span class="num">04</span>
+        </div>
+        <h3>MEITAL</h3>
+        <p>Our applied-research and co-development umbrella, bringing together four complementary tracks for long-term resilience innovation across clinical research, technical validation, community initiatives, and public policy formulation.</p>
+        <button class="more" id="meitalToggle" aria-expanded="false">Explore the 4 tracks</button>
+        
+        <div class="sublist" aria-hidden="true">
+          <div class="item">
+            <span class="dot"></span>
+            <div class="body">
+              <strong>MEITAL · Clinical</strong>
+              <span>Translational research from bedside trauma diagnostics to scalable hospital-grade recovery protocols.</span>
+            </div>
+          </div>
+          <div class="item">
+            <span class="dot"></span>
+            <div class="body">
+              <strong>MEITAL · Technology</strong>
+              <span>Applied technology validating and benchmarking sensors, biosignal diagnostics, and AI remote-monitoring tools.</span>
+            </div>
+          </div>
+          <div class="item">
+            <span class="dot"></span>
+            <div class="body">
+              <strong>MEITAL · Community</strong>
+              <span>Empirical field research and co-designed technologies that strengthen localized, municipal municipal networks.</span>
+            </div>
+          </div>
+          <div class="item">
+            <span class="dot"></span>
+            <div class="body">
+              <strong>MEITAL · Policy</strong>
+              <span>Translating digital health evidence into systemic public policy recommendations and funding models.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const meital=document.getElementById('meital');
+  const toggle=document.getElementById('meitalToggle');
+  toggle.addEventListener('click',()=>{
+    const o=meital.classList.toggle('open');
+    toggle.setAttribute('aria-expanded',o);
+    toggle.textContent=o?'Hide tracks':'Explore the 4 tracks';
+    if(window.__frameReport) window.__frameReport();
+  });
+})();
+</script>
+<script src="_bridge.js" data-frame="programs-list"></script>
+</body>
+</html>

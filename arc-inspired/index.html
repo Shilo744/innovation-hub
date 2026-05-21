@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · ARC-Inspired Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#04102E;--bg-1:#0A1F4A;--bg-2:#13316E;
+    --ink:#FFFFFF;--dim:#BCC8E6;
+    --teal:#46C9C2;--teal-2:#5EE0D5;--gold:#F2C94C;
+    --violet:#8A5BFF;--line:rgba(180,200,255,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{font-family:'Heebo',system-ui,sans-serif;background:var(--bg-0);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:
+    radial-gradient(900px 700px at 80% 10%, rgba(43,168,224,.18), transparent 60%),
+    radial-gradient(800px 700px at 15% 90%, rgba(138,91,255,.16), transparent 60%),
+    radial-gradient(ellipse at center, var(--bg-1), var(--bg-0) 80%)}
+
+  header{position:relative;z-index:5;padding:56px 6vw 28px;display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .h-l{max-width:780px}
+  .badge{display:inline-flex;align-items:center;gap:10px;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .badge .d{width:7px;height:7px;border-radius:50%;background:var(--teal-2);box-shadow:0 0 12px var(--teal-2)}
+  h1{font-family:'Heebo';font-weight:900;font-size:clamp(36px,5.2vw,64px);line-height:1.02;letter-spacing:-.025em;margin:18px 0 10px}
+  h1 .g{color:var(--teal-2)}
+  .lead{color:var(--dim);font-size:16.5px;line-height:1.7;max-width:680px}
+  .h-r{font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);text-align:left}
+  .h-r div{margin:6px 0}
+  .h-r strong{color:var(--ink);font-weight:700}
+
+  .grid{position:relative;z-index:5;padding:20px 6vw 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:22px}
+  .card{position:relative;overflow:hidden;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid var(--line);transition:transform .25s, box-shadow .25s, border-color .25s}
+  .card:hover{transform:translateY(-4px);border-color:rgba(94,224,213,.30);box-shadow:0 30px 70px -20px rgba(0,0,0,.6)}
+  .frame{position:relative;width:100%;aspect-ratio:16/10;background:#000;overflow:hidden}
+  .frame iframe{position:absolute;left:0;top:0;width:200%;height:200%;transform:scale(.5);transform-origin:top left;border:0;pointer-events:none}
+  .frame .veil{position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%, rgba(4,16,46,.85));pointer-events:none}
+  .frame .num{position:absolute;top:14px;right:16px;font-size:11px;letter-spacing:2.5px;color:var(--ink);font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(4,16,46,.7);border:1px solid var(--line);backdrop-filter:blur(8px);z-index:2}
+  .meta{padding:16px 18px 18px}
+  .meta .row{display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .meta h3{font-family:'Heebo';font-weight:800;font-size:19px;letter-spacing:-.01em}
+  .meta .tag{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--teal-2);font-weight:600;background:rgba(94,224,213,.08);border:1px solid rgba(94,224,213,.18);padding:4px 10px;border-radius:6px}
+  .meta p{margin-top:8px;font-size:13.5px;line-height:1.6;color:var(--dim)}
+  .open{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 16px;border-radius:999px;background:var(--teal);color:#04102E;font-weight:700;font-size:13px;letter-spacing:.4px;text-decoration:none;transition:.15s}
+  .open:hover{background:var(--teal-2);transform:translateX(-3px)}
+  .card a.cover{position:absolute;inset:0;z-index:5}
+
+  footer{position:relative;z-index:5;padding:20px 6vw 30px;display:flex;justify-content:space-between;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);border-top:1px solid var(--line)}
+
+  @media (max-width:640px){header{flex-direction:column;align-items:flex-start}.h-r{text-align:right}}
+</style>
+</head>
+<body>
+  <header>
+    <div class="h-l">
+      <span class="badge"><span class="d"></span>10 ARC-Inspired Directions · עמוד בית בלבד</span>
+      <h1>בחרי את <span class="g">הסגנון</span> — כולן בנויות<br>על השפה הוויזואלית של ARC.</h1>
+      <p class="lead">עשר וריאציות לעמוד הבית, כולן צמודות לקו העיצובי של ARC: רקע נייבי עמוק, סרגל ניווט דק וצף עם לוגו וקישורים, כפתור Contact Us בטורקיז, כותרת גדולה משמאל וויזואל מרכזי מימין — מותאמות לפלטת הלוגו (כחול→סגול) ולסלוגן "From Trauma to Opportunity".</p>
+    </div>
+    <div class="h-r">
+      <div><strong>Layout</strong> · One-viewport hero</div>
+      <div><strong>Palette</strong> · Navy + Teal + Gold</div>
+      <div><strong>Lang</strong> · עברית · EN toggle · נגישות</div>
+      <div><strong>Set</strong> · arc-inspired / 01→10</div>
+    </div>
+  </header>
+
+  <section class="grid" id="grid"></section>
+
+  <footer>
+    <span>© 2026 Innovation Hub</span>
+    <span>arc-inspired · 10 directions · click to open</span>
+  </footer>
+
+<script>
+  const items = [
+    {n:'01', file:'01-classic-globe.html',       title:'Classic Globe',         tag:'הכי קרוב ל-ARC',
+     desc:'גלובוס נקודות טורקיז עם הדגשות צהובות מימין, טקסט גדול משמאל, כפתור פיל טורקיז. הכיוון הכי קרוב לרפרנס המקורי.'},
+    {n:'02', file:'02-hemisphere.html',          title:'Hemisphere',            tag:'חצי גלובוס למטה',
+     desc:'הכותרת תופסת את כל הרוחב, חצי גלובוס מנוקד עולה מקצה התחתון כמו זריחה של רשת עולמית.'},
+    {n:'03', file:'03-connected-world.html',     title:'Connected World',       tag:'רשת חיבורים חיה',
+     desc:'גלובוס עם קשתות מחברות נעות, צמתים פועמים — מטאפורה ויזואלית ישירה לאקוסיסטם.'},
+    {n:'04', file:'04-phoenix-centerpiece.html', title:'Phoenix Centerpiece',   tag:'הלוגו במרכז',
+     desc:'הפניקס בגדול עם הילה זוהרת, טבעות פנימיות וזוהרת חלקיק מסלולית — מעמיד את המותג במרכז.'},
+    {n:'05', file:'05-orbital.html',             title:'Orbital',               tag:'מסלולים + ערכים',
+     desc:'הלוגו במרכז, שלושה מסלולים נעים סביבו עם תוויות: Resilience · Innovation · Impact · Ecosystem.'},
+    {n:'06', file:'06-region-map.html',          title:'Region Map',            tag:'מפת עולם + פינים',
+     desc:'מפת עולם מנקודות עם פינים פועמים בשדרות, בוסטון ואסיה — מדגיש את הפריסה הגיאוגרפית.'},
+    {n:'07', file:'07-particle-cloud.html',      title:'Particle Cloud',        tag:'ענן חלקיקים תלת-מימדי',
+     desc:'ספירת חלקיקים מסתובבת בתלת-מימד אמיתי (canvas) עם הפניקס במרכז — אורגני, חי, מהפנט.'},
+    {n:'08', file:'08-blob-shapes.html',         title:'Organic Blobs',         tag:'בלובים כמו ב-ARC',
+     desc:'הצורות האורגניות הטורקיז עם המסגרת הצהובה — לקוחות ישירות מסקשן ה-Ecosystem של ARC. הכי "ARC-ish".'},
+    {n:'09', file:'09-radar-pulse.html',         title:'Radar Pulse',           tag:'ראדאר עם סריקה',
+     desc:'ראדאר עם קווי סריקה מסתובבים, פולסים מתרחבים ובליפים פועמים — מטאפורה לגילוי הזדמנויות.'},
+    {n:'10', file:'10-wireframe-globe.html',     title:'Wireframe Globe',       tag:'גלובוס קווי',
+     desc:'גלובוס וויירפריים אלגנטי עם מרידיאנים, מקבילות וצמתים זוהרים — נקי, מינימליסטי וטכנולוגי.'}
+  ];
+  const grid=document.getElementById('grid');
+  grid.innerHTML=items.map(i=>`
+    <article class="card">
+      <a class="cover" href="${i.file}" target="_blank" aria-label="פתח ${i.title}"></a>
+      <div class="frame">
+        <span class="num">v.${i.n}</span>
+        <iframe src="${i.file}" loading="lazy" title="${i.title}" sandbox="allow-same-origin allow-scripts"></iframe>
+        <div class="veil"></div>
+      </div>
+      <div class="meta">
+        <div class="row"><h3>${i.title}</h3><span class="tag">${i.tag}</span></div>
+        <p>${i.desc}</p>
+        <a class="open" href="${i.file}" target="_blank">פתח במסך מלא →</a>
+      </div>
+    </article>
+  `).join('');
+</script>
+</body>
+</html>

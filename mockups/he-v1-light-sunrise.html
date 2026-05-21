@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מרכז חדשנות שדרות · גרסה 1 — Light Sunrise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF8F2;
+    --ink: #1A2B3D;
+    --teal: #0E7E7E;
+    --teal-soft: rgba(14, 126, 126, 0.08);
+    --peach: #FF8C5A;
+    --gold: #FFB547;
+    --muted: rgba(26, 43, 61, 0.6);
+    --line: rgba(26, 43, 61, 0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.4;
+  }
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 85% 10%, rgba(255, 140, 90, 0.28) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 60% at 15% 90%, rgba(14, 126, 126, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 50% 50%, rgba(255, 181, 71, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Topbar */
+  .topbar {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    z-index: 100;
+    background: rgba(251, 248, 242, 0.7);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem 0.5rem 1.4rem;
+    gap: 1.2rem;
+    box-shadow: 0 10px 40px rgba(26, 43, 61, 0.05);
+  }
+  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--ink); font-weight: 800; font-size: 0.95rem; letter-spacing: -0.01em; }
+  .brand-mark {
+    position: relative;
+    width: 28px; height: 28px;
+  }
+  .brand-mark::before, .brand-mark::after { content: ""; position: absolute; border-radius: 50%; }
+  .brand-mark::before { inset: 0; background: var(--teal); }
+  .brand-mark::after { inset: 30%; background: var(--peach); }
+
+  .topnav { display: flex; align-items: center; gap: 0.1rem; list-style: none; }
+  .topnav li { position: relative; }
+  .topnav > li > a, .topnav > li > button {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    text-decoration: none; color: var(--ink);
+    font-family: inherit; font-size: 0.9rem; font-weight: 500;
+    padding: 0.45rem 0.85rem; border-radius: 999px;
+    background: none; border: none; cursor: pointer; transition: all 0.2s;
+  }
+  .topnav > li > a:hover, .topnav > li:hover > button { background: var(--teal-soft); color: var(--teal); }
+  .caret { font-size: 0.65rem; opacity: 0.5; }
+  .dropdown {
+    position: absolute; top: 100%; right: 0; margin-top: 0.6rem;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+    border: 1px solid var(--line); border-radius: 16px;
+    min-width: 290px; padding: 0.5rem;
+    opacity: 0; visibility: hidden; transform: translateY(-6px);
+    transition: all 0.22s; box-shadow: 0 20px 50px rgba(26, 43, 61, 0.12);
+  }
+  .topnav li:hover > .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+  .ditem { display: block; padding: 0.6rem 0.85rem; color: var(--ink); text-decoration: none; border-radius: 10px; font-size: 0.92rem; transition: background 0.15s; }
+  .ditem:hover { background: var(--teal-soft); color: var(--teal); }
+  .ditem .desc { display: block; font-size: 0.76rem; color: var(--muted); margin-top: 0.2rem; }
+  .he-tag { display: inline-block; font-size: 0.65rem; color: #B85A1E; background: rgba(255, 140, 90, 0.18); padding: 0.1rem 0.45rem; border-radius: 4px; margin-left: 0.4rem; font-weight: 700; }
+  .submenu { margin-top: 0.3rem; margin-right: 0.7rem; border-right: 2px solid var(--teal-soft); padding-right: 0.6rem; }
+  .submenu .ditem { font-size: 0.85rem; padding: 0.4rem 0.65rem; }
+
+  .topbar-right { display: flex; align-items: center; gap: 0.4rem; }
+  .lang-toggle { display: flex; background: rgba(26, 43, 61, 0.05); border-radius: 999px; padding: 2px; font-size: 0.78rem; }
+  .lang-toggle a { text-decoration: none; color: var(--muted); padding: 0.3rem 0.7rem; border-radius: 999px; font-weight: 700; transition: all 0.2s; }
+  .lang-toggle a.active { background: var(--ink); color: var(--bg); }
+  .a11y-btn { background: rgba(26, 43, 61, 0.05); border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink); font-size: 1rem; }
+  .a11y-btn:hover { background: var(--teal-soft); }
+  .nav-cta { background: var(--ink); color: var(--bg); padding: 0.55rem 1.2rem; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 0.85rem; }
+
+  /* Hero */
+  .hero {
+    position: relative; z-index: 2;
+    height: 100vh; width: 100%;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    padding: 0.4rem 1.1rem; border-radius: 999px;
+    font-size: 0.82rem; color: var(--teal);
+    margin-bottom: 1.8rem; font-weight: 600;
+  }
+  .pulse-dot { width: 7px; height: 7px; background: var(--peach); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: 0.5; transform: scale(1.4); } }
+
+  .slogan {
+    font-size: clamp(2.8rem, 8vw, 8.5rem);
+    font-weight: 800; line-height: 0.92;
+    letter-spacing: -0.045em; margin-bottom: 1.5rem;
+    direction: ltr; max-width: 1200px;
+    color: var(--ink);
+  }
+  .slogan .from { color: var(--muted); }
+  .slogan .arrow {
+    color: var(--peach); margin: 0 0.25em; display: inline-block;
+    animation: arrow-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes arrow-pulse { 0%,100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
+  .slogan .opportunity {
+    background: linear-gradient(135deg, var(--teal) 0%, var(--peach) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .vision {
+    font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+    color: var(--muted); max-width: 700px;
+    line-height: 1.55; margin-bottom: 2.2rem;
+  }
+  .vision strong { color: var(--ink); font-weight: 600; }
+
+  .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: var(--ink); color: var(--bg);
+    padding: 1rem 2.1rem; border-radius: 999px;
+    text-decoration: none; font-weight: 700; font-size: 1rem;
+    box-shadow: 0 10px 30px rgba(26, 43, 61, 0.2);
+    transition: transform 0.25s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
+    border: 1px solid var(--line); color: var(--ink);
+    padding: 1rem 2.1rem; border-radius: 999px;
+    text-decoration: none; font-weight: 600; font-size: 1rem;
+  }
+  .btn-secondary:hover { background: rgba(255, 255, 255, 0.9); }
+
+  .scroll-cue {
+    position: absolute; bottom: 1.5rem; right: 50%; transform: translateX(50%);
+    font-size: 0.72rem; color: var(--muted);
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    letter-spacing: 0.15em; font-weight: 500;
+  }
+  .scroll-cue::after { content: ""; width: 1px; height: 22px; background: linear-gradient(180deg, var(--teal), transparent); animation: scroll-pulse 2s ease infinite; }
+  @keyframes scroll-pulse { 0%,100% { transform: scaleY(0.6); opacity: 0.4; } 50% { transform: scaleY(1.2); opacity: 1; } }
+
+  /* Float CTA */
+  .float-cta {
+    position: fixed; bottom: 1.5rem; right: 50%;
+    transform: translate(50%, 150px); z-index: 99;
+    background: linear-gradient(135deg, var(--peach) 0%, var(--gold) 100%);
+    color: var(--ink); padding: 0.9rem 1rem 0.9rem 1.5rem;
+    border-radius: 999px; display: flex; align-items: center; gap: 1.3rem;
+    box-shadow: 0 20px 50px rgba(255, 140, 90, 0.4);
+    opacity: 0; transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    max-width: calc(100vw - 3rem);
+  }
+  .float-cta.show { transform: translate(50%, 0); opacity: 1; }
+  .float-cta-text { font-weight: 700; font-size: 0.95rem; line-height: 1.3; direction: ltr; }
+  .float-cta-btn { background: var(--ink); color: var(--bg); padding: 0.65rem 1.3rem; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 0.88rem; white-space: nowrap; }
+  .float-cta-close { background: rgba(26, 43, 61, 0.15); border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; color: var(--ink); font-size: 1.1rem; }
+
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 6px; }
+
+  @media (max-width: 1100px) {
+    .topnav { display: none; }
+  }
+  @media (max-width: 600px) {
+    .slogan { font-size: clamp(2.2rem, 11vw, 4rem); }
+    .float-cta { padding: 0.8rem; gap: 0.7rem; flex-direction: column; border-radius: 20px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="grain"></div>
+
+<header class="topbar">
+  <a href="#" class="brand"><span class="brand-mark"></span> מרכז חדשנות שדרות</a>
+  <nav>
+    <ul class="topnav">
+      <li><a href="#about">אודות</a></li>
+      <li>
+        <button>תוכניות <span class="caret">▾</span></button>
+        <div class="dropdown">
+          <a href="#" class="ditem">Resilience Accelerator<span class="desc">מסלול האצה לסטארטאפים בתחום החוסן</span></a>
+          <a href="#" class="ditem">משדרות לשיבא <span class="he-tag">עברית בלבד</span><span class="desc">שיתוף פעולה עם מרכז שיבא</span></a>
+          <a href="#" class="ditem">Immediate Implementation<span class="desc">פתרונות ליישום מיידי בשטח</span></a>
+          <a href="#" class="ditem">MEITAL <span class="caret">▸</span><span class="desc">4 תוכניות־משנה</span>
+            <div class="submenu">
+              <a href="#" class="ditem">MEITAL · בריאות הנפש</a>
+              <a href="#" class="ditem">MEITAL · חוסן קהילתי</a>
+              <a href="#" class="ditem">MEITAL · חינוך וחדשנות</a>
+              <a href="#" class="ditem">MEITAL · מענה חירום</a>
+            </div>
+          </a>
+        </div>
+      </li>
+      <li>
+        <button>צוות <span class="caret">▾</span></button>
+        <div class="dropdown">
+          <a href="#" class="ditem">הנהלה<span class="desc">Management</span></a>
+          <a href="#" class="ditem">דירקטוריון<span class="desc">Board</span></a>
+          <a href="#" class="ditem">מומחים<span class="desc">Experts</span></a>
+        </div>
+      </li>
+      <li><a href="#events">אירועים</a></li>
+      <li>
+        <button>עדכונים <span class="caret">▾</span></button>
+        <div class="dropdown">
+          <a href="#" class="ditem">בעיתונות<span class="desc">סיקור ופרסומים</span></a>
+          <a href="#" class="ditem">ניוזלטר<span class="desc">הצטרפו לדיוור</span></a>
+        </div>
+      </li>
+      <li>
+        <button>אקוסיסטם <span class="caret">▾</span></button>
+        <div class="dropdown">
+          <a href="#" class="ditem">פורטפוליו<span class="desc">חברות הסטארטאפ שלנו</span></a>
+          <a href="#" class="ditem">חבילות ערך<span class="desc">לסטארטאפים בקהילה</span></a>
+          <a href="#" class="ditem">השותפים שלנו<span class="desc">תעשייה, אקדמיה וממשלה</span></a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <div class="topbar-right">
+    <div class="lang-toggle"><a href="#" class="active">עב</a><a href="/en/">EN</a></div>
+    <button class="a11y-btn" aria-label="נגישות">♿</button>
+    <a href="#" class="nav-cta">הצטרפו</a>
+  </div>
+</header>
+
+<main class="hero">
+  <div class="hero-eyebrow"><span class="pulse-dot"></span> מחזור 05 · הגשת מועמדות פתוחה</div>
+  <h1 class="slogan">
+    <span class="from">From</span> Trauma <span class="arrow">→</span> <span class="opportunity">Opportunity.</span>
+  </h1>
+  <p class="vision">מרכז חדשנות שדרות הוא <strong>תשתית טכנולוגית וקהילתית</strong> שבונה גשר מהקושי להזדמנות — בית לסטארטאפים, יזמים וחוקרים שמפתחים את עתיד החוסן מהדרום, אל העולם.</p>
+  <div class="hero-actions">
+    <a href="#" class="btn-primary">קראו את הסיפור שלנו ←</a>
+    <a href="#" class="btn-secondary">לתוכניות שלנו</a>
+  </div>
+  <div class="scroll-cue">גלילה למטה</div>
+</main>
+
+<aside class="float-cta" id="floatCta">
+  <div class="float-cta-text">Join us in redefining the future of<br><strong>resilience innovation.</strong></div>
+  <a href="#" class="float-cta-btn">הצטרפו אלינו ←</a>
+  <button class="float-cta-close" onclick="this.parentElement.classList.remove('show')">×</button>
+</aside>
+
+<script>
+  setTimeout(() => document.getElementById('floatCta').classList.add('show'), 2000);
+</script>
+</body>
+</html>

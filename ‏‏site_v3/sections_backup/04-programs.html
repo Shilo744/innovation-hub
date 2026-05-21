@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · Programs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper-3:#EEF3F7;
+  --ink:#FFFFFF;--ink-2:#D6E2EE;--ink-dark:#0D2436;--ink-mid:#3F546A;
+  --teal:#46C9C2;--teal-2:#5EE0D5;--teal-deep:#287E78;--gold:#F2C94C;
+  --rule:rgba(13,36,54,.10);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:#fff;color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+body.fs-lg{font-size:18px}body.fs-xl{font-size:20px}
+body.hc{filter:contrast(1.12) saturate(1.15)}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+.reveal{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
+section{position:relative;padding:96px var(--pad)}
+.section-head{max-width:1240px;margin:0 auto 56px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:end}
+.section-head .left{max-width:640px}
+.section-head .right{align-self:end;font-size:15.5px;line-height:1.7;max-width:440px;color:var(--ink-mid)}
+.eyebrow{font-size:11.5px;letter-spacing:4.5px;text-transform:uppercase;font-weight:800;margin-bottom:16px;display:inline-flex;align-items:center;gap:10px;color:var(--teal-deep)}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+h2.headline{font-family:'Manrope';font-weight:800;font-size:clamp(32px,3.8vw,52px);line-height:1.05;letter-spacing:-.02em}
+h2.headline .accent{color:var(--teal-deep)}
+
+.programs{background:linear-gradient(180deg, #FFFFFF 0%, var(--paper-3) 100%);position:relative;overflow:hidden}
+.programs::before{content:"";position:absolute;left:-200px;top:40%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle, rgba(70,201,194,.08), transparent 65%);pointer-events:none}
+.programs::after{content:"";position:absolute;right:-150px;bottom:0;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle, rgba(242,201,76,.07), transparent 65%);pointer-events:none}
+.programs-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:auto auto;gap:18px;max-width:1280px;margin:0 auto}
+.programs-grid .prog:nth-child(1){grid-row:1/3}
+.programs-grid .prog:nth-child(4){grid-column:2/4}
+.prog{position:relative;padding:34px;border-radius:var(--radius);background:#fff;border:1px solid var(--rule);overflow:hidden;transition:.25s;display:flex;flex-direction:column}
+.prog:hover{transform:translateY(-4px);border-color:var(--teal);box-shadow:0 28px 60px -25px rgba(13,36,54,.18)}
+.prog.large{background:linear-gradient(160deg, #082636, #114577);border-color:transparent;color:#fff}
+.prog::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 100% 0%, rgba(70,201,194,.12), transparent 50%);opacity:0;transition:.3s;pointer-events:none}
+.prog:hover::before{opacity:1}
+.prog .ix{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;position:relative;z-index:2}
+.prog .badge{font-size:10.5px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;padding:6px 12px;border-radius:6px;background:rgba(40,126,120,.10);color:var(--teal-deep);border:1px solid rgba(40,126,120,.22)}
+.prog.large .badge{background:rgba(94,224,213,.12);color:var(--teal-2);border-color:rgba(94,224,213,.25)}
+.prog .badge.heb{background:rgba(216,160,30,.12);color:#B8841E;border-color:rgba(216,160,30,.28);direction:ltr;font-family:inherit}
+.prog .num{font-family:'Manrope';font-weight:800;font-size:42px;color:rgba(40,126,120,.22);line-height:1;letter-spacing:-.03em}
+.prog.large .num{color:rgba(94,224,213,.30)}
+.prog h3{font-family:'Manrope';font-weight:800;font-size:24px;line-height:1.2;letter-spacing:-.012em;margin-bottom:12px;position:relative;z-index:2;color:var(--ink-dark)}
+.prog.large h3{font-size:36px;color:#fff}
+.prog h3.he{font-family:'Heebo',sans-serif;direction:rtl;text-align:right}
+.prog p{color:var(--ink-mid);font-size:14.5px;line-height:1.65;flex:1;position:relative;z-index:2}
+.prog.large p{color:var(--ink-2)}
+.prog p.he{font-family:'Heebo',sans-serif;direction:rtl;text-align:right}
+.prog .more{margin-top:22px;display:inline-flex;align-items:center;gap:8px;color:var(--teal-deep);font-size:13.5px;font-weight:700;letter-spacing:.3px;width:fit-content;background:transparent;padding:0}
+.prog.large .more{color:var(--teal-2)}
+.prog .more::after{content:"→";transition:transform .2s}
+.prog .more:hover::after{transform:translateX(4px)}
+.prog.large .vis{position:absolute;right:-50px;bottom:-50px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 35% 35%, rgba(70,201,194,.28), transparent 60%);z-index:0}
+.prog.large .vis::before{content:"";position:absolute;inset:30px;border-radius:50%;border:1px dashed rgba(94,224,213,.45);animation:prog-spin 30s linear infinite}
+.prog.large .vis::after{content:"";position:absolute;inset:80px;border-radius:50%;border:1px dashed rgba(242,201,76,.35);animation:prog-spin 18s linear infinite reverse}
+@keyframes prog-spin{to{transform:rotate(360deg)}}
+.prog .sublist{margin-top:18px;display:none;border-top:1px solid var(--rule);padding-top:16px;position:relative;z-index:2}
+.prog.open .sublist{display:block;animation:prog-fade .25s ease}
+@keyframes prog-fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.prog .sublist .item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px dashed var(--rule)}
+.prog .sublist .item:last-child{border-bottom:0}
+.prog .sublist .item .dot{flex:0 0 8px;height:8px;border-radius:50%;background:var(--teal-deep);margin-top:8px}
+.prog .sublist .item .body{font-size:14px;line-height:1.55;color:var(--ink-mid)}
+.prog .sublist .item .body strong{display:block;color:var(--ink-dark);font-weight:700;margin-bottom:2px}
+.prog .sublist .item .body span{color:var(--ink-mid);font-size:13px}
+@media (max-width:1200px){
+  .section-head{grid-template-columns:1fr}
+  .programs-grid{grid-template-columns:1fr 1fr}
+  .programs-grid .prog:nth-child(1){grid-row:auto;grid-column:1/3}
+  .programs-grid .prog:nth-child(4){grid-column:1/3}
+}
+@media (max-width:600px){
+  section{padding:80px 6vw}
+  .programs-grid{grid-template-columns:1fr}
+  .programs-grid .prog:nth-child(1),.programs-grid .prog:nth-child(4){grid-column:auto}
+}
+</style>
+</head>
+<body>
+<section class="programs" id="programs">
+  <div class="section-head">
+    <div class="left">
+      <div class="eyebrow">Programs</div>
+      <h2 class="headline reveal">Four flagship programs <span class="accent">driving impact.</span></h2>
+    </div>
+    <div class="right reveal d1">Each program is purpose-built for a different point in the resilience journey — from early-stage acceleration to immediate field deployment and long-term applied research.</div>
+  </div>
+  <div class="programs-grid">
+    <article class="prog large reveal">
+      <div class="vis" aria-hidden="true"></div>
+      <div class="ix"><span class="badge">Flagship · Accelerator</span><span class="num">01</span></div>
+      <h3>Resilience Accelerator</h3>
+      <p>Our flagship equity-free program for early-stage startups building the next generation of resilience technologies — from mental health platforms and crisis-response infrastructure to clinical recovery tools. Six months of deep operator support, clinical pilot pathways, investor introductions, and a global community of founders.</p>
+      <button class="more">Learn more</button>
+    </article>
+    <article class="prog reveal d1">
+      <div class="ix"><span class="badge heb">Hebrew only · עברית בלבד</span><span class="num">02</span></div>
+      <h3 class="he">שיבא לשדרות</h3>
+      <p class="he">תכנית דגל בשיתוף שיבא ועיריית שדרות — מביאה את הקלינאים, החוקרים והיזמים המובילים אל הקו הראשון של החוסן הקהילתי. מתחילים בשדרות, מגיעים לעולם.</p>
+      <button class="more">קרא עוד</button>
+    </article>
+    <article class="prog reveal d2">
+      <div class="ix"><span class="badge">Deployment</span><span class="num">03</span></div>
+      <h3>Immediate Implementation</h3>
+      <p>A rapid-deployment track that takes vetted solutions from concept to on-the-ground impact in weeks — built for moments when speed matters most and lives are on the line.</p>
+      <button class="more">Learn more</button>
+    </article>
+    <article class="prog reveal d3" id="meital">
+      <div class="ix"><span class="badge">Umbrella · 4 sub-programs</span><span class="num">04</span></div>
+      <h3>MEITAL</h3>
+      <p>Our applied-research umbrella, bringing together four complementary tracks for long-term resilience innovation across clinical, technological, community, and policy domains.</p>
+      <button class="more" id="meitalToggle" aria-expanded="false">Explore the 4 tracks</button>
+      <div class="sublist" aria-hidden="true">
+        <div class="item"><span class="dot"></span><div class="body"><strong>MEITAL · Clinical</strong><span>Translational research from the bedside to scalable protocols.</span></div></div>
+        <div class="item"><span class="dot"></span><div class="body"><strong>MEITAL · Technology</strong><span>Applied tech for diagnosis, monitoring, and recovery.</span></div></div>
+        <div class="item"><span class="dot"></span><div class="body"><strong>MEITAL · Community</strong><span>Community-based resilience programs co-designed with the field.</span></div></div>
+        <div class="item"><span class="dot"></span><div class="body"><strong>MEITAL · Policy</strong><span>Evidence-based policy frameworks for system-level resilience.</span></div></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<script>
+(function(){
+  const meital=document.getElementById('meital');
+  const toggle=document.getElementById('meitalToggle');
+  toggle.addEventListener('click',()=>{
+    const o=meital.classList.toggle('open');
+    toggle.setAttribute('aria-expanded',o);
+    toggle.textContent=o?'Hide tracks':'Explore the 4 tracks';
+    if(window.__frameReport) window.__frameReport();
+  });
+})();
+</script>
+<script src="_bridge.js" data-frame="programs"></script>
+</body>
+</html>

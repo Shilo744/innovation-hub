@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מרכז חדשנות שדרות · גרסה 5 — Mono Precision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060606;
+    --panel: #0E0E0E;
+    --cream: #E8E5DE;
+    --accent: #00FFB2;
+    --accent-soft: rgba(0, 255, 178, 0.08);
+    --warn: #FF6B35;
+    --muted: rgba(232, 229, 222, 0.55);
+    --line: rgba(232, 229, 222, 0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--cream);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.4;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* Background — precise grid */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(232, 229, 222, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232, 229, 222, 0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .corner-tl, .corner-tr, .corner-bl, .corner-br {
+    position: fixed; width: 24px; height: 24px; z-index: 5; pointer-events: none;
+  }
+  .corner-tl { top: 12px; right: 12px; border-top: 1px solid var(--accent); border-right: 1px solid var(--accent); }
+  .corner-tr { top: 12px; left: 12px; border-top: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+  .corner-bl { bottom: 12px; right: 12px; border-bottom: 1px solid var(--accent); border-right: 1px solid var(--accent); }
+  .corner-br { bottom: 12px; left: 12px; border-bottom: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+
+  .glow {
+    position: fixed; top: 50%; right: 50%; transform: translate(50%, -50%);
+    width: 80vw; height: 80vh; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(0, 255, 178, 0.06) 0%, transparent 60%);
+    filter: blur(40px);
+  }
+
+  /* Topbar */
+  .topbar {
+    position: fixed; top: 32px; right: 32px; left: 32px; z-index: 100;
+    background: rgba(6, 6, 6, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.5rem 0.5rem 0.5rem 1.4rem; gap: 1rem;
+  }
+  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--cream); font-weight: 800; font-size: 0.92rem; letter-spacing: -0.005em; }
+  .brand-mono { font-family: 'JetBrains Mono', monospace; color: var(--accent); margin-left: 0.4rem; font-weight: 700; font-size: 0.78rem; }
+
+  .topnav { display: flex; align-items: center; gap: 0; list-style: none; }
+  .topnav li { position: relative; }
+  .topnav > li > a, .topnav > li > button {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    text-decoration: none; color: var(--cream);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: 500;
+    padding: 0.5rem 0.9rem; background: none; border: none; cursor: pointer;
+    transition: all 0.15s;
+    text-transform: lowercase;
+  }
+  .topnav > li > a::before, .topnav > li > button::before { content: "//"; color: var(--muted); margin-left: 0.35rem; opacity: 0.5; }
+  .topnav > li > a:hover, .topnav > li:hover > button { color: var(--accent); }
+  .topnav > li > a:hover::before, .topnav > li:hover > button::before { color: var(--accent); opacity: 1; }
+  .caret { font-size: 0.6rem; opacity: 0.5; }
+
+  .dropdown {
+    position: absolute; top: 100%; right: 0; margin-top: 0.5rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    min-width: 300px; padding: 0.4rem;
+    opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: all 0.18s;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  }
+  .topnav li:hover > .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+  .ditem { display: block; padding: 0.65rem 0.85rem; color: var(--cream); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: background 0.15s; }
+  .ditem:hover { background: var(--accent-soft); color: var(--accent); }
+  .ditem .desc { display: block; font-size: 0.74rem; color: var(--muted); margin-top: 0.25rem; font-family: 'JetBrains Mono', monospace; }
+  .ditem:hover .desc { color: rgba(0, 255, 178, 0.65); }
+  .he-tag {
+    display: inline-block; font-size: 0.62rem;
+    color: var(--bg); background: var(--warn);
+    padding: 0.12rem 0.5rem;
+    margin-left: 0.4rem; font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .submenu { margin-top: 0.3rem; padding-right: 0.7rem; border-right: 1px solid var(--accent); }
+  .submenu .ditem { font-size: 0.83rem; padding: 0.4rem 0.65rem; }
+  .submenu .ditem::before { content: "› "; color: var(--accent); }
+
+  .topbar-right { display: flex; align-items: center; gap: 0.4rem; }
+  .lang-toggle { display: flex; border: 1px solid var(--line); font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; }
+  .lang-toggle a { text-decoration: none; color: var(--muted); padding: 0.32rem 0.7rem; font-weight: 700; transition: all 0.2s; }
+  .lang-toggle a.active { background: var(--accent); color: var(--bg); }
+  .a11y-btn { background: var(--panel); border: 1px solid var(--line); width: 32px; height: 32px; cursor: pointer; color: var(--cream); font-size: 1rem; }
+  .a11y-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: var(--bg);
+    padding: 0.5rem 1.2rem; text-decoration: none;
+    font-weight: 800; font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: lowercase;
+  }
+  .nav-cta::before { content: "./"; opacity: 0.6; }
+
+  /* Hero */
+  .hero {
+    position: relative; z-index: 2;
+    height: 100vh; width: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 7rem 3.5rem 3.5rem;
+    gap: 2rem;
+  }
+  .hero-meta {
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; color: var(--muted);
+  }
+  .hero-meta .item { display: flex; gap: 0.6rem; }
+  .hero-meta .label { color: var(--accent); }
+  .hero-meta .live { color: var(--warn); }
+  .hero-meta .live::before { content: "● "; animation: pulse 2s infinite; }
+  @keyframes pulse { 50% { opacity: 0.4; } }
+
+  .hero-body {
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+  }
+  .slogan-wrap { position: relative; }
+  .slogan-marker {
+    position: absolute; top: -0.5rem; right: -1.5rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    color: var(--accent); transform: rotate(-90deg);
+    transform-origin: right top;
+    letter-spacing: 0.15em;
+  }
+  .slogan {
+    font-size: clamp(3.2rem, 11vw, 12rem);
+    font-weight: 900; line-height: 0.85;
+    letter-spacing: -0.055em;
+    direction: ltr;
+    margin-bottom: 1.5rem;
+  }
+  .slogan .from { color: var(--muted); font-weight: 700; }
+  .slogan .trauma {
+    color: var(--cream);
+    position: relative;
+  }
+  .slogan .arrow {
+    color: var(--accent); margin: 0 0.15em;
+    display: inline-block;
+    animation: arrow-pulse 2.6s infinite;
+  }
+  @keyframes arrow-pulse { 0%,100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+  .slogan .opportunity {
+    color: var(--accent);
+    text-shadow: 0 0 30px rgba(0, 255, 178, 0.35);
+  }
+
+  .vision {
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+    color: var(--cream); max-width: 600px;
+    line-height: 1.55;
+    border-right: 2px solid var(--accent);
+    padding-right: 1.2rem;
+  }
+  .vision strong { color: var(--accent); font-weight: 600; }
+
+  .hero-bottom {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 2rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line); padding-top: 2rem;
+  }
+  .hero-actions { display: flex; gap: 0.6rem; }
+  .btn-primary {
+    background: var(--accent); color: var(--bg);
+    padding: 0.95rem 2rem; text-decoration: none;
+    font-weight: 700; font-size: 0.92rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: lowercase;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary::before { content: "./"; opacity: 0.6; }
+  .btn-secondary {
+    background: var(--panel); border: 1px solid var(--line); color: var(--cream);
+    padding: 0.95rem 2rem; text-decoration: none;
+    font-weight: 700; font-size: 0.92rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: lowercase;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats { display: flex; gap: 2rem; }
+  .hero-stat { display: flex; flex-direction: column; }
+  .hero-stat .num {
+    font-size: 1.8rem; font-weight: 900;
+    letter-spacing: -0.03em; line-height: 1;
+    color: var(--accent);
+  }
+  .hero-stat .lab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; color: var(--muted);
+    margin-top: 0.3rem; text-transform: lowercase;
+  }
+  .hero-stat .lab::before { content: "› "; color: var(--accent); }
+
+  /* Float CTA */
+  .float-cta {
+    position: fixed; bottom: 60px; right: 50%;
+    transform: translate(50%, 150px); z-index: 99;
+    background: var(--panel); color: var(--cream);
+    border: 1px solid var(--accent);
+    padding: 1rem 1rem 1rem 1.5rem;
+    display: flex; align-items: center; gap: 1.3rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--accent-soft);
+    opacity: 0; transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    max-width: calc(100vw - 4rem);
+  }
+  .float-cta.show { transform: translate(50%, 0); opacity: 1; }
+  .float-cta::before {
+    content: "// invite.exec";
+    position: absolute; top: -10px; right: 1.2rem;
+    background: var(--panel); color: var(--accent);
+    padding: 0 0.5rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    border: 1px solid var(--accent);
+  }
+  .float-cta-text { font-weight: 600; font-size: 0.95rem; line-height: 1.3; direction: ltr; }
+  .float-cta-text strong { color: var(--accent); font-weight: 800; }
+  .float-cta-btn {
+    background: var(--accent); color: var(--bg);
+    padding: 0.65rem 1.3rem; text-decoration: none;
+    font-weight: 800; font-size: 0.85rem;
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: lowercase;
+  }
+  .float-cta-btn::before { content: "./"; opacity: 0.6; }
+  .float-cta-close {
+    background: transparent; border: 1px solid var(--line);
+    width: 28px; height: 28px; cursor: pointer;
+    color: var(--cream); font-size: 1rem;
+  }
+  .float-cta-close:hover { border-color: var(--warn); color: var(--warn); }
+
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (max-width: 1100px) { .topnav { display: none; } .hero { padding: 6rem 1.5rem 2rem; } }
+  @media (max-width: 700px) {
+    .hero-meta { flex-direction: column; gap: 0.4rem; font-size: 0.7rem; }
+    .hero-bottom { flex-direction: column; align-items: flex-start; }
+    .vision { font-size: 1rem; }
+    .float-cta { padding: 0.8rem; gap: 0.7rem; flex-direction: column; text-align: right; }
+    .slogan-marker { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow"></div>
+<div class="corner-tl"></div>
+<div class="corner-tr"></div>
+<div class="corner-bl"></div>
+<div class="corner-br"></div>
+
+<header class="topbar">
+  <a href="#" class="brand">מרכז חדשנות שדרות<span class="brand-mono">[v.05]</span></a>
+  <nav>
+    <ul class="topnav">
+      <li><a href="#">about</a></li>
+      <li>
+        <button>programs <span class="caret">▾</span></button>
+        <div class="dropdown">
+          <a href="#" class="ditem">Resilience Accelerator<span class="desc">accelerator for resilience startups</span></a>
+          <a href="#" class="ditem">משדרות לשיבא <span class="he-tag">HE</span><span class="desc">collaboration with sheba medical</span></a>
+          <a href="#" class="ditem">Immediate Implementation<span class="desc">field-ready tech solutions</span></a>
+          <a href="#" class="ditem">MEITAL <span class="caret">▸</span><span class="desc">4 sub-programs</span>
+            <div class="submenu">
+              <a href="#" class="ditem">MEITAL · בריאות הנפש</a>
+              <a href="#" class="ditem">MEITAL · חוסן קהילתי</a>
+              <a href="#" class="ditem">MEITAL · חינוך וחדשנות</a>
+              <a href="#" class="ditem">MEITAL · מענה חירום</a>
+            </div>
+          </a>
+        </div>
+      </li>
+      <li>
+        <button>team <span class="caret">▾</span></button>
+        <div class="dropdown">
+          <a href="#" class="ditem">הנהלה<span class="desc">management</span></a>
+          <a href="#" class="ditem">דירקטוריון<span class="desc">board</span></a>
+          <a href="#" class="ditem">מומחים<span class="desc">experts</span></a>
+        </div>
+      </li>
+      <li><a href="#">events</a></li>
+      <li>
+        <button>updates <span class="caret">▾</span></button>
+        <div class="dropdown">
+          <a href="#" class="ditem">בעיתונות<span class="desc">press coverage</span></a>
+          <a href="#" class="ditem">ניוזלטר<span class="desc">newsletter signup</span></a>
+        </div>
+      </li>
+      <li>
+        <button>ecosystem <span class="caret">▾</span></button>
+        <div class="dropdown">
+          <a href="#" class="ditem">פורטפוליו<span class="desc">portfolio startups</span></a>
+          <a href="#" class="ditem">חבילות ערך<span class="desc">value packages</span></a>
+          <a href="#" class="ditem">השותפים שלנו<span class="desc">partners</span></a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <div class="topbar-right">
+    <div class="lang-toggle"><a href="#" class="active">HE</a><a href="/en/">EN</a></div>
+    <button class="a11y-btn" aria-label="נגישות">♿</button>
+    <a href="#" class="nav-cta">join</a>
+  </div>
+</header>
+
+<main class="hero">
+  <div class="hero-meta">
+    <div class="item"><span class="label">// loc:</span>שדרות, ישראל · 31.52°N</div>
+    <div class="item"><span class="label">// since:</span>2023</div>
+    <div class="item live">cohort_05 · applications open</div>
+  </div>
+
+  <div class="hero-body">
+    <div class="slogan-wrap">
+      <div class="slogan-marker">— SLOGAN_01</div>
+      <h1 class="slogan">
+        <span class="from">From</span> <span class="trauma">Trauma</span><span class="arrow">→</span><span class="opportunity">Opportunity.</span>
+      </h1>
+    </div>
+    <p class="vision">מרכז חדשנות שדרות הוא <strong>תשתית טכנולוגית וקהילתית</strong> שבונה גשר מהקושי להזדמנות — בית לסטארטאפים, יזמים וחוקרים שמפתחים את עתיד החוסן מהדרום, אל העולם.</p>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">read_story()</a>
+      <a href="#" class="btn-secondary">view_programs</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">120+</div><div class="lab">startups</div></div>
+      <div class="hero-stat"><div class="num">₪18M</div><div class="lab">raised 2025</div></div>
+      <div class="hero-stat"><div class="num">2,400</div><div class="lab">community</div></div>
+    </div>
+  </div>
+</main>
+
+<aside class="float-cta" id="floatCta">
+  <div class="float-cta-text">Join us in redefining the future of <strong>resilience innovation.</strong></div>
+  <a href="#" class="float-cta-btn">join_us</a>
+  <button class="float-cta-close" onclick="this.parentElement.classList.remove('show')">×</button>
+</aside>
+
+<script>
+  setTimeout(() => document.getElementById('floatCta').classList.add('show'), 2000);
+</script>
+</body>
+</html>

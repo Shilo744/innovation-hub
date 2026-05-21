@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · Neon Grid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;500;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#03060F;
+    --ink:#D9E5FF;
+    --dim:#7B89B5;
+    --cyan:#22F0FF;
+    --blue:#3D7BFF;
+    --violet:#9D5BFF;
+    --grid:rgba(61,123,255,.10);
+    --grid-2:rgba(61,123,255,.22);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Heebo',system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow:hidden}
+
+  /* grid backdrop */
+  .grid{position:fixed;inset:0;z-index:0;
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0/64px 64px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/64px 64px,
+      radial-gradient(ellipse at 50% 70%, #0A1235 0%, #03060F 70%);
+    mask-image:radial-gradient(ellipse at center, #000 30%, transparent 90%);
+  }
+  .grid-2{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(var(--grid-2) 1px, transparent 1px) 0 0/256px 256px,
+      linear-gradient(90deg, var(--grid-2) 1px, transparent 1px) 0 0/256px 256px;}
+  .scan{position:fixed;inset:0;z-index:2;pointer-events:none;background:repeating-linear-gradient(180deg,transparent 0 3px,rgba(34,240,255,.025) 3px 4px)}
+  .horizon{position:fixed;left:0;right:0;bottom:0;height:55vh;z-index:3;pointer-events:none;
+    background:
+      linear-gradient(180deg,transparent, rgba(157,91,255,.18) 60%, rgba(34,240,255,.25));
+    mask-image:linear-gradient(180deg,transparent, #000 30%);}
+  .sun{position:fixed;left:50%;bottom:6vh;transform:translateX(-50%);width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle, rgba(157,91,255,.5), rgba(61,123,255,.15) 50%, transparent 70%);
+    filter:blur(20px);z-index:2;pointer-events:none;animation:rise 8s ease-in-out infinite}
+  @keyframes rise{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-12px)}}
+
+  /* nav */
+  .nav{position:fixed;top:18px;left:18px;right:18px;z-index:50;height:56px;
+    display:flex;align-items:center;gap:18px;padding:0 18px;
+    background:rgba(5,9,24,.7);border:1px solid rgba(34,240,255,.25);
+    box-shadow:0 0 0 1px rgba(34,240,255,.05), 0 0 30px rgba(34,240,255,.15) inset;
+    backdrop-filter:blur(18px)}
+  .nav::before, .nav::after{content:"";position:absolute;width:14px;height:14px;border:1px solid var(--cyan)}
+  .nav::before{top:-1px;right:-1px;border-bottom:0;border-left:0}
+  .nav::after{bottom:-1px;left:-1px;border-top:0;border-right:0}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:1px}
+  .brand img{height:30px;filter:drop-shadow(0 0 10px rgba(34,240,255,.6))}
+  .brand .mono{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);font-weight:500;margin-inline-start:8px;border-inline-start:1px solid rgba(34,240,255,.3);padding-inline-start:10px}
+  .links{display:flex;gap:22px;margin-inline-start:auto;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px}
+  .links a{color:inherit;text-decoration:none}
+  .links a:hover{color:var(--cyan);text-shadow:0 0 10px rgba(34,240,255,.6)}
+  .tools{display:flex;gap:8px}
+  .ic{width:36px;height:36px;background:transparent;border:1px solid rgba(34,240,255,.3);color:var(--cyan);display:grid;place-items:center;cursor:pointer;font-family:'JetBrains Mono'}
+  .lang{height:36px;padding:0 16px;background:var(--cyan);color:#04071A;border:0;font-family:'JetBrains Mono';font-weight:700;font-size:12px;letter-spacing:2px;cursor:pointer;box-shadow:0 0 20px rgba(34,240,255,.5)}
+
+  /* hero */
+  main{position:relative;z-index:10;height:100vh;display:grid;place-items:center;text-align:center;padding:110px 6vw 80px}
+  .id{font-family:'JetBrains Mono';font-size:11px;color:var(--cyan);letter-spacing:5px;text-transform:uppercase;margin-bottom:18px;display:inline-flex;align-items:center;gap:10px}
+  .id::before,.id::after{content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan))}
+  h1{font-family:'Heebo';font-weight:800;font-size:clamp(48px,8vw,124px);line-height:1;letter-spacing:-.02em;
+    text-shadow:0 0 32px rgba(34,240,255,.25)}
+  h1 .n{color:var(--cyan);text-shadow:0 0 22px rgba(34,240,255,.7), 0 0 60px rgba(34,240,255,.35)}
+  h1 .v{color:var(--violet);text-shadow:0 0 22px rgba(157,91,255,.7), 0 0 60px rgba(157,91,255,.35)}
+  .slog{font-family:'JetBrains Mono';font-size:14px;letter-spacing:6px;text-transform:uppercase;color:var(--ink);margin:22px 0 8px}
+  .lead{max-width:680px;margin:18px auto 28px;font-size:16.5px;line-height:1.75;color:var(--dim)}
+  .ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .pri{position:relative;padding:16px 30px;border:1px solid var(--cyan);background:transparent;color:var(--cyan);
+    font-family:'JetBrains Mono';font-weight:700;font-size:13px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;
+    box-shadow:0 0 30px rgba(34,240,255,.25), inset 0 0 30px rgba(34,240,255,.1)}
+  .pri::before,.pri::after{content:"";position:absolute;width:8px;height:8px;border:1px solid var(--cyan)}
+  .pri::before{top:-1px;right:-1px;border-bottom:0;border-left:0}
+  .pri::after{bottom:-1px;left:-1px;border-top:0;border-right:0}
+  .pri:hover{background:rgba(34,240,255,.1)}
+  .gho{padding:16px 24px;border:1px dashed rgba(157,91,255,.45);background:transparent;color:var(--violet);font-family:'JetBrains Mono';font-size:12.5px;text-transform:uppercase;letter-spacing:2px;cursor:pointer}
+
+  /* stats hud */
+  .hud{position:fixed;left:32px;bottom:80px;z-index:20;font-family:'JetBrains Mono';font-size:11px;color:var(--cyan);letter-spacing:2px}
+  .hud div{display:flex;gap:10px;margin:6px 0}
+  .hud .dot{width:6px;height:6px;background:var(--cyan);align-self:center;box-shadow:0 0 10px var(--cyan)}
+  .hud-r{position:fixed;right:32px;bottom:80px;z-index:20;font-family:'JetBrains Mono';font-size:11px;color:var(--violet);letter-spacing:2px;text-align:right}
+
+  /* logo behind */
+  .ghost{position:fixed;left:50%;top:54%;transform:translate(-50%,-50%);width:min(640px,60vmin);opacity:.07;z-index:1;filter:drop-shadow(0 0 60px rgba(34,240,255,.8))}
+
+  .foot{position:fixed;left:0;right:0;bottom:14px;z-index:21;display:flex;justify-content:space-between;padding:0 32px;font-family:'JetBrains Mono';font-size:10.5px;color:var(--dim);letter-spacing:3px;text-transform:uppercase}
+
+  @media (max-width:900px){.links{display:none}.hud,.hud-r{display:none}}
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="grid-2"></div>
+  <img class="ghost" src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">
+  <div class="sun"></div>
+  <div class="horizon"></div>
+  <div class="scan"></div>
+
+  <nav class="nav">
+    <div class="brand"><img src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">INNOVATION_HUB<span class="mono">SYS::ONLINE</span></div>
+    <div class="links">
+      <a>// אודות</a><a>// תוכניות</a><a>// צוות</a>
+      <a>// אירועים</a><a>// עדכונים</a><a>// אקוסיסטם</a>
+    </div>
+    <div class="tools">
+      <button class="ic" aria-label="נגישות">⊕</button>
+      <button class="lang">EN ↗</button>
+    </div>
+  </nav>
+
+  <main>
+    <div>
+      <span class="id">// node_id: resilience_hub_01</span>
+      <h1>מ<span class="v">חוסן</span>·ל<span class="n">חדשנות</span></h1>
+      <div class="slog">From Trauma to Opportunity</div>
+      <p class="lead">פלטפורמה טכנולוגית שמחברת בין מומחי חוסן, יזמים וחברות גלובליות — לבניית הדור הבא של פתרונות שמצילים חיים ומחזירים אנשים לשגרה.</p>
+      <div class="ctas">
+        <button class="pri">&gt; INITIATE · הצטרפו</button>
+        <button class="gho">[ play.reel — סרטון תדמית ]</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="hud">
+    <div><span class="dot"></span>SECTOR · MED-RESILIENCE</div>
+    <div><span class="dot"></span>STARTUPS · 142 ACTIVE</div>
+    <div><span class="dot"></span>PARTNERS · GLOBAL/IL</div>
+  </div>
+  <div class="hud-r">
+    <div>LAT 31.2530° N</div>
+    <div>LNG 34.7915° E</div>
+    <div>STATUS · LIVE</div>
+  </div>
+
+  <div class="foot">
+    <span>© 2026 INNOVATION_HUB</span>
+    <span>v.04 · NEON_GRID</span>
+  </div>
+</body>
+</html>

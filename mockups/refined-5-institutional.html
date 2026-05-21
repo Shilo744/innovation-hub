@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>גרסה 5 — Institutional</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #FCFCFA; --ink: #1B2434; --steel: #4A6378; --steel-deep: #2C4258; --amber: #D4924A; --muted: rgba(27,36,52,0.55); --line: rgba(27,36,52,0.1); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--ink); overflow: hidden; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+  .topbar { position: fixed; top: 0; right: 0; left: 0; z-index: 100; background: rgba(252,252,250,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--line); }
+  .tb-inner { max-width: 1500px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.95rem 2.5rem; gap: 1.5rem; }
+  .brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: var(--ink); font-weight: 600; font-size: 0.95rem; }
+  .brand-mark { width: 22px; height: 22px; background: var(--steel-deep); position: relative; }
+  .brand-mark::after { content: ""; position: absolute; inset: 30%; background: var(--amber); }
+  .topnav { display: flex; gap: 0.2rem; list-style: none; align-items: center; }
+  .topnav li { position: relative; }
+  .topnav > li > a, .topnav > li > button { display: inline-flex; align-items: center; gap: 0.3rem; text-decoration: none; color: var(--ink); font-family: inherit; font-size: 0.9rem; font-weight: 500; padding: 0.5rem 1rem; background: none; border: none; cursor: pointer; transition: color 0.2s; }
+  .topnav > li > a:hover, .topnav > li:hover > button { color: var(--steel-deep); }
+  .caret { font-size: 0.62rem; opacity: 0.5; }
+  .dropdown { position: absolute; top: 100%; right: 0; margin-top: 0.4rem; background: white; border: 1px solid var(--line); border-radius: 4px; min-width: 290px; padding: 0.4rem; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: all 0.2s; box-shadow: 0 16px 40px rgba(27,36,52,0.06); }
+  .topnav li:hover > .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+  .ditem { display: block; padding: 0.6rem 0.85rem; color: var(--ink); text-decoration: none; border-radius: 3px; font-size: 0.9rem; transition: background 0.15s; }
+  .ditem:hover { background: rgba(74,99,120,0.08); color: var(--steel-deep); }
+  .ditem .desc { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+  .he-tag { display: inline-block; font-size: 0.65rem; color: white; background: var(--amber); padding: 0.1rem 0.45rem; margin-left: 0.4rem; font-weight: 600; }
+  .submenu { margin-top: 0.3rem; margin-right: 0.7rem; border-right: 2px solid var(--amber); padding-right: 0.6rem; }
+  .submenu .ditem { font-size: 0.83rem; padding: 0.4rem 0.65rem; }
+  .tb-right { display: flex; align-items: center; gap: 0.5rem; }
+  .lang { display: flex; gap: 0.6rem; font-size: 0.82rem; }
+  .lang a { text-decoration: none; color: var(--muted); font-weight: 500; padding: 0.2rem 0.3rem; }
+  .lang a.active { color: var(--ink); border-bottom: 1.5px solid var(--amber); }
+  .a11y { background: none; border: 1px solid var(--line); width: 30px; height: 30px; cursor: pointer; color: var(--ink); border-radius: 2px; }
+  .nav-cta { background: var(--steel-deep); color: var(--bg); padding: 0.55rem 1.3rem; text-decoration: none; font-weight: 600; font-size: 0.85rem; border-radius: 2px; }
+  /* Accent strip under topbar */
+  .accent-strip { position: fixed; top: 56px; right: 0; left: 0; height: 2px; background: var(--amber); z-index: 99; }
+  /* Hero */
+  .hero { position: relative; z-index: 2; height: 100vh; display: grid; grid-template-columns: 7fr 5fr; padding-top: 58px; }
+  .hero-l { padding: 4.5rem 5rem 3rem; display: flex; flex-direction: column; justify-content: center; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 0.7rem; font-size: 0.78rem; color: var(--steel-deep); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; margin-bottom: 2.2rem; align-self: flex-start; }
+  .eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--amber); }
+  .slogan { font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 700; line-height: 1.02; letter-spacing: -0.035em; margin-bottom: 1.8rem; direction: ltr; max-width: 800px; }
+  .slogan .from { color: var(--muted); font-weight: 600; }
+  .slogan .trauma { color: var(--ink); }
+  .slogan .arrow { color: var(--amber); margin: 0 0.2em; font-weight: 500; }
+  .slogan .opp { color: var(--steel-deep); }
+  .vision { font-size: clamp(1.05rem, 1.25vw, 1.2rem); color: var(--ink); max-width: 560px; line-height: 1.6; margin-bottom: 2.5rem; font-weight: 400; }
+  .vision strong { font-weight: 600; }
+  .actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--steel-deep); color: var(--bg); padding: 0.95rem 2rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; border-radius: 2px; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--ink); }
+  .btn-secondary { background: var(--bg); border: 1.5px solid var(--steel-deep); color: var(--steel-deep); padding: 0.85rem 2rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; border-radius: 2px; }
+  .btn-secondary:hover { background: var(--steel-deep); color: var(--bg); }
+  /* Right panel — institutional info card */
+  .hero-r { background: linear-gradient(180deg, #F0EEE8 0%, #E8E5DD 100%); padding: 4.5rem 4rem 3rem; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; border-right: 1px solid var(--line); position: relative; }
+  .hero-r::before { content: ""; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: var(--amber); }
+  .info-label { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--steel-deep); font-weight: 700; margin-bottom: 0.4rem; }
+  .info-block { background: white; border: 1px solid var(--line); padding: 1.5rem; border-radius: 2px; }
+  .info-block h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .info-block p { font-size: 0.92rem; color: var(--muted); line-height: 1.5; margin-bottom: 0.8rem; }
+  .info-block .meta { font-size: 0.82rem; color: var(--steel-deep); font-weight: 600; }
+  .info-link { color: var(--steel-deep); text-decoration: none; font-weight: 600; font-size: 0.88rem; border-bottom: 1px solid var(--amber); padding-bottom: 1px; }
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); padding-top: 1.5rem; }
+  .stat { padding: 0 1rem; border-right: 1px solid var(--line); }
+  .stat:first-child { padding-right: 0; }
+  .stat:last-child { border-right: none; }
+  .stat .n { font-size: 1.6rem; font-weight: 700; color: var(--steel-deep); letter-spacing: -0.02em; line-height: 1; }
+  .stat .l { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .fcta { position: fixed; bottom: 1.5rem; right: 50%; transform: translate(50%, 150px); z-index: 99; background: var(--ink); color: var(--bg); padding: 0.85rem 0.85rem 0.85rem 1.4rem; border-radius: 2px; display: flex; align-items: center; gap: 1.2rem; box-shadow: 0 20px 50px rgba(27,36,52,0.25); opacity: 0; transition: all 0.6s cubic-bezier(0.22,1,0.36,1); max-width: calc(100vw - 3rem); border-right: 3px solid var(--amber); }
+  .fcta.show { transform: translate(50%, 0); opacity: 1; }
+  .fcta-t { font-weight: 500; font-size: 0.92rem; line-height: 1.3; direction: ltr; }
+  .fcta-t strong { color: var(--amber); font-weight: 700; }
+  .fcta-b { background: var(--amber); color: var(--ink); padding: 0.6rem 1.2rem; border-radius: 2px; text-decoration: none; font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
+  .fcta-x { background: rgba(252,252,250,0.1); border: 1px solid rgba(252,252,250,0.2); width: 26px; height: 26px; cursor: pointer; color: var(--bg); font-size: 1rem; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+  @media (max-width: 1100px) { .topnav { display: none; } }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .hero-l { padding: 4rem 1.5rem 2rem; } .hero-r { padding: 2rem 1.5rem; border-right: none; border-top: 1px solid var(--line); } .fcta { padding: 0.7rem; gap: 0.6rem; flex-direction: column; text-align: right; } }
+</style>
+</head>
+<body>
+<header class="topbar"><div class="tb-inner">
+  <a href="#" class="brand"><span class="brand-mark"></span> מרכז חדשנות שדרות</a>
+  <nav><ul class="topnav">
+    <li><a href="#">אודות</a></li>
+    <li><button>תוכניות <span class="caret">▾</span></button><div class="dropdown">
+      <a href="#" class="ditem">Resilience Accelerator<span class="desc">מסלול האצה לסטארטאפים</span></a>
+      <a href="#" class="ditem">משדרות לשיבא <span class="he-tag">עברית בלבד</span><span class="desc">שיתוף פעולה עם שיבא</span></a>
+      <a href="#" class="ditem">Immediate Implementation<span class="desc">פתרונות ליישום מיידי</span></a>
+      <a href="#" class="ditem">MEITAL<span class="desc">4 תוכניות־משנה</span>
+        <div class="submenu"><a href="#" class="ditem">MEITAL · בריאות הנפש</a><a href="#" class="ditem">MEITAL · חוסן קהילתי</a><a href="#" class="ditem">MEITAL · חינוך וחדשנות</a><a href="#" class="ditem">MEITAL · מענה חירום</a></div>
+      </a>
+    </div></li>
+    <li><button>צוות <span class="caret">▾</span></button><div class="dropdown">
+      <a href="#" class="ditem">הנהלה<span class="desc">Management</span></a>
+      <a href="#" class="ditem">דירקטוריון<span class="desc">Board</span></a>
+      <a href="#" class="ditem">מומחים<span class="desc">Experts</span></a>
+    </div></li>
+    <li><a href="#">אירועים</a></li>
+    <li><button>עדכונים <span class="caret">▾</span></button><div class="dropdown">
+      <a href="#" class="ditem">בעיתונות<span class="desc">סיקור ופרסומים</span></a>
+      <a href="#" class="ditem">ניוזלטר<span class="desc">הצטרפו לדיוור</span></a>
+    </div></li>
+    <li><button>אקוסיסטם <span class="caret">▾</span></button><div class="dropdown">
+      <a href="#" class="ditem">פורטפוליו<span class="desc">חברות הסטארטאפ</span></a>
+      <a href="#" class="ditem">חבילות ערך<span class="desc">לסטארטאפים</span></a>
+      <a href="#" class="ditem">השותפים שלנו<span class="desc">תעשייה ואקדמיה</span></a>
+    </div></li>
+  </ul></nav>
+  <div class="tb-right">
+    <div class="lang"><a href="#" class="active">עב</a><a href="/en/">EN</a></div>
+    <button class="a11y" aria-label="נגישות">♿</button>
+    <a href="#" class="nav-cta">הצטרפו</a>
+  </div>
+</div></header>
+<div class="accent-strip"></div>
+
+<main class="hero">
+  <div class="hero-l">
+    <div class="eyebrow">מחזור 05 · הגשת מועמדות פתוחה</div>
+    <h1 class="slogan"><span class="from">From</span> <span class="trauma">Trauma</span> <span class="arrow">to</span> <span class="opp">Opportunity.</span></h1>
+    <p class="vision">מרכז חדשנות שדרות הוא <strong>תשתית טכנולוגית וקהילתית</strong> שבונה גשר מהקושי להזדמנות — בית לסטארטאפים, יזמים וחוקרים שמפתחים את עתיד החוסן מהדרום, אל העולם.</p>
+    <div class="actions">
+      <a href="#" class="btn-primary">קראו את הסיפור שלנו ←</a>
+      <a href="#" class="btn-secondary">לתוכניות שלנו</a>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div>
+      <div class="info-label">תוכנית פעילה</div>
+      <div class="info-block">
+        <h4>Resilience Accelerator · מחזור 05</h4>
+        <p>מסלול האצה של 16 שבועות לסטארטאפים מוקדמים בתחום החוסן — ליווי, השקעת זרע וגישה לרשת מנטורים בינלאומית.</p>
+        <div class="meta">הגשת מועמדות: עד 15 ביולי 2026</div>
+        <div style="margin-top:1rem;"><a href="#" class="info-link">לפרטים מלאים ←</a></div>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="n">120+</div><div class="l">סטארטאפים</div></div>
+      <div class="stat"><div class="n">₪18M</div><div class="l">גיוס 2025</div></div>
+      <div class="stat"><div class="n">2,400</div><div class="l">קהילה</div></div>
+    </div>
+  </div>
+</main>
+
+<aside class="fcta" id="fcta">
+  <div class="fcta-t">Join us in redefining the future of <strong>resilience innovation.</strong></div>
+  <a href="#" class="fcta-b">הצטרפו ←</a>
+  <button class="fcta-x" onclick="this.parentElement.classList.remove('show')">×</button>
+</aside>
+<script>setTimeout(()=>document.getElementById('fcta').classList.add('show'),2000);</script>
+</body>
+</html>

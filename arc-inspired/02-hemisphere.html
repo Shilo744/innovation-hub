@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · Hemisphere</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#04102E;--bg-1:#0A1F4A;--bg-2:#13316E;
+    --ink:#FFFFFF;--dim:#BCC8E6;
+    --teal:#46C9C2;--teal-2:#5EE0D5;--gold:#F2C94C;
+    --violet:#8A5BFF;--line:rgba(180,200,255,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:'Heebo',system-ui,sans-serif;background:var(--bg-0);color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
+  .bg{position:fixed;inset:0;z-index:0;background:
+    radial-gradient(900px 600px at 50% 100%, var(--bg-2) 0%, var(--bg-1) 30%, var(--bg-0) 75%),
+    radial-gradient(700px 500px at 85% 15%, rgba(138,91,255,.16), transparent 60%);
+  }
+  .dust{position:fixed;inset:0;z-index:1;pointer-events:none;background-image:
+    radial-gradient(1px 1px at 22% 30%, var(--gold), transparent),
+    radial-gradient(1px 1px at 78% 22%, var(--gold), transparent),
+    radial-gradient(1.5px 1.5px at 12% 70%, #fff, transparent),
+    radial-gradient(1px 1px at 90% 60%, var(--teal), transparent),
+    radial-gradient(1px 1px at 60% 38%, #fff, transparent),
+    radial-gradient(1px 1px at 8% 52%, var(--gold), transparent);
+    opacity:.85}
+
+  .nav{position:fixed;top:20px;left:24px;right:24px;z-index:50;height:60px;display:flex;align-items:center;gap:28px;
+    padding:0 22px;border-radius:18px;background:rgba(7,18,46,.55);border:1px solid var(--line);
+    backdrop-filter:blur(20px) saturate(140%);box-shadow:0 24px 50px -20px rgba(0,0,0,.5)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+  .brand img{height:34px;filter:drop-shadow(0 4px 12px rgba(43,168,224,.45))}
+  .links{display:flex;gap:28px;margin-inline-start:auto;font-size:14.5px;color:#E1E8FA;font-weight:500}
+  .links a{color:inherit;text-decoration:none;opacity:.85;display:inline-flex;align-items:center;gap:6px}
+  .links a:hover{opacity:1}
+  .tools{display:flex;gap:8px;align-items:center}
+  .ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);cursor:pointer}
+  .lang{height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);font-family:'Heebo';font-weight:600;font-size:13px;cursor:pointer}
+  .cta-nav{height:42px;padding:0 22px;border-radius:999px;background:var(--teal);color:#04102E;border:0;font-family:'Heebo';font-weight:700;font-size:14px;cursor:pointer}
+  .cta-nav:hover{background:var(--teal-2)}
+
+  main{position:relative;z-index:10;height:100vh;display:grid;grid-template-rows:auto 1fr;padding:110px 6vw 0}
+  .copy{max-width:780px}
+  .slogan{font-size:13px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px;display:inline-flex;align-items:center;gap:10px}
+  .slogan::after{content:"";width:36px;height:1px;background:var(--gold);opacity:.6}
+  h1{font-family:'Heebo';font-weight:800;font-size:clamp(48px,6.2vw,96px);line-height:1.02;letter-spacing:-.02em}
+  h1 .b{color:var(--teal-2)}
+  .lead{margin-top:24px;color:var(--dim);font-size:17px;line-height:1.75;max-width:620px}
+  .cta-row{margin-top:30px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .pri{height:54px;padding:0 30px;border-radius:999px;background:var(--teal);color:#04102E;border:0;font-family:'Heebo';font-weight:700;font-size:15.5px;cursor:pointer;box-shadow:0 14px 40px -12px rgba(70,201,194,.55);transition:.2s}
+  .pri:hover{background:var(--teal-2);transform:translateY(-2px)}
+
+  /* hemisphere at bottom */
+  .hemi-wrap{position:fixed;left:0;right:0;bottom:0;height:55vh;z-index:5;pointer-events:none;overflow:hidden}
+  .hemi{position:absolute;left:50%;bottom:-65%;transform:translateX(-50%);width:140vmin;height:140vmin;border-radius:50%;
+    background:radial-gradient(circle at 50% 30%, rgba(94,224,213,.18), transparent 55%);
+    filter:drop-shadow(0 -30px 80px rgba(43,168,224,.25));
+    animation:rot 120s linear infinite}
+  @keyframes rot{to{transform:translateX(-50%) rotate(360deg)}}
+  .hemi svg{position:absolute;inset:0;width:100%;height:100%}
+
+  /* floating sparks */
+  .spark{position:fixed;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;animation:tw 2.4s ease-in-out infinite;z-index:6}
+  .sp1{width:4px;height:4px;bottom:42vh;right:12vw;background:var(--gold);box-shadow:0 0 14px var(--gold)}
+  .sp2{width:5px;height:5px;bottom:30vh;left:18vw;background:var(--teal-2);box-shadow:0 0 14px var(--teal-2);animation-delay:.5s}
+  .sp3{width:3px;height:3px;bottom:54vh;left:35vw;animation-delay:1s}
+  .sp4{width:4px;height:4px;bottom:46vh;right:32vw;background:var(--violet);box-shadow:0 0 14px var(--violet);animation-delay:1.5s}
+  @keyframes tw{0%,100%{opacity:1}50%{opacity:.3}}
+
+  @media (max-width:980px){.links{display:none}}
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="dust"></div>
+
+  <nav class="nav">
+    <div class="brand"><img src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">Innovation Hub</div>
+    <div class="links">
+      <a>אודות</a><a>תוכניות ▾</a><a>עדכונים</a><a>אירועים</a><a>אקוסיסטם</a>
+    </div>
+    <div class="tools">
+      <button class="ic" aria-label="נגישות"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M19 13l-5-1v9M5 13l5-1M9 22V15M15 22l-1-7"/></svg></button>
+      <button class="lang">EN</button>
+      <button class="cta-nav">צור קשר</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="copy">
+      <div class="slogan">From Trauma to Opportunity</div>
+      <h1>מעצימים <span class="b">חוסן</span><br>בקנה מידה גלובלי.</h1>
+      <p class="lead">פלטפורמת חדשנות שמחברת מומחים קליניים, יזמים ומובילי תעשייה — כדי להפוך אתגרי חוסן להזדמנויות. טכנולוגיות פורצות דרך, מודלים חדשניים ושותפויות שמשנות מציאות.</p>
+      <div class="cta-row"><button class="pri">Innovation Hub is on a Mission →</button></div>
+    </section>
+  </main>
+
+  <div class="hemi-wrap">
+    <div class="hemi">
+      <svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="hg" cx="50%" cy="35%">
+            <stop offset="0%" stop-color="#1f4f86" stop-opacity=".55"/>
+            <stop offset="55%" stop-color="#0d2858" stop-opacity=".4"/>
+            <stop offset="100%" stop-color="#04102E" stop-opacity="0"/>
+          </radialGradient>
+          <clipPath id="hc"><circle cx="400" cy="400" r="395"/></clipPath>
+        </defs>
+        <circle cx="400" cy="400" r="395" fill="url(#hg)"/>
+        <g clip-path="url(#hc)" stroke="rgba(140,200,220,.18)" fill="none" stroke-width="1">
+          <ellipse cx="400" cy="400" rx="395" ry="60"/>
+          <ellipse cx="400" cy="400" rx="395" ry="140"/>
+          <ellipse cx="400" cy="400" rx="395" ry="220"/>
+          <ellipse cx="400" cy="400" rx="395" ry="300"/>
+          <ellipse cx="400" cy="400" rx="60" ry="395"/>
+          <ellipse cx="400" cy="400" rx="140" ry="395"/>
+          <ellipse cx="400" cy="400" rx="220" ry="395"/>
+          <ellipse cx="400" cy="400" rx="300" ry="395"/>
+        </g>
+        <g clip-path="url(#hc)">
+          <g fill="#5EE0D5">
+            <!-- procedurally placed dots for landmasses -->
+            <circle cx="320" cy="200" r="3"/><circle cx="335" cy="215" r="3"/><circle cx="350" cy="225" r="3"/>
+            <circle cx="370" cy="235" r="3"/><circle cx="390" cy="245" r="3"/><circle cx="410" cy="240" r="3"/>
+            <circle cx="430" cy="250" r="3"/><circle cx="450" cy="260" r="3"/><circle cx="470" cy="265" r="3"/>
+            <circle cx="490" cy="255" r="3"/><circle cx="510" cy="270" r="3"/><circle cx="530" cy="280" r="3"/>
+            <circle cx="280" cy="240" r="3"/><circle cx="265" cy="255" r="3"/><circle cx="250" cy="270" r="3"/>
+            <circle cx="240" cy="290" r="3"/><circle cx="250" cy="310" r="3"/><circle cx="260" cy="330" r="3"/>
+            <circle cx="555" cy="290" r="3"/><circle cx="570" cy="310" r="3"/><circle cx="580" cy="330" r="3"/>
+            <circle cx="590" cy="350" r="3"/>
+            <circle cx="300" cy="280" r="3"/><circle cx="320" cy="290" r="3"/><circle cx="340" cy="300" r="3"/>
+            <circle cx="365" cy="310" r="3"/><circle cx="390" cy="320" r="3"/><circle cx="415" cy="320" r="3"/>
+            <circle cx="440" cy="325" r="3"/><circle cx="465" cy="320" r="3"/><circle cx="490" cy="315" r="3"/>
+            <circle cx="515" cy="320" r="3"/><circle cx="540" cy="325" r="3"/>
+            <circle cx="310" cy="345" r="3"/><circle cx="335" cy="355" r="3"/><circle cx="360" cy="365" r="3"/>
+            <circle cx="385" cy="370" r="3"/><circle cx="410" cy="375" r="3"/><circle cx="435" cy="370" r="3"/>
+            <circle cx="460" cy="365" r="3"/><circle cx="485" cy="360" r="3"/><circle cx="510" cy="355" r="3"/>
+          </g>
+          <g fill="rgba(94,224,213,.4)">
+            <circle cx="220" cy="380" r="2.2"/><circle cx="245" cy="395" r="2.2"/><circle cx="280" cy="410" r="2.2"/>
+            <circle cx="600" cy="395" r="2.2"/><circle cx="630" cy="410" r="2.2"/>
+            <circle cx="400" cy="440" r="2.2"/><circle cx="430" cy="455" r="2.2"/><circle cx="380" cy="465" r="2.2"/>
+            <circle cx="460" cy="490" r="2.2"/><circle cx="500" cy="475" r="2.2"/>
+          </g>
+          <g fill="#F2C94C">
+            <circle cx="410" cy="310" r="4"/>
+            <circle cx="350" cy="240" r="4"/>
+            <circle cx="480" cy="265" r="4"/>
+            <circle cx="270" cy="330" r="4"/>
+            <circle cx="550" cy="335" r="4"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <span class="spark sp1"></span><span class="spark sp2"></span><span class="spark sp3"></span><span class="spark sp4"></span>
+</body>
+</html>

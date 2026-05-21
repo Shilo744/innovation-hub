@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Single-File Web Bundler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030a16;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #0a1f3d 0%, #030a16 75%);
+      --card-bg: rgba(10, 25, 47, 0.55);
+      --card-border: rgba(70, 201, 194, 0.15);
+      --text: #f4f7fa;
+      --text-dim: #9ab1c7;
+      --teal: #46c9c2;
+      --teal-glow: rgba(70, 201, 194, 0.35);
+      --gold: #f2c94c;
+      --gold-glow: rgba(242, 201, 76, 0.35);
+      --success: #10b981;
+      --error: #ef4444;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      background-image: var(--bg-gradient);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 680px;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Glow Elements */
+    .glow-1 {
+      position: absolute;
+      top: -150px;
+      left: -150px;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--teal-glow), transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .glow-2 {
+      position: absolute;
+      bottom: -150px;
+      right: -150px;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-glow), transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 32px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 30%, var(--teal) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 15px;
+      color: var(--text-dim);
+      font-weight: 400;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Main Card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 40px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+      position: relative;
+      z-index: 5;
+      animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Dropzone */
+    .dropzone {
+      border: 2px dashed rgba(70, 201, 194, 0.3);
+      border-radius: 16px;
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--teal);
+      background: rgba(70, 201, 194, 0.05);
+      box-shadow: 0 0 25px rgba(70, 201, 194, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .dropzone svg {
+      width: 64px;
+      height: 64px;
+      color: var(--teal);
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 4px 10px rgba(70, 201, 194, 0.2));
+    }
+
+    .dropzone:hover svg {
+      transform: translateY(-4px);
+    }
+
+    .dropzone h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .dropzone p {
+      font-size: 13.5px;
+      color: var(--text-dim);
+      max-width: 320px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--teal);
+      color: #030a16;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 10px 20px -8px var(--teal-glow);
+    }
+
+    .btn:hover {
+      background: #5eed5;
+      transform: translateY(-1.5px);
+      box-shadow: 0 14px 24px -8px rgba(70, 201, 194, 0.5);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* Progress and Output UI */
+    .progress-container {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(70, 201, 194, 0.2);
+      border-top-color: var(--teal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--teal);
+      box-shadow: 0 0 10px var(--teal);
+      border-radius: 99px;
+      transition: width 0.1s ease;
+    }
+
+    .log-panel {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 180px;
+      overflow-y: auto;
+      color: var(--text-dim);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .log-entry {
+      line-height: 1.4;
+      animation: fadeIn 0.2s ease forwards;
+    }
+
+    .log-entry.warn { color: var(--gold); }
+    .log-entry.error { color: var(--error); }
+    .log-entry.success { color: var(--success); }
+
+    /* Results */
+    .result-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(16, 185, 129, 0.15);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    }
+
+    .result-details {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      text-align: left;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      row-gap: 12px;
+      column-gap: 16px;
+      font-size: 14px;
+    }
+
+    .result-details span.label {
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .result-details span.val {
+      color: var(--text);
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .action-row .btn {
+      flex: 1;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: none;
+    }
+
+    /* Footer */
+    footer.page-footer {
+      margin-top: 32px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-dim);
+      animation: fadeIn 1s ease;
+    }
+
+    /* Hide file input */
+    #dirInput {
+      display: none;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-1"></div>
+  <div class="glow-2"></div>
+
+  <div class="container">
+    <header>
+      <h1>Single-File Web Bundler</h1>
+      <p>Recursively compile HTML, stylesheets, scripts, local images and nested iframes into a single self-contained HTML file.</p>
+    </header>
+
+    <main class="card">
+      <!-- Input UI -->
+      <div id="inputUI">
+        <div class="dropzone" id="dropzone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            <polyline points="12 11 12 17"></polyline>
+            <polyline points="9 14 12 11 15 14"></polyline>
+          </svg>
+          <h3>Drag & Drop Folder Here</h3>
+          <p>Drop your website folder containing index.html, or click below to browse</p>
+          <button class="btn" id="browseBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Choose Folder
+          </button>
+        </div>
+        <input type="file" id="dirInput" webkitdirectory directory multiple />
+      </div>
+
+      <!-- Progress UI -->
+      <div id="progressUI" class="progress-container">
+        <div class="status-bar">
+          <div class="spinner"></div>
+          <span id="statusText">Scanning files...</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="log-panel" id="logPanel"></div>
+      </div>
+
+      <!-- Results UI -->
+      <div id="resultUI" class="result-container">
+        <div class="success-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div>
+          <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 6px;">Bundling Complete!</h3>
+          <p style="color: var(--text-dim); font-size: 14px;">Your single-file site has been successfully compiled.</p>
+        </div>
+        <div class="result-details">
+          <span class="label">Filename:</span>
+          <span class="val" id="resFilename">innovation-hub.html</span>
+          <span class="label">Total Size:</span>
+          <span class="val" id="resSize">14.68 MB</span>
+          <span class="label">Files Processed:</span>
+          <span class="val" id="resCount">34 files</span>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-secondary" id="resetBtn">Bundle Another</button>
+          <button class="btn" id="downloadBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download File
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <p>All processing runs 100% locally in your browser. No files are uploaded to any server.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Config
+    const MIME = {
+      ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+      ".gif": "image/gif", ".svg": "image/svg+xml", ".webp": "image/webp",
+      ".avif": "image/avif", ".ico": "image/x-icon"
+    };
+
+    const RESOLVER_TMPL = `<script>(function(){\n` +
+      `  var assets = __ASSETS__;\n` +
+      `  var A = __MAP__;\n` +
+      `  function getAsset(key){\n` +
+      `    if(!key) return null;\n` +
+      `    var val = A[key];\n` +
+      `    return typeof val === 'number' ? assets[val] : null;\n` +
+      `  }\n` +
+      `  function f(r){\n` +
+      `    try {\n` +
+      `      var m = r.querySelectorAll ? r.querySelectorAll('img') : [], i;\n` +
+      `      for(i=0; i<m.length; i++){\n` +
+      `        var s = m[i].getAttribute('src');\n` +
+      `        var resolved = getAsset(s);\n` +
+      `        if(resolved) m[i].setAttribute('src', resolved);\n` +
+      `      }\n` +
+      `      var g = r.querySelectorAll ? r.querySelectorAll('image') : [];\n` +
+      `      for(i=0; i<g.length; i++){\n` +
+      `        var h = g[i].getAttribute('href') || g[i].getAttributeNS('http://www.w3.org/1999/xlink', 'href');\n` +
+      `        var resolved = getAsset(h);\n` +
+      `        if(resolved){\n` +
+      `          g[i].setAttribute('href', resolved);\n` +
+      `          try { g[i].setAttributeNS('http://www.w3.org/1999/xlink', 'href', resolved); } catch(e){}\n` +
+      `        }\n` +
+      `      }\n` +
+      `    } catch(e){}\n` +
+      `  }\n` +
+      `  function a(){ f(document); }\n` +
+      `  if(document.readyState !== 'loading') a(); else document.addEventListener('DOMContentLoaded', a);\n` +
+      `  try {\n` +
+      `    new MutationObserver(function(ms){\n` +
+      `      for(var i=0; i<ms.length; i++){\n` +
+      `        var m = ms[i];\n` +
+      `        if(m.type === 'attributes'){\n` +
+      `          var el = m.target;\n` +
+      `          var name = m.attributeName;\n` +
+      `          if(name === 'src' || name === 'href'){\n` +
+      `            var val = el.getAttribute(name);\n` +
+      `            var resolved = getAsset(val);\n` +
+      `            if(resolved) el.setAttribute(name, resolved);\n` +
+      `          }\n` +
+      `        } else if(m.addedNodes){\n` +
+      `          var n = m.addedNodes;\n` +
+      `          for(var k=0; k<n.length; k++){\n` +
+      `            var el = n[k];\n` +
+      `            if(el.nodeType === 1){\n` +
+      `              if(el.tagName === 'IMG' || el.tagName === 'image'){\n" +
+      `                var name = el.tagName === 'IMG' ? 'src' : 'href';\n` +
+      `                var val = el.getAttribute(name);\n` +
+      `                var resolved = getAsset(val);\n` +
+      `                if(resolved) el.setAttribute(name, resolved);\n` +
+      `              }\n` +
+      `              f(el);\n` +
+      `            }\n` +
+      `          }\n` +
+      `        }\n` +
+      `      }\n` +
+      `    }).observe(document.documentElement, {childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'href']});\n` +
+      `  } catch(e){}\n` +
+      `})();<\/script>`;
+
+    // Elements
+    const dropzone = document.getElementById('dropzone');
+    const dirInput = document.getElementById('dirInput');
+    const browseBtn = document.getElementById('browseBtn');
+    const inputUI = document.getElementById('inputUI');
+    const progressUI = document.getElementById('progressUI');
+    const resultUI = document.getElementById('resultUI');
+    const progressBar = document.getElementById('progressBar');
+    const statusText = document.getElementById('statusText');
+    const logPanel = document.getElementById('logPanel');
+    const resFilename = document.getElementById('resFilename');
+    const resSize = document.getElementById('resSize');
+    const resCount = document.getElementById('resCount');
+    const resetBtn = document.getElementById('resetBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // State Registry
+    let html_files = {};
+    let css_files = {};
+    let js_files = {};
+    let asset_files = {};
+    let processed_files = new Set();
+    let finalBlob = null;
+    let finalFileName = 'site.html';
+
+    // Event Listeners
+    browseBtn.addEventListener('click', () => dirInput.click());
+    dirInput.addEventListener('change', handleFileSelection);
+
+    // Drag and Drop
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('dragover');
+    });
+    dropzone.addEventListener('drop', handleFolderDrop);
+
+    resetBtn.addEventListener('click', resetUIState);
+    downloadBtn.addEventListener('click', triggerDownload);
+
+    // Helpers for UI
+    function log(msg, type = '') {
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = msg;
+      logPanel.appendChild(entry);
+      logPanel.scrollTop = logPanel.scrollHeight;
+    }
+
+    function setProgress(pct, statusMsg) {
+      progressBar.style.width = `${pct}%`;
+      if (statusMsg) statusText.textContent = statusMsg;
+    }
+
+    function resetUIState() {
+      html_files = {};
+      css_files = {};
+      js_files = {};
+      asset_files = {};
+      processed_files.clear();
+      finalBlob = null;
+      finalFileName = 'site.html';
+
+      dirInput.value = '';
+      logPanel.innerHTML = '';
+      progressBar.style.width = '0%';
+      
+      inputUI.style.display = 'block';
+      progressUI.style.display = 'none';
+      resultUI.style.display = 'none';
+    }
+
+    function triggerDownload() {
+      if (!finalBlob) return;
+      const url = URL.createObjectURL(finalBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = finalFileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Drag and Drop handler
+    async function handleFolderDrop(e) {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+
+      const items = e.dataTransfer.items;
+      if (!items || items.length === 0) return;
+
+      inputUI.style.display = 'none';
+      progressUI.style.display = 'flex';
+      setProgress(10, 'Scanning dropped folder...');
+
+      try {
+        const fileList = await scanDroppedItems(items);
+        if (fileList.length === 0) {
+          throw new Error('No files found in the dropped folder.');
+        }
+        await processFileList(fileList);
+      } catch (err) {
+        log(`ERROR: ${err.message}`, 'error');
+        setProgress(100, 'Failed');
+        statusText.innerHTML = `<span style="color: var(--error)">Error: ${err.message}</span>`;
+        setTimeout(() => {
+          resetUIState();
+        }, 4000);
+      }
+    }
+
+    // Input selection handler
+    async function handleFileSelection(e) {
+      const files = Array.from(e.target.files);
+      if (files.length === 0) return;
+
+      inputUI.style.display = 'none';
+      progressUI.style.display = 'flex';
+      setProgress(10, 'Scanning directory...');
+
+      try {
+        await processFileList(files);
+      } catch (err) {
+        log(`ERROR: ${err.message}`, 'error');
+        setProgress(100, 'Failed');
+        statusText.innerHTML = `<span style="color: var(--error)">Error: ${err.message}</span>`;
+        setTimeout(() => {
+          resetUIState();
+        }, 4000);
+      }
+    }
+
+    // Scan directories recursively in browser
+    async function scanDroppedItems(items) {
+      let fileList = [];
+      async function traverse(entry, path = '') {
+        if (entry.isFile) {
+          const file = await new Promise((resolve) => entry.file(resolve));
+          // Attach custom property to preserve path structure
+          file.relativeRoute = path + entry.name;
+          fileList.push(file);
+        } else if (entry.isDirectory) {
+          const dirReader = entry.createReader();
+          const entries = await new Promise((resolve) => {
+            let allEntries = [];
+            function readAll() {
+              dirReader.readEntries((results) => {
+                if (results.length === 0) {
+                  resolve(allEntries);
+                } else {
+                  allEntries = allEntries.concat(results);
+                  readAll();
+                }
+              });
+            }
+            readAll();
+          });
+          for (const child of entries) {
+            await traverse(child, path + entry.name + '/');
+          }
+        }
+      }
+
+      for (let i = 0; i < items.length; i++) {
+        const entry = items[i].webkitGetAsEntry();
+        if (entry) {
+          await traverse(entry);
+        }
+      }
+      return fileList;
+    }
+
+    // Process scanned files
+    async function processFileList(files) {
+      // Find index.html to identify the project root
+      let indexFile = null;
+      for (const file of files) {
+        const path = file.webkitRelativePath || file.relativeRoute || file.name;
+        if (path.endsWith('index.html')) {
+          indexFile = file;
+          break;
+        }
+      }
+
+      if (!indexFile) {
+        throw new Error('Could not find index.html. Please ensure you select a folder containing the main index.html.');
+      }
+
+      const indexPath = indexFile.webkitRelativePath || indexFile.relativeRoute || indexFile.name;
+      const rootPrefix = indexPath.substring(0, indexPath.length - 10); // Strip "index.html"
+      
+      log(`Detected root path prefix: ${rootPrefix || '(root)'}`);
+      log(`Found ${files.length} total files. Reading files...`);
+
+      // Read files in parallel batches
+      let readCount = 0;
+      const totalFiles = files.length;
+
+      for (const file of files) {
+        const fullPath = file.webkitRelativePath || file.relativeRoute || file.name;
+        if (!fullPath.startsWith(rootPrefix)) {
+          continue; // Outside index.html subtree
+        }
+        
+        const relPath = fullPath.substring(rootPrefix.length).replace(/\\/g, '/');
+        if (relPath === 'build.py' || relPath === 'build.bat' || relPath === 'bundler.html') {
+          continue;
+        }
+
+        const ext = '.' + relPath.split('.').pop().toLowerCase();
+        
+        try {
+          if (ext === '.html') {
+            html_files[relPath] = await file.text();
+            log(`Loaded: ${relPath}`);
+          } else if (ext === '.css') {
+            css_files[relPath] = await file.text();
+            log(`Loaded: ${relPath}`);
+          } else if (ext === '.js') {
+            js_files[relPath] = await file.text();
+            log(`Loaded: ${relPath}`);
+          } else if (MIME[ext]) {
+            const dataUrl = await fileToDataURL(file);
+            asset_files[relPath] = {
+              uri: dataUrl,
+              filename: file.name
+            };
+            log(`Loaded asset: ${relPath}`);
+          }
+        } catch (e) {
+          log(`WARN: Failed to read ${relPath}: ${e.message}`, 'warn');
+        }
+
+        readCount++;
+        setProgress(10 + Math.floor((readCount / totalFiles) * 40), `Reading files (${readCount}/${totalFiles})...`);
+      }
+
+      if (!html_files['index.html']) {
+        throw new Error('Failed to load entrypoint index.html.');
+      }
+
+      setProgress(60, 'Inlining files and resolving paths...');
+      log('Compiling index.html and resolving recursive dependencies...');
+      
+      const compiledHTML = processHTML('index.html');
+      
+      setProgress(90, 'Preparing bundle download...');
+
+      // Save file details
+      finalFileName = getOutputFilename(html_files['index.html'], 'bundle.html');
+      finalBlob = new Blob([compiledHTML], { type: 'text/html;charset=utf-8' });
+      
+      const sizeMB = (finalBlob.size / (1024 * 1024)).toFixed(2);
+      
+      // Update result details
+      resFilename.textContent = finalFileName;
+      resSize.textContent = `${sizeMB} MB`;
+      resCount.textContent = `${Object.keys(html_files).length + Object.keys(css_files).length + Object.keys(js_files).length + Object.keys(asset_files).length} files`;
+
+      setProgress(100, 'Bundling Complete');
+      setTimeout(() => {
+        progressUI.style.display = 'none';
+        resultUI.style.display = 'flex';
+        triggerDownload(); // Auto-download once done
+      }, 800);
+    }
+
+    function fileToDataURL(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Path resolution helper
+    function resolvePath(baseDir, relativePath) {
+      relativePath = relativePath.split('?')[0];
+      if (relativePath.startsWith('/')) {
+        return relativePath.substring(1);
+      }
+      
+      const baseParts = baseDir ? baseDir.split('/') : [];
+      const relParts = relativePath.split('/');
+      
+      for (const part of relParts) {
+        if (part === '.' || part === '') {
+          continue;
+        }
+        if (part === '..') {
+          baseParts.pop();
+        } else {
+          baseParts.push(part);
+        }
+      }
+      return baseParts.join('/');
+    }
+
+    // Path relation helper
+    function getRelativePath(fromDir, toPath) {
+      if (!fromDir) return toPath;
+      const fromParts = fromDir.split('/');
+      const toParts = toPath.split('/');
+      
+      let i = 0;
+      while (i < fromParts.length && i < toParts.length && fromParts[i] === toParts[i]) {
+        i++;
+      }
+      
+      const upCount = fromParts.length - i;
+      const upParts = Array(upCount).fill('..');
+      const downParts = toParts.slice(i);
+      
+      return upParts.concat(downParts).join('/');
+    }
+
+    // CSS Resource Inliner
+    function inline_css_resources(css_content, css_dir) {
+      return css_content.replace(/\burl\(([^)]+)\)/gi, (match, url_val) => {
+        url_val = url_val.trim().replace(/^['"]|['"]$/g, '');
+        if (url_val.startsWith('http://') || url_val.startsWith('https://') || url_val.startsWith('data:') || url_val.startsWith('//') || url_val.startsWith('#')) {
+          return match;
+        }
+        
+        const resolvedPath = resolvePath(css_dir, url_val);
+        if (asset_files[resolvedPath]) {
+          log(`Inlined CSS url() asset: ${url_val}`);
+          return `url("${asset_files[resolvedPath].uri}")`;
+        } else {
+          log(`WARN: CSS asset not found: ${url_val} (resolved: ${resolvedPath})`, 'warn');
+          return match;
+        }
+      });
+    }
+
+    // Link Stylesheet Processor
+    function process_stylesheet_tags(html_content, current_dir) {
+      return html_content.replace(/<link\b([^>]*?)>/gi, (match, tag_content) => {
+        if (!/\brel=["']stylesheet["']/i.test(tag_content)) {
+          return match;
+        }
+        
+        const href_match = /\bhref=["']([^"']+)["']/i.exec(tag_content);
+        if (!href_match) return match;
+        
+        const href_val = href_match[1];
+        if (href_val.startsWith('http://') || href_val.startsWith('https://') || href_val.startsWith('data:') || href_val.startsWith('//')) {
+          return match;
+        }
+        
+        const resolvedPath = resolvePath(current_dir, href_val);
+        if (css_files[resolvedPath]) {
+          log(`Inlined stylesheet: ${href_val}`);
+          const css_dir = resolvedPath.includes('/') ? resolvedPath.substring(0, resolvedPath.lastIndexOf('/')) : '';
+          const inlined_css = inline_css_resources(css_files[resolvedPath], css_dir);
+          return `<style>${inlined_css}</style>`;
+        } else {
+          log(`WARN: Stylesheet not found: ${href_val} (resolved: ${resolvedPath})`, 'warn');
+          return match;
+        }
+      });
+    }
+
+    // Script Src Tag Processor
+    function process_script_tags(html_content, current_dir) {
+      return html_content.replace(/<script\b([^>]*?)>\s*<\/script>/gi, (match, tag_content) => {
+        const src_match = /\bsrc=["']([^"']+)["']/i.exec(tag_content);
+        if (!src_match) return match;
+        
+        const src_val = src_match[1];
+        if (src_val.startsWith('http://') || src_val.startsWith('https://') || src_val.startsWith('data:') || src_val.startsWith('//')) {
+          return match;
+        }
+        
+        const resolvedPath = resolvePath(current_dir, src_val);
+        if (js_files[resolvedPath]) {
+          log(`Inlined script: ${src_val}`);
+          let js_content = js_files[resolvedPath];
+          js_content = js_content.replace(/<\/script>/gi, '<\\/script>');
+          const new_attrs = tag_content.replace(/\bsrc=["']([^"']+)["']/i, '').trim();
+          const attrs_str = new_attrs ? ' ' + new_attrs : '';
+          return `<script${attrs_str}>${js_content}</script>`;
+        } else {
+          log(`WARN: Script not found: ${src_val} (resolved: ${resolvedPath})`, 'warn');
+          return match;
+        }
+      });
+    }
+
+    // Static Image Tag Processor
+    function process_static_images(html_content, current_dir) {
+      // <img> tags
+      html_content = html_content.replace(/<img\b([^>]*?)>/gi, (match, tag_content) => {
+        const src_match = /\bsrc=["']([^"']+)["']/i.exec(tag_content);
+        if (!src_match) return match;
+        
+        const src_val = src_match[1];
+        if (src_val.startsWith('http://') || src_val.startsWith('https://') || src_val.startsWith('data:') || src_val.startsWith('//')) {
+          return match;
+        }
+        
+        const resolvedPath = resolvePath(current_dir, src_val);
+        if (asset_files[resolvedPath]) {
+          log(`Inlined static image: ${src_val}`);
+          const new_tag_content = tag_content.replace(/\bsrc=["']([^"']+)["']/i, `src="${asset_files[resolvedPath].uri}"`);
+          return `<img${new_tag_content}>`;
+        }
+        return match;
+      });
+      
+      // <image> tags (inside SVGs)
+      html_content = html_content.replace(/<image\b([^>]*?)>/gi, (match, tag_content) => {
+        const href_match = /\b(?:xlink:)?href=["']([^"']+)["']/i.exec(tag_content);
+        if (!href_match) return match;
+        
+        const href_val = href_match[1];
+        if (href_val.startsWith('http://') || href_val.startsWith('https://') || href_val.startsWith('data:') || href_val.startsWith('//')) {
+          return match;
+        }
+        
+        const resolvedPath = resolvePath(current_dir, href_val);
+        if (asset_files[resolvedPath]) {
+          log(`Inlined static SVG image: ${href_val}`);
+          const new_tag_content = tag_content.replace(/\b(?:xlink:)?href=["']([^"']+)["']/i, `href="${asset_files[resolvedPath].uri}"`);
+          return `<image${new_tag_content}>`;
+        }
+        return match;
+      });
+      
+      return html_content;
+    }
+
+    // Recursive Iframe Compiler
+    function process_iframe_tags(html_content, current_dir) {
+      return html_content.replace(/<iframe\b([^>]*?)>/gi, (match, tag_content) => {
+        const src_match = /\bsrc=["']([^"']+)["']/i.exec(tag_content);
+        if (!src_match) return match;
+        
+        const src_val = src_match[1];
+        if (src_val.startsWith('http://') || src_val.startsWith('https://') || src_val.startsWith('data:') || src_val.startsWith('//')) {
+          return match;
+        }
+        
+        const resolvedPath = resolvePath(current_dir, src_val);
+        if (html_files[resolvedPath]) {
+          log(`Recursively inlining iframe: ${src_val}`);
+          const child_html = processHTML(resolvedPath);
+          const srcdoc = esc_srcdoc(child_html);
+          const new_tag_content = tag_content.replace(/\bsrc=["']([^"']+)["']/i, `srcdoc="${srcdoc}"`);
+          return `<iframe${new_tag_content}>`;
+        } else {
+          log(`WARN: Local iframe src not found: ${src_val} (resolved: ${resolvedPath})`, 'warn');
+          return match;
+        }
+      });
+    }
+
+    function esc_srcdoc(s) {
+      return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    }
+
+    // Dynamic Asset Resolver Injection
+    function inject_dynamic_resolver(html_content, current_file_path) {
+      const current_dir = current_file_path.includes('/') ? current_file_path.substring(0, current_file_path.lastIndexOf('/')) : '';
+      const assets_list = [];
+      const assets_map = {};
+      const uri_to_idx = {};
+      
+      for (const [rel_path, asset] of Object.entries(asset_files)) {
+        const fn = asset.filename;
+        if (html_content.includes(fn)) {
+          const uri = asset.uri;
+          if (uri_to_idx[uri] === undefined) {
+            uri_to_idx[uri] = assets_list.length;
+            assets_list.push(uri);
+          }
+          
+          const idx = uri_to_idx[uri];
+          assets_map[fn] = idx;
+          
+          const rel_from_doc = getRelativePath(current_dir, rel_path);
+          assets_map[rel_from_doc] = idx;
+          assets_map[rel_path] = idx;
+        }
+      }
+      
+      if (assets_list.length === 0) {
+        return html_content;
+      }
+      
+      log(`Injected runtime path resolver for ${assets_list.length} dynamic assets inside ${current_file_path}`);
+      const script = RESOLVER_TMPL
+        .replace('__ASSETS__', JSON.stringify(assets_list))
+        .replace('__MAP__', JSON.stringify(assets_map));
+        
+      const head_match = /<head[^>]*>/i.exec(html_content);
+      if (head_match) {
+        return html_content.replace(/(<head[^>]*>)/i, `$1\n${script}`);
+      } else {
+        return script + '\n' + html_content;
+      }
+    }
+
+    // Process a single HTML file recursively
+    function processHTML(html_file_path) {
+      if (processed_files.has(html_file_path)) {
+        return "";
+      }
+      processed_files.add(html_file_path);
+      
+      let content = html_files[html_file_path];
+      const current_dir = html_file_path.includes('/') ? html_file_path.substring(0, html_file_path.lastIndexOf('/')) : '';
+      
+      content = process_stylesheet_tags(content, current_dir);
+      content = process_script_tags(content, current_dir);
+      content = process_static_images(content, current_dir);
+      content = inject_dynamic_resolver(content, html_file_path);
+      content = process_iframe_tags(content, current_dir);
+      
+      processed_files.delete(html_file_path);
+      return content;
+    }
+
+    // Resolve output filename based on title tag
+    function getOutputFilename(indexContent, defaultName) {
+      const titleMatch = /<title>(.*?)<\/title>/i.exec(indexContent);
+      if (titleMatch) {
+        const title = titleMatch[1].split('—')[0].split('·')[0].split('-')[0].trim();
+        const clean = title.replace(/[^a-zA-Z0-9_\-]/g, ' ').trim().toLowerCase().replace(/\s+/g, '-');
+        if (clean) {
+          return `${clean}.html`;
+        }
+      }
+      return defaultName;
+    }
+  </script>
+</body>
+</html>

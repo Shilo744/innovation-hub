@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>האב חדשנות שדרות — From Trauma to Opportunity</title>
+<meta name="description" content="מרכז חדשנות שדרות — מהטראומה להזדמנות. תשתית טכנולוגית של תוכניות, סטארטאפים, וקהילה לקידום חוסן וצמיחה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A1628;
+    --bg-2: #0F1E36;
+    --cyan: #00D4D4;
+    --amber: #FFB547;
+    --cream: #F5F2EB;
+    --muted: rgba(245, 242, 235, 0.6);
+    --line: rgba(245, 242, 235, 0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--cream);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.4;
+    height: 100vh;
+  }
+  body.scrollable { overflow-y: auto; }
+
+  /* Background layers */
+  .bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .bg-gradient {
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(0, 212, 212, 0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 10% 90%, rgba(255, 181, 71, 0.15) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 50%, rgba(0, 212, 212, 0.05) 0%, transparent 70%);
+  }
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(0, 212, 212, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 212, 0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+  .bg-particles {
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
+    opacity: 0;
+    animation: rise linear infinite;
+  }
+  .particle.amber { background: var(--amber); box-shadow: 0 0 12px var(--amber); }
+  @keyframes rise {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+  }
+
+  /* Thin sticky top bar */
+  .topbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 100;
+    background: rgba(10, 22, 40, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 2rem;
+    gap: 2rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--cream);
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    position: relative;
+    width: 28px;
+    height: 28px;
+  }
+  .brand-mark::before, .brand-mark::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+  }
+  .brand-mark::before {
+    inset: 0;
+    background: var(--cyan);
+    box-shadow: 0 0 16px rgba(0, 212, 212, 0.6);
+  }
+  .brand-mark::after {
+    inset: 30%;
+    background: var(--amber);
+  }
+  .brand-text-en { font-size: 0.7rem; color: var(--muted); font-weight: 500; letter-spacing: 0.05em; display: block; }
+
+  .topnav {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    list-style: none;
+  }
+  .topnav li { position: relative; }
+  .topnav > li > a, .topnav > li > button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .topnav > li > a:hover, .topnav > li > button:hover { background: rgba(0, 212, 212, 0.1); color: var(--cyan); }
+  .topnav .caret { font-size: 0.7rem; opacity: 0.5; }
+
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: rgba(15, 30, 54, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    min-width: 280px;
+    padding: 0.7rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+  .topnav li:hover > .dropdown,
+  .topnav li:focus-within > .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+  .dropdown-item {
+    display: block;
+    padding: 0.7rem 0.9rem;
+    color: var(--cream);
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .dropdown-item:hover { background: rgba(0, 212, 212, 0.1); color: var(--cyan); }
+  .dropdown-item .desc { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+  .dropdown-item .he-only {
+    font-size: 0.65rem;
+    color: var(--amber);
+    background: rgba(255, 181, 71, 0.12);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    margin-right: 0.4rem;
+    font-weight: 600;
+  }
+  .dropdown-sub {
+    margin-right: 0.8rem;
+    border-right: 2px solid var(--line);
+    padding-right: 0.8rem;
+    margin-top: 0.2rem;
+  }
+  .dropdown-sub .dropdown-item { font-size: 0.85rem; padding: 0.45rem 0.7rem; }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .lang-toggle {
+    display: flex;
+    background: rgba(245, 242, 235, 0.06);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 2px;
+    font-size: 0.8rem;
+  }
+  .lang-toggle button {
+    background: none;
+    border: none;
+    color: var(--muted);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .lang-toggle button.active { background: var(--cyan); color: var(--bg); }
+  .a11y-btn {
+    background: rgba(245, 242, 235, 0.06);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--cream);
+    font-size: 1rem;
+    transition: background 0.2s;
+  }
+  .a11y-btn:hover { background: rgba(0, 212, 212, 0.15); }
+  .nav-cta {
+    background: var(--cyan);
+    color: var(--bg);
+    padding: 0.55rem 1.2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0, 212, 212, 0.4); }
+
+  /* Hero — fills exactly one viewport */
+  .hero {
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: rgba(0, 212, 212, 0.08);
+    border: 1px solid rgba(0, 212, 212, 0.25);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: var(--cyan);
+    margin-bottom: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .hero-eyebrow .pulse-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { opacity: 0.5; transform: scale(1.4); } }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 8vw, 8rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    margin-bottom: 1.5rem;
+    max-width: 1200px;
+  }
+  .hero h1 .from { color: var(--muted); }
+  .hero h1 .trauma {
+    color: var(--cream);
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1 .arrow {
+    color: var(--amber);
+    margin: 0 0.2em;
+    display: inline-block;
+    animation: arrow-pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes arrow-pulse {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-8px); }
+  }
+  .hero h1 .opportunity {
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--amber) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: shimmer 6s ease infinite;
+  }
+  @keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .hero-tagline-he {
+    font-size: clamp(1.05rem, 1.5vw, 1.4rem);
+    color: var(--muted);
+    max-width: 680px;
+    line-height: 1.55;
+    margin-bottom: 2.2rem;
+  }
+  .hero-tagline-he strong { color: var(--cream); font-weight: 600; }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn-primary {
+    background: var(--cyan);
+    color: var(--bg);
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 8px 30px rgba(0, 212, 212, 0.35);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0, 212, 212, 0.5); }
+  .btn-secondary {
+    background: rgba(245, 242, 235, 0.06);
+    border: 1px solid rgba(245, 242, 235, 0.18);
+    color: var(--cream);
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background 0.25s;
+    backdrop-filter: blur(10px);
+  }
+  .btn-secondary:hover { background: rgba(245, 242, 235, 0.12); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 6rem;
+    right: 50%;
+    transform: translateX(50%);
+    display: flex;
+    gap: 3rem;
+    padding: 1.2rem 2rem;
+    background: rgba(15, 30, 54, 0.5);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .hero-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.85rem;
+  }
+  .hero-stat .num {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--cyan);
+    letter-spacing: -0.02em;
+  }
+  .hero-stat .lab { color: var(--muted); }
+  .hero-stat + .hero-stat { padding-right: 3rem; border-right: 1px solid var(--line); }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 50%;
+    transform: translateX(50%);
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .scroll-cue::after {
+    content: "";
+    width: 1px;
+    height: 24px;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+    animation: scroll-pulse 2s ease infinite;
+  }
+  @keyframes scroll-pulse {
+    0%, 100% { transform: scaleY(0.6); opacity: 0.4; }
+    50% { transform: scaleY(1.2); opacity: 1; }
+  }
+
+  /* Floating CTA popup */
+  .float-cta {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 50%;
+    transform: translate(50%, 150px);
+    z-index: 99;
+    background: linear-gradient(135deg, var(--amber) 0%, #FF8C42 100%);
+    color: var(--bg);
+    padding: 1rem 1rem 1rem 1.5rem;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 1.3rem;
+    box-shadow: 0 20px 60px rgba(255, 140, 66, 0.4);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s;
+    max-width: calc(100vw - 3rem);
+  }
+  .float-cta.show { transform: translate(50%, 0); opacity: 1; }
+  .float-cta-text {
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+  }
+  .float-cta-btn {
+    background: var(--bg);
+    color: var(--cream);
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: transform 0.2s;
+  }
+  .float-cta-btn:hover { transform: translateY(-1px); }
+  .float-cta-close {
+    background: rgba(10, 22, 40, 0.15);
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--bg);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .float-cta-close:hover { background: rgba(10, 22, 40, 0.3); }
+
+  @media (max-width: 1000px) {
+    .topbar-inner { padding: 0.6rem 1rem; gap: 0.5rem; }
+    .topnav { display: none; }
+    .brand-text-en { display: none; }
+    .a11y-btn { display: none; }
+  }
+  @media (max-width: 600px) {
+    .hero h1 { font-size: clamp(2.2rem, 12vw, 4rem); }
+    .hero-stats { gap: 1.5rem; padding: 0.8rem 1.2rem; flex-direction: column; bottom: 8rem; }
+    .hero-stat + .hero-stat { padding-right: 0; border-right: none; border-top: 1px solid var(--line); padding-top: 0.8rem; }
+    .float-cta { padding: 0.7rem 0.7rem 0.7rem 1rem; gap: 0.7rem; flex-direction: column; align-items: stretch; border-radius: 20px; text-align: center; }
+    .float-cta-close { align-self: end; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-layer bg-gradient"></div>
+<div class="bg-layer bg-grid"></div>
+<div class="bg-layer bg-particles" id="particles"></div>
+
+<!-- Thin sticky topbar -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark"></span>
+      <span>
+        האב חדשנות שדרות
+        <span class="brand-text-en">SDEROT INNOVATION HUB</span>
+      </span>
+    </a>
+
+    <nav>
+      <ul class="topnav">
+        <li><a href="#about">About</a></li>
+        <li>
+          <button>Programs <span class="caret">▾</span></button>
+          <div class="dropdown">
+            <a href="#" class="dropdown-item">
+              Resilience Accelerator
+              <span class="desc">מסלול חדשנות לסטארטאפים בשלב מוקדם</span>
+            </a>
+            <a href="#" class="dropdown-item">
+              <span class="he-only">עברית בלבד</span>
+              משדרות לשיבא
+              <span class="desc">תוכנית שיתוף פעולה עם מרכז שיבא</span>
+            </a>
+            <a href="#" class="dropdown-item">
+              Immediate Implementation
+              <span class="desc">פתרונות טכנולוגיים ליישום מיידי בשטח</span>
+            </a>
+            <a href="#" class="dropdown-item">
+              MEITAL <span class="caret">▸</span>
+              <span class="desc">4 תוכניות־משנה לחוסן וטכנולוגיה</span>
+              <div class="dropdown-sub">
+                <a href="#" class="dropdown-item">MEITAL · Mental Health Tech</a>
+                <a href="#" class="dropdown-item">MEITAL · Community Resilience</a>
+                <a href="#" class="dropdown-item">MEITAL · Education Innovation</a>
+                <a href="#" class="dropdown-item">MEITAL · Crisis Response</a>
+              </div>
+            </a>
+          </div>
+        </li>
+        <li>
+          <button>Team <span class="caret">▾</span></button>
+          <div class="dropdown">
+            <a href="#" class="dropdown-item">Management <span class="desc">צוות הנהלה</span></a>
+            <a href="#" class="dropdown-item">Board <span class="desc">חברי הדירקטוריון</span></a>
+            <a href="#" class="dropdown-item">Experts <span class="desc">מומחים ויועצים</span></a>
+          </div>
+        </li>
+        <li><a href="#events">Events</a></li>
+        <li>
+          <button>Updates <span class="caret">▾</span></button>
+          <div class="dropdown">
+            <a href="#" class="dropdown-item">In the Press <span class="desc">בעיתונות</span></a>
+            <a href="#" class="dropdown-item">Newsletter <span class="desc">הצטרפו לדיוור</span></a>
+          </div>
+        </li>
+        <li>
+          <button>Ecosystem <span class="caret">▾</span></button>
+          <div class="dropdown">
+            <a href="#" class="dropdown-item">Portfolio <span class="desc">חברות הסטארטאפ שלנו</span></a>
+            <a href="#" class="dropdown-item">Value for Startups <span class="desc">חבילות ערך</span></a>
+            <a href="#" class="dropdown-item">Partners <span class="desc">השותפים שלנו</span></a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="topbar-actions">
+      <div class="lang-toggle" role="group" aria-label="בחירת שפה">
+        <button class="active" aria-current="true">עב</button>
+        <button>EN</button>
+      </div>
+      <button class="a11y-btn" aria-label="הגדרות נגישות" title="נגישות">♿</button>
+      <a href="#join" class="nav-cta">Join Us</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero — fills exactly one viewport -->
+<main class="hero">
+  <div class="hero-eyebrow">
+    <span class="pulse-dot"></span>
+    Resilience Accelerator · Cohort 05 · Now Open
+  </div>
+
+  <h1>
+    <span class="from">From</span> <span class="trauma">Trauma</span><br>
+    <span class="arrow">→</span><br>
+    <span class="opportunity">Opportunity.</span>
+  </h1>
+
+  <p class="hero-tagline-he">
+    מרכז חדשנות שדרות הוא <strong>תשתית טכנולוגית וקהילתית</strong> לסטארטאפים, חוקרים ויזמים שבונים את עתיד החוסן — מהדרום, לעולם.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#programs" class="btn-primary">Explore Programs ←</a>
+    <a href="#about" class="btn-secondary">Watch Our Story</a>
+  </div>
+
+  <div class="hero-stats" aria-label="נתוני מרכז החדשנות">
+    <div class="hero-stat">
+      <span class="num">120+</span>
+      <span class="lab">Startups</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">4</span>
+      <span class="lab">Programs</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">₪18M</span>
+      <span class="lab">Raised 2025</span>
+    </div>
+  </div>
+
+  <div class="scroll-cue">Scroll to explore</div>
+</main>
+
+<!-- Floating CTA popup -->
+<div class="float-cta" id="floatCta" role="dialog" aria-label="הזמנה להצטרף">
+  <div class="float-cta-text">
+    Join us in redefining the future of<br>
+    <strong>resilience innovation.</strong>
+  </div>
+  <a href="#join" class="float-cta-btn">Get Involved ←</a>
+  <button class="float-cta-close" aria-label="סגירה" onclick="document.getElementById('floatCta').classList.remove('show')">×</button>
+</div>
+
+<script>
+  // Floating CTA popup after 2 seconds
+  setTimeout(() => {
+    document.getElementById('floatCta').classList.add('show');
+  }, 2000);
+
+  // Generate background particles
+  const particles = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle' + (Math.random() > 0.7 ? ' amber' : '');
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (15 + Math.random() * 20) + 's';
+    p.style.animationDelay = Math.random() * 20 + 's';
+    particles.appendChild(p);
+  }
+
+  // Language toggle visual state
+  document.querySelectorAll('.lang-toggle button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

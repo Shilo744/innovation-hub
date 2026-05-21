@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · Classic Globe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#04102E;
+    --bg-1:#0A1F4A;
+    --bg-2:#13316E;
+    --ink:#FFFFFF;
+    --dim:#BCC8E6;
+    --teal:#46C9C2;
+    --teal-2:#5EE0D5;
+    --gold:#F2C94C;
+    --blue-logo:#2BA8E0;
+    --violet:#8A5BFF;
+    --line:rgba(180,200,255,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Heebo',system-ui,sans-serif;
+    background:var(--bg-0);color:var(--ink);overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* hero backdrop — like ARC: deep radial gradient */
+  .bg{position:fixed;inset:0;z-index:0;
+    background:
+      radial-gradient(1100px 800px at 75% 50%, var(--bg-2) 0%, var(--bg-1) 35%, var(--bg-0) 80%),
+      radial-gradient(900px 700px at 20% 90%, rgba(138,91,255,.18), transparent 60%),
+      var(--bg-0);
+  }
+  /* subtle yellow micro-dots */
+  .dust{position:fixed;inset:0;z-index:1;pointer-events:none;background-image:
+    radial-gradient(1px 1px at 18% 22%, var(--gold), transparent),
+    radial-gradient(1px 1px at 32% 70%, var(--gold), transparent),
+    radial-gradient(1px 1px at 88% 28%, var(--gold), transparent),
+    radial-gradient(1px 1px at 65% 85%, var(--gold), transparent),
+    radial-gradient(1.5px 1.5px at 78% 62%, #fff, transparent),
+    radial-gradient(1px 1px at 12% 88%, var(--gold), transparent),
+    radial-gradient(1px 1px at 92% 76%, #fff, transparent),
+    radial-gradient(1px 1px at 8% 45%, var(--teal), transparent);
+    opacity:.85;
+  }
+
+  /* slim floating nav — like ARC */
+  .nav{
+    position:fixed;top:20px;left:24px;right:24px;z-index:50;
+    height:60px;display:flex;align-items:center;gap:28px;
+    padding:0 22px;border-radius:18px;
+    background:rgba(7,18,46,.55);
+    border:1px solid var(--line);
+    backdrop-filter:blur(20px) saturate(140%);
+    -webkit-backdrop-filter:blur(20px) saturate(140%);
+    box-shadow:0 24px 50px -20px rgba(0,0,0,.5);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px;font-size:17px}
+  .brand img{height:34px;filter:drop-shadow(0 4px 12px rgba(43,168,224,.45))}
+  .links{display:flex;gap:28px;margin-inline-start:auto;font-size:14.5px;color:#E1E8FA;font-weight:500}
+  .links a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:6px 0;opacity:.85;transition:opacity .2s}
+  .links a:hover{opacity:1}
+  .links .caret{font-size:10px;opacity:.7;transform:translateY(1px)}
+  .tools{display:flex;gap:8px;align-items:center}
+  .ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+    background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink);transition:.2s}
+  .ic:hover{background:rgba(255,255,255,.10)}
+  .lang{height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line);
+    background:rgba(255,255,255,.04);color:var(--ink);font-family:'Heebo';font-weight:600;font-size:13px;cursor:pointer}
+  .cta-nav{height:42px;padding:0 22px;border-radius:999px;background:var(--teal);color:#04102E;
+    border:0;font-family:'Heebo';font-weight:700;font-size:14px;cursor:pointer;transition:.2s}
+  .cta-nav:hover{background:var(--teal-2)}
+
+  /* hero layout */
+  main{position:relative;z-index:10;height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 6vw 80px;gap:40px}
+  .copy{max-width:560px}
+  h1{font-family:'Heebo';font-weight:800;font-size:clamp(48px,5.8vw,84px);line-height:1.02;letter-spacing:-.02em}
+  h1 .b{color:var(--teal-2)}
+  .slogan{font-size:13px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:18px;display:inline-flex;align-items:center;gap:10px}
+  .slogan::after{content:"";width:36px;height:1px;background:var(--gold);opacity:.6}
+  .lead{margin-top:26px;color:var(--dim);font-size:17px;line-height:1.75;max-width:480px}
+  .lead + .lead{margin-top:18px}
+  .cta-row{margin-top:34px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .pri{height:54px;padding:0 30px;border-radius:999px;background:var(--teal);color:#04102E;
+    border:0;font-family:'Heebo';font-weight:700;font-size:15.5px;cursor:pointer;letter-spacing:.2px;transition:.2s;
+    box-shadow:0 14px 40px -12px rgba(70,201,194,.55)}
+  .pri:hover{background:var(--teal-2);transform:translateY(-2px)}
+
+  /* right visual — dotted globe */
+  .visual{position:relative;height:100%;display:grid;place-items:center}
+  .globe{
+    position:relative;
+    width:min(560px,52vw);aspect-ratio:1;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(94,224,213,.18), transparent 55%),
+      radial-gradient(circle at 50% 50%, rgba(43,168,224,.10), transparent 65%);
+    filter:drop-shadow(0 30px 80px rgba(43,168,224,.3));
+    animation:spin 90s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .globe::before{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    background:
+      radial-gradient(1.2px 1.2px at 10% 50%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 18% 35%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 22% 60%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 27% 25%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 30% 45%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 34% 70%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 38% 20%, var(--gold) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 42% 55%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 46% 30%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 50% 65%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 54% 40%, var(--gold) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 58% 20%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 62% 55%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 66% 75%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 70% 30%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 74% 50%, var(--gold) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 78% 65%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 82% 35%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 86% 55%, var(--teal-2) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 90% 45%, var(--teal-2) 50%, transparent 51%);
+    background-size:100% 100%;
+  }
+  /* svg dotted globe — more believable */
+  .globe svg{position:absolute;inset:0;width:100%;height:100%}
+  .globe .dot{fill:#5EE0D5}
+  .globe .dot.gold{fill:#F2C94C}
+  .globe .dot.dim{fill:rgba(94,224,213,.35)}
+
+  /* floating sparkles around globe */
+  .spark{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 10px #fff;animation:tw 2.4s ease-in-out infinite}
+  .s1{width:4px;height:4px;top:18%;right:-4%;background:var(--teal-2);box-shadow:0 0 14px var(--teal-2)}
+  .s2{width:5px;height:5px;bottom:14%;left:-3%;background:var(--gold);box-shadow:0 0 14px var(--gold);animation-delay:.6s}
+  .s3{width:3px;height:3px;top:55%;right:-6%;animation-delay:1.2s}
+  @keyframes tw{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+
+  /* phoenix logo as subtle background watermark on right */
+  .ghost{position:absolute;right:-2vw;top:50%;transform:translateY(-50%);height:80vh;width:auto;opacity:.05;z-index:0;filter:blur(0.4px)}
+
+  @media (max-width:980px){
+    main{grid-template-columns:1fr;padding-top:120px}
+    .visual{display:none}
+    .links{display:none}
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="dust"></div>
+
+  <nav class="nav" aria-label="ראשי">
+    <div class="brand"><img src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">Innovation Hub</div>
+    <div class="links">
+      <a href="#about">אודות</a>
+      <a href="#programs">תוכניות <span class="caret">▾</span></a>
+      <a href="#updates">עדכונים</a>
+      <a href="#events">אירועים</a>
+      <a href="#eco">אקוסיסטם</a>
+    </div>
+    <div class="tools">
+      <button class="ic" aria-label="נגישות" title="נגישות">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="4" r="2"/><path d="M19 13l-5-1v9M5 13l5-1M9 22V15M15 22l-1-7"/></svg>
+      </button>
+      <button class="lang" aria-label="English">EN</button>
+      <button class="cta-nav">צור קשר</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="copy">
+      <div class="slogan">From Trauma to Opportunity</div>
+      <h1>מ<span class="b">חוסן</span><br>לחדשנות גלובלית.</h1>
+      <p class="lead">אנחנו משנים את פני החוסן האנושי והבריאותי. זה לא רק המסע שלנו — זהו מסע של אקוסיסטם שלם.</p>
+      <p class="lead">פלטפורמת ה-Innovation Hub משלבת טכנולוגיות פורצות דרך, מודלים חדשניים של מתן מענה ומתודולוגיה ייחודית — שמאפשרים לנו לחולל שינוי משמעותי ולהניע צמיחה כלכלית.</p>
+      <div class="cta-row">
+        <button class="pri">Innovation Hub is on a Mission →</button>
+      </div>
+    </section>
+
+    <section class="visual">
+      <img class="ghost" src="../assets/Up_00024_-no-bg-1956x2226 (1).png" alt="">
+      <div class="globe" aria-hidden="true">
+        <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="ge" cx="35%" cy="30%">
+              <stop offset="0%" stop-color="#1f4f86" stop-opacity=".55"/>
+              <stop offset="60%" stop-color="#0d2858" stop-opacity=".3"/>
+              <stop offset="100%" stop-color="#04102E" stop-opacity="0"/>
+            </radialGradient>
+            <clipPath id="gc"><circle cx="200" cy="200" r="195"/></clipPath>
+          </defs>
+          <circle cx="200" cy="200" r="195" fill="url(#ge)"/>
+          <g clip-path="url(#gc)">
+            <!-- latitude rings -->
+            <g stroke="rgba(140,200,220,.18)" fill="none" stroke-width="1">
+              <ellipse cx="200" cy="200" rx="195" ry="40"/>
+              <ellipse cx="200" cy="200" rx="195" ry="80"/>
+              <ellipse cx="200" cy="200" rx="195" ry="120"/>
+              <ellipse cx="200" cy="200" rx="195" ry="160"/>
+              <ellipse cx="200" cy="200" rx="195" ry="195"/>
+              <ellipse cx="200" cy="200" rx="40" ry="195"/>
+              <ellipse cx="200" cy="200" rx="80" ry="195"/>
+              <ellipse cx="200" cy="200" rx="120" ry="195"/>
+              <ellipse cx="200" cy="200" rx="160" ry="195"/>
+            </g>
+            <!-- continent-like dot clusters -->
+            <g>
+              <!-- africa/europe -->
+              <g fill="#5EE0D5">
+                <circle cx="210" cy="140" r="2"/><circle cx="220" cy="148" r="2"/><circle cx="200" cy="160" r="2"/>
+                <circle cx="215" cy="170" r="2"/><circle cx="225" cy="180" r="2"/><circle cx="208" cy="190" r="2"/>
+                <circle cx="218" cy="200" r="2"/><circle cx="230" cy="210" r="2"/><circle cx="240" cy="200" r="2"/>
+                <circle cx="222" cy="220" r="2"/><circle cx="232" cy="230" r="2"/><circle cx="218" cy="240" r="2"/>
+                <circle cx="225" cy="250" r="2"/><circle cx="215" cy="258" r="2"/>
+              </g>
+              <!-- asia -->
+              <g fill="#5EE0D5">
+                <circle cx="260" cy="135" r="2"/><circle cx="275" cy="145" r="2"/><circle cx="290" cy="155" r="2"/>
+                <circle cx="305" cy="160" r="2"/><circle cx="320" cy="155" r="2"/>
+                <circle cx="270" cy="165" r="2"/><circle cx="285" cy="175" r="2"/><circle cx="300" cy="180" r="2"/>
+                <circle cx="315" cy="185" r="2"/><circle cx="298" cy="195" r="2"/>
+                <circle cx="280" cy="205" r="2"/><circle cx="295" cy="215" r="2"/><circle cx="310" cy="210" r="2"/>
+                <circle cx="320" cy="225" r="2"/><circle cx="305" cy="235" r="2"/>
+              </g>
+              <!-- americas (left) -->
+              <g fill="#5EE0D5">
+                <circle cx="110" cy="140" r="2"/><circle cx="120" cy="150" r="2"/><circle cx="100" cy="160" r="2"/>
+                <circle cx="115" cy="170" r="2"/><circle cx="125" cy="180" r="2"/><circle cx="105" cy="190" r="2"/>
+                <circle cx="120" cy="200" r="2"/><circle cx="135" cy="210" r="2"/>
+                <circle cx="125" cy="220" r="2"/><circle cx="115" cy="230" r="2"/><circle cx="130" cy="240" r="2"/>
+                <circle cx="120" cy="250" r="2"/><circle cx="135" cy="260" r="2"/><circle cx="125" cy="270" r="2"/>
+              </g>
+              <!-- gold highlights — key hubs -->
+              <g fill="#F2C94C">
+                <circle cx="220" cy="170" r="2.6"/>
+                <circle cx="300" cy="180" r="2.6"/>
+                <circle cx="120" cy="200" r="2.6"/>
+                <circle cx="240" cy="225" r="2.6"/>
+              </g>
+              <!-- background dim dots -->
+              <g fill="rgba(94,224,213,.30)">
+                <circle cx="190" cy="100" r="1.4"/><circle cx="260" cy="105" r="1.4"/>
+                <circle cx="160" cy="115" r="1.4"/><circle cx="320" cy="115" r="1.4"/>
+                <circle cx="345" cy="180" r="1.4"/><circle cx="60" cy="180" r="1.4"/>
+                <circle cx="350" cy="220" r="1.4"/><circle cx="55" cy="220" r="1.4"/>
+                <circle cx="170" cy="290" r="1.4"/><circle cx="240" cy="295" r="1.4"/>
+                <circle cx="200" cy="305" r="1.4"/>
+              </g>
+            </g>
+          </g>
+        </svg>
+        <span class="spark s1"></span>
+        <span class="spark s2"></span>
+        <span class="spark s3"></span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

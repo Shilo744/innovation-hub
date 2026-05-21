@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>האב חדשנות לחוסן ובריאות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#F4F2F8;
+    --ink:#0E1138;
+    --soft:#4A4E73;
+    --blue:#2563EB;
+    --blue-deep:#1E3A8A;
+    --purple:#7C3AED;
+    --purple-deep:#5B21B6;
+    --pink:#EC4899;
+    --cream:#FFF8EC;
+    --line:rgba(14,17,56,.12);
+  }
+  html,body{background:var(--bg);color:var(--ink);font-family:'Rubik','Heebo',sans-serif;line-height:1.55;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--purple);color:#fff}
+
+  /* NAV */
+  .nav{
+    position:fixed;top:18px;right:50%;transform:translateX(50%);
+    z-index:100;width:min(95%,1200px);
+    background:rgba(14,17,56,.92);backdrop-filter:blur(20px);
+    border-radius:999px;padding:8px 8px 8px 28px;
+    display:flex;align-items:center;justify-content:space-between;color:#fff;
+    box-shadow:0 14px 50px rgba(14,17,56,.18)
+  }
+  .nav-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px}
+  .nav-brand svg{width:28px;height:32px}
+  .nav-links{display:flex;gap:4px}
+  .nav-links a{padding:8px 14px;font-size:13px;font-weight:500;border-radius:999px;transition:all .2s;color:rgba(255,255,255,.8)}
+  .nav-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+  .nav-actions{display:flex;align-items:center;gap:6px}
+  .lang{font-size:12px;font-weight:600;padding:8px 12px;border-radius:999px;color:rgba(255,255,255,.6);cursor:pointer}
+  .nav-cta{background:linear-gradient(135deg,#3B82F6,#7C3AED);color:#fff!important;padding:10px 22px!important;font-weight:700!important;font-size:13px!important;border-radius:999px!important;box-shadow:0 6px 20px rgba(124,58,237,.5)}
+
+  /* HERO */
+  .hero{
+    height:100vh;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#1E3A8A 0%,#3B82F6 35%,#7C3AED 70%,#5B21B6 100%);
+    color:#fff;display:flex;align-items:center;padding:0 6vw
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at 20% 30%,rgba(236,72,153,.3),transparent 50%),
+      radial-gradient(ellipse at 85% 80%,rgba(34,211,238,.25),transparent 50%);
+    pointer-events:none
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23fff' fill-opacity='.05'/%3E%3C/svg%3E");
+    pointer-events:none
+  }
+  .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:center;position:relative;z-index:2;width:100%}
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:10px;
+    background:rgba(255,255,255,.12);backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.2);
+    padding:8px 16px;border-radius:999px;font-size:12px;font-weight:500;
+    letter-spacing:.05em;margin-bottom:32px
+  }
+  .hero-tag-dot{width:8px;height:8px;background:#22d3ee;border-radius:50%;animation:pulse 1.5s infinite}
+  @keyframes pulse{50%{opacity:.4;transform:scale(.8)}}
+  .hero h1{
+    font-family:'Rubik',sans-serif;
+    font-size:clamp(60px,9vw,168px);font-weight:900;line-height:.86;letter-spacing:-.04em;
+    margin-bottom:12px
+  }
+  .hero h1 .stroke{
+    -webkit-text-stroke:2px #fff;color:transparent;font-weight:900;font-style:italic
+  }
+  .hero h1 .grad{
+    background:linear-gradient(135deg,#FCD34D 0%,#F472B6 50%,#22D3EE 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+  }
+  .hero-en{font-family:'Rubik',sans-serif;font-size:18px;font-weight:500;letter-spacing:.2em;color:rgba(255,255,255,.8);margin-top:32px;text-transform:uppercase}
+  .hero-sub{margin-top:18px;font-size:18px;line-height:1.55;max-width:540px;color:rgba(255,255,255,.85)}
+  .hero-cta{margin-top:42px;display:flex;gap:14px;flex-wrap:wrap}
+  .btn-pri{
+    background:#fff;color:var(--ink);padding:18px 32px;border-radius:999px;
+    font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:10px;transition:all .3s
+  }
+  .btn-pri:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
+  .btn-sec{
+    background:transparent;color:#fff;padding:18px 28px;border-radius:999px;
+    font-weight:600;font-size:15px;border:2px solid rgba(255,255,255,.3);transition:all .3s
+  }
+  .btn-sec:hover{background:rgba(255,255,255,.1);border-color:#fff}
+
+  .hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+  .hero-logo-block{
+    width:min(78%,460px);aspect-ratio:1;background:rgba(255,255,255,.08);backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.18);border-radius:32px;display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden
+  }
+  .hero-logo-block::before{
+    content:"";position:absolute;inset:-20%;background:conic-gradient(from 0deg,#FCD34D,#EC4899,#3B82F6,#7C3AED,#FCD34D);
+    animation:spin 12s linear infinite;opacity:.15;filter:blur(40px)
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .hero-logo-block svg{position:relative;z-index:2;width:65%;filter:drop-shadow(0 20px 50px rgba(255,255,255,.3))}
+  .hero-stat-card{
+    position:absolute;background:rgba(255,255,255,.95);color:var(--ink);padding:18px 24px;
+    border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.2);min-width:160px
+  }
+  .hero-stat-card.t{top:-20px;right:20%}
+  .hero-stat-card.b{bottom:-20px;left:0}
+  .hsc-num{font-size:32px;font-weight:900;background:linear-gradient(135deg,#3B82F6,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+  .hsc-lbl{font-size:11px;color:var(--soft);text-transform:uppercase;letter-spacing:.15em;margin-top:6px;font-weight:600}
+
+  /* Marquee */
+  .marquee{background:var(--ink);color:#fff;padding:18px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:3}
+  .marquee-track{display:inline-flex;gap:60px;animation:marquee 28s linear infinite;font-family:'Rubik',sans-serif;font-weight:700;font-size:22px;align-items:center}
+  .marquee-track span{display:inline-flex;align-items:center;gap:60px}
+  .marquee-track svg{width:24px;height:24px;color:#FCD34D;flex-shrink:0}
+  @keyframes marquee{to{transform:translateX(100%)}}
+
+  /* Section base */
+  section{padding:140px 6vw;position:relative}
+  .sec-eyebrow{display:inline-flex;align-items:center;gap:12px;background:#fff;padding:8px 16px;border-radius:999px;font-size:12px;font-weight:700;color:var(--purple);margin-bottom:24px;border:1px solid var(--line);text-transform:uppercase;letter-spacing:.1em}
+  .sec-eyebrow::before{content:"";width:8px;height:8px;background:var(--purple);border-radius:50%}
+  .sec-title{font-family:'Rubik',sans-serif;font-size:clamp(40px,5.5vw,84px);font-weight:900;line-height:.95;letter-spacing:-.03em;max-width:920px;margin-bottom:24px}
+  .sec-title em{font-style:italic;background:linear-gradient(135deg,#3B82F6,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .sec-lead{font-size:18px;color:var(--soft);max-width:600px;margin-bottom:60px}
+
+  /* ABOUT */
+  .about{background:#fff}
+  .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:stretch}
+  .video-block{
+    position:relative;border-radius:32px;overflow:hidden;
+    background:linear-gradient(135deg,#1E3A8A,#7C3AED);min-height:460px;
+    display:flex;align-items:center;justify-content:center
+  }
+  .video-block::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,.2),transparent 60%)}
+  .play{position:relative;z-index:2;width:96px;height:96px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+  .play:hover{transform:scale(1.1)}
+  .play svg{width:32px;height:32px;fill:var(--ink);margin-right:-4px}
+  .video-meta{position:absolute;bottom:24px;right:24px;color:#fff;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);padding:8px 16px;border-radius:999px;font-size:12px;font-weight:600;z-index:2}
+  .about-content{display:flex;flex-direction:column;justify-content:center;gap:24px}
+  .about-content p{font-size:18px;line-height:1.7;color:var(--ink)}
+  .about-content p strong{color:var(--purple);font-weight:700}
+  .about-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .about-tag{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(124,58,237,.1));border:1px solid rgba(124,58,237,.2);color:var(--purple);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600}
+
+  /* TEAM */
+  .team-tabs{display:inline-flex;background:#fff;border-radius:999px;padding:6px;margin-bottom:50px;box-shadow:0 8px 30px rgba(14,17,56,.08)}
+  .tab{padding:12px 28px;font-size:14px;font-weight:600;color:var(--soft);cursor:pointer;border-radius:999px;transition:all .3s}
+  .tab.active{background:linear-gradient(135deg,#3B82F6,#7C3AED);color:#fff;box-shadow:0 8px 24px rgba(124,58,237,.4)}
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .member{background:#fff;border-radius:28px;padding:8px;transition:all .4s;cursor:pointer;box-shadow:0 4px 20px rgba(14,17,56,.06)}
+  .member:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(14,17,56,.12)}
+  .m-photo{aspect-ratio:1;background:linear-gradient(135deg,#1E3A8A,#7C3AED);border-radius:22px;margin-bottom:18px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .m-photo::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.25),transparent 50%)}
+  .m-photo svg{width:50%;opacity:.7;position:relative;z-index:1}
+  .m-info{padding:0 16px 16px}
+  .m-name{font-size:19px;font-weight:700;margin-bottom:4px}
+  .m-role{font-size:13px;color:var(--purple);font-weight:600;margin-bottom:14px}
+  .m-links{display:flex;gap:8px}
+  .m-links a{width:34px;height:34px;background:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .3s}
+  .m-links a:hover{background:var(--purple);color:#fff}
+  .m-links svg{width:14px;height:14px}
+
+  /* PROGRAMS */
+  .programs{background:linear-gradient(180deg,#0E1138 0%,#1E1B4B 100%);color:#fff;border-radius:48px 48px 0 0;margin-top:60px;overflow:hidden;position:relative}
+  .programs::before{content:"";position:absolute;top:0;right:0;width:60%;height:60%;background:radial-gradient(circle,rgba(124,58,237,.25),transparent 60%);filter:blur(60px)}
+  .programs .sec-title{color:#fff}
+  .programs .sec-title em{background:linear-gradient(135deg,#FCD34D,#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .programs .sec-eyebrow{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+  .programs .sec-eyebrow::before{background:#FCD34D}
+  .programs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;position:relative;z-index:2}
+  .program{
+    position:relative;padding:42px;border-radius:32px;cursor:pointer;
+    background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.12);transition:all .4s;overflow:hidden
+  }
+  .program:hover{transform:translateY(-6px);background:rgba(255,255,255,.1)}
+  .program:nth-child(1){background:linear-gradient(135deg,rgba(59,130,246,.3),rgba(124,58,237,.2))}
+  .program:nth-child(2){background:linear-gradient(135deg,rgba(236,72,153,.25),rgba(124,58,237,.25))}
+  .program:nth-child(3){background:linear-gradient(135deg,rgba(34,211,238,.2),rgba(59,130,246,.3))}
+  .program:nth-child(4){background:linear-gradient(135deg,rgba(252,211,77,.18),rgba(236,72,153,.2))}
+  .p-num{font-size:13px;font-weight:700;letter-spacing:.2em;opacity:.7;margin-bottom:18px}
+  .program h3{font-family:'Rubik',sans-serif;font-size:42px;font-weight:900;line-height:1;margin-bottom:18px;letter-spacing:-.02em}
+  .program p{color:rgba(255,255,255,.75);font-size:15px;line-height:1.6;margin-bottom:32px;max-width:420px}
+  .p-arrow{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:700;background:rgba(255,255,255,.15);padding:10px 18px;border-radius:999px;transition:all .3s}
+  .program:hover .p-arrow{background:#fff;color:var(--ink)}
+
+  /* EVENTS */
+  .events-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+  .event-card{background:#fff;border-radius:28px;padding:32px;cursor:pointer;transition:all .4s;position:relative;overflow:hidden;border:1px solid var(--line)}
+  .event-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(14,17,56,.12)}
+  .event-card::before{content:"";position:absolute;top:0;right:0;width:100%;height:6px;background:linear-gradient(90deg,#3B82F6,#7C3AED,#EC4899)}
+  .e-date{display:flex;align-items:baseline;gap:8px;margin-bottom:24px}
+  .e-day{font-family:'Rubik',sans-serif;font-size:48px;font-weight:900;line-height:1;letter-spacing:-.04em}
+  .e-mo{font-size:14px;font-weight:600;color:var(--soft);text-transform:uppercase;letter-spacing:.15em}
+  .e-card-tag{position:absolute;top:24px;left:24px;background:var(--bg);padding:6px 12px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--purple)}
+  .e-card-tag.past{color:var(--soft)}
+  .e-title{font-family:'Rubik',sans-serif;font-size:22px;font-weight:700;line-height:1.2;margin-bottom:14px}
+  .e-loc{font-size:14px;color:var(--soft);display:flex;align-items:center;gap:8px;margin-bottom:24px}
+  .e-loc::before{content:"●";color:var(--purple)}
+  .e-go{font-size:13px;font-weight:700;color:var(--purple);display:inline-flex;align-items:center;gap:8px}
+
+  /* UPDATES */
+  .updates{background:linear-gradient(180deg,var(--cream) 0%,#FFE8C2 100%)}
+  .updates-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px}
+  .press-card{background:#fff;border-radius:32px;padding:8px;box-shadow:0 8px 30px rgba(14,17,56,.05)}
+  .press-card h3{padding:24px 32px;font-size:17px;font-weight:700;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .press-card h3 span{font-size:12px;color:var(--soft);font-weight:500}
+  .press-item{padding:22px 32px;border-bottom:1px solid var(--line);cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;transition:all .3s}
+  .press-item:hover{background:var(--bg)}
+  .press-item:last-child{border-bottom:none}
+  .press-src{font-size:11px;color:var(--purple);font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px}
+  .press-title{font-size:17px;font-weight:600;line-height:1.3}
+  .press-date{color:var(--soft);font-size:12px;font-weight:600;white-space:nowrap}
+  .news-card{
+    background:linear-gradient(135deg,#1E3A8A,#7C3AED);color:#fff;border-radius:32px;padding:44px;
+    position:relative;overflow:hidden;align-self:start
+  }
+  .news-card::before{content:"";position:absolute;top:-30%;right:-30%;width:80%;height:80%;background:radial-gradient(circle,rgba(252,211,77,.3),transparent 60%);filter:blur(40px)}
+  .news-card > *{position:relative;z-index:1}
+  .news-card h3{font-family:'Rubik',sans-serif;font-size:32px;font-weight:900;line-height:1.05;margin-bottom:14px}
+  .news-card p{color:rgba(255,255,255,.8);font-size:15px;margin-bottom:28px}
+  .news-card input{width:100%;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:14px 22px;color:#fff;font-family:inherit;font-size:14px;margin-bottom:10px}
+  .news-card input::placeholder{color:rgba(255,255,255,.6)}
+  .news-card input:focus{outline:none;border-color:#fff}
+  .news-card button{margin-top:14px;width:100%;background:#FCD34D;color:var(--ink);border:none;padding:16px;border-radius:999px;font-family:inherit;font-weight:800;font-size:14px;cursor:pointer;transition:transform .3s}
+  .news-card button:hover{transform:translateY(-2px)}
+
+  /* ECOSYSTEM */
+  .eco-control{display:flex;justify-content:center;gap:10px;margin-bottom:50px;flex-wrap:wrap}
+  .eco-tab{background:#fff;border:1px solid var(--line);padding:12px 22px;border-radius:999px;font-size:14px;font-weight:600;color:var(--soft);cursor:pointer;transition:all .3s}
+  .eco-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .eco-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  .eco-cell{background:#fff;border:1px solid var(--line);aspect-ratio:1.3;border-radius:20px;display:flex;align-items:center;justify-content:center;padding:18px;text-align:center;font-size:15px;font-weight:600;transition:all .3s;cursor:pointer}
+  .eco-cell:hover{transform:translateY(-4px);border-color:var(--purple);color:var(--purple);box-shadow:0 12px 30px rgba(124,58,237,.15)}
+
+  /* Footer */
+  footer{background:var(--ink);color:#fff;padding:90px 6vw 30px;border-radius:48px 48px 0 0;margin-top:60px}
+  .foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;padding-bottom:50px}
+  .foot-brand{display:flex;gap:14px;align-items:center;margin-bottom:18px}
+  .foot-brand svg{width:48px;height:54px}
+  .foot-brand h4{font-family:'Rubik',sans-serif;font-size:22px;font-weight:800;line-height:1.1}
+  .foot-brand small{display:block;color:rgba(255,255,255,.55);font-size:12px;font-weight:500;margin-top:4px}
+  .foot-col h5{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#FCD34D;margin-bottom:18px;font-weight:700}
+  .foot-col a{display:block;padding:6px 0;color:rgba(255,255,255,.85);font-size:14px}
+  .foot-col a:hover{color:#FCD34D}
+  .foot-bot{padding-top:24px;border-top:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5)}
+
+  /* CTA */
+  .cta-pop{
+    position:fixed;bottom:-200px;left:50%;transform:translateX(-50%);z-index:999;
+    background:linear-gradient(135deg,#1E3A8A,#7C3AED);color:#fff;
+    border-radius:24px;padding:18px 24px;display:flex;align-items:center;gap:20px;
+    box-shadow:0 30px 80px rgba(124,58,237,.4);transition:bottom .6s cubic-bezier(.2,.9,.3,1.2);max-width:580px
+  }
+  .cta-pop.show{bottom:30px}
+  .cta-pop-text{font-size:15px;font-weight:500;line-height:1.3}
+  .cta-pop-text b{font-family:'Rubik',sans-serif;font-weight:800;color:#FCD34D}
+  .cta-pop button{background:#FCD34D;color:var(--ink);border:none;padding:12px 22px;border-radius:999px;font-family:inherit;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
+  .cta-pop .close{background:rgba(255,255,255,.15);color:#fff;width:34px;height:34px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+  .a11y{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3B82F6,#7C3AED);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:90;box-shadow:0 8px 30px rgba(124,58,237,.4)}
+
+  @media (max-width:900px){
+    .nav-links{display:none}
+    .hero-grid,.about-grid,.updates-grid{grid-template-columns:1fr;gap:40px}
+    .hero-visual{display:none}
+    .team-grid{grid-template-columns:1fr 1fr}
+    .programs-grid,.events-grid{grid-template-columns:1fr}
+    .eco-grid{grid-template-columns:1fr 1fr}
+    .foot-top{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="40%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="logoGradDark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e40af"/>
+      <stop offset="55%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <symbol id="logo" viewBox="0 0 120 140">
+      <g fill="url(#logoGrad)">
+        <path d="M60 8 Q52 24 56 44 Q58 54 60 60 Q62 54 64 44 Q68 24 60 8 Z"/>
+        <path d="M58 14 Q42 32 46 70 Q52 60 56 46 Q58 30 58 14 Z"/>
+        <path d="M62 14 Q78 32 74 70 Q68 60 64 46 Q62 30 62 14 Z"/>
+        <path d="M50 24 Q28 48 32 92 Q44 80 48 60 Q50 40 50 24 Z"/>
+        <path d="M70 24 Q92 48 88 92 Q76 80 72 60 Q70 40 70 24 Z"/>
+        <path d="M40 44 Q16 72 26 112 Q40 96 42 76 Q42 56 40 44 Z"/>
+        <path d="M80 44 Q104 72 94 112 Q80 96 78 76 Q78 56 80 44 Z"/>
+      </g>
+    </symbol>
+    <symbol id="logo-dark" viewBox="0 0 120 140">
+      <g fill="url(#logoGradDark)">
+        <path d="M60 8 Q52 24 56 44 Q58 54 60 60 Q62 54 64 44 Q68 24 60 8 Z"/>
+        <path d="M58 14 Q42 32 46 70 Q52 60 56 46 Q58 30 58 14 Z"/>
+        <path d="M62 14 Q78 32 74 70 Q68 60 64 46 Q62 30 62 14 Z"/>
+        <path d="M50 24 Q28 48 32 92 Q44 80 48 60 Q50 40 50 24 Z"/>
+        <path d="M70 24 Q92 48 88 92 Q76 80 72 60 Q70 40 70 24 Z"/>
+        <path d="M40 44 Q16 72 26 112 Q40 96 42 76 Q42 56 40 44 Z"/>
+        <path d="M80 44 Q104 72 94 112 Q80 96 78 76 Q78 56 80 44 Z"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="nav">
+  <a href="#" class="nav-brand"><svg><use href="#logo"/></svg><span>חוסן ובריאות</span></a>
+  <div class="nav-links">
+    <a href="#about">אודות</a>
+    <a href="#team">צוות</a>
+    <a href="#programs">תוכניות</a>
+    <a href="#events">אירועים</a>
+    <a href="#updates">עדכונים</a>
+    <a href="#ecosystem">אקוסיסטם</a>
+  </div>
+  <div class="nav-actions">
+    <span class="lang">EN</span>
+    <a href="#" class="nav-cta">הצטרפו ←</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-tag"><span class="hero-tag-dot"></span> RESILIENCE · HEALTH · INNOVATION</div>
+      <h1>
+        מטראומה<br>
+        <span class="grad">להזדמנות</span><br>
+        <span class="stroke">.</span>
+      </h1>
+      <p class="hero-en">From Trauma to Opportunity</p>
+      <p class="hero-sub">מאיצים פתרונות חדשנות בתחומי החוסן הנפשי, הפיזי והקהילתי — ובונים תשתית חדשה לדור שלם שעבר טראומה.</p>
+      <div class="hero-cta">
+        <a href="#programs" class="btn-pri">לתוכניות שלנו <span>←</span></a>
+        <a href="#about" class="btn-sec">▶ הסרטון שלנו</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-logo-block">
+        <svg><use href="#logo"/></svg>
+      </div>
+      <div class="hero-stat-card t">
+        <div class="hsc-num">48+</div>
+        <div class="hsc-lbl">סטארטאפים בליווינו</div>
+      </div>
+      <div class="hero-stat-card b">
+        <div class="hsc-num">$12M</div>
+        <div class="hsc-lbl">השקעות בקאוורט</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>
+      Mental Health <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      Community Resilience <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      PTSD Innovation <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      Digital Therapeutics <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      Implementation Science <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      From Trauma to Opportunity <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+    </span>
+    <span>
+      Mental Health <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      Community Resilience <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      PTSD Innovation <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      Digital Therapeutics <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      Implementation Science <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+      From Trauma to Opportunity <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+    </span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="sec-eyebrow">אודות · About</div>
+  <h2 class="sec-title">מקום שבו <em>חוסן</em> פוגש <em>חדשנות</em>.</h2>
+  <p class="sec-lead">אנחנו מחברים בין יזמים, חוקרים, אנשי טיפול וקהילות — והופכים תובנות מהשטח לכלים פורצי דרך לדור שלם שעבר טראומה.</p>
+  <div class="about-grid">
+    <div class="video-block">
+      <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="video-meta">🎬 VISION · 02:48</div>
+    </div>
+    <div class="about-content">
+      <p>האב חדשנות לחוסן ובריאות הוקם כתשובה לרגע שבו הציבור הישראלי נדרש להמציא את עצמו מחדש.</p>
+      <p>בעבודה משותפת עם <strong>בית החולים שיבא</strong>, שירותי הטיפול הציבוריים, ועם השקעות אסטרטגיות מהארץ ומחו"ל — אנחנו בונים תשתית חדשה לבריאות נפש, חוסן קהילתי ושיקום.</p>
+      <p><strong>המטרה:</strong> להפוך את ישראל למרכז עולמי בחדשנות חוסן ובריאות, ולייצא ידע לעולם.</p>
+      <div class="about-tags">
+        <span class="about-tag">בריאות נפש</span>
+        <span class="about-tag">חוסן קהילתי</span>
+        <span class="about-tag">שיקום מטראומה</span>
+        <span class="about-tag">חדשנות דיגיטלית</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="sec-eyebrow">צוות · Team</div>
+  <h2 class="sec-title">האנשים <em>שמובילים</em> את השינוי.</h2>
+  <div class="team-tabs">
+    <div class="tab active">ניהול</div>
+    <div class="tab">דירקטוריון</div>
+    <div class="tab">מומחים</div>
+  </div>
+  <div class="team-grid">
+    <div class="member">
+      <div class="m-photo"><svg><use href="#logo"/></svg></div>
+      <div class="m-info">
+        <div class="m-name">פרופ' שירה לוי</div>
+        <div class="m-role">מנכ"לית והמייסדת</div>
+        <div class="m-links">
+          <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.5 18v-8h-3v8h3zM7 8.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 18v-4.5c0-2-1-3-2.5-3-1.2 0-1.8.7-2 1V10h-3v8h3v-4.2c0-1 .4-1.5 1.3-1.5s1.2.7 1.2 1.5V18h2z"/></svg></a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 6l8 7 8-7"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="member">
+      <div class="m-photo"><svg><use href="#logo"/></svg></div>
+      <div class="m-info">
+        <div class="m-name">ד"ר עידן ברק</div>
+        <div class="m-role">סמנכ"ל מחקר</div>
+        <div class="m-links">
+          <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.5 18v-8h-3v8h3zM7 8.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 18v-4.5c0-2-1-3-2.5-3-1.2 0-1.8.7-2 1V10h-3v8h3v-4.2c0-1 .4-1.5 1.3-1.5s1.2.7 1.2 1.5V18h2z"/></svg></a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 6l8 7 8-7"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="member">
+      <div class="m-photo"><svg><use href="#logo"/></svg></div>
+      <div class="m-info">
+        <div class="m-name">נועה אדלשטיין</div>
+        <div class="m-role">ראש תוכניות האצה</div>
+        <div class="m-links">
+          <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.5 18v-8h-3v8h3zM7 8.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 18v-4.5c0-2-1-3-2.5-3-1.2 0-1.8.7-2 1V10h-3v8h3v-4.2c0-1 .4-1.5 1.3-1.5s1.2.7 1.2 1.5V18h2z"/></svg></a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 6l8 7 8-7"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="member">
+      <div class="m-photo"><svg><use href="#logo"/></svg></div>
+      <div class="m-info">
+        <div class="m-name">יואב כהן</div>
+        <div class="m-role">סמנכ"ל שותפויות</div>
+        <div class="m-links">
+          <a href="#"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14zM8.5 18v-8h-3v8h3zM7 8.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 18v-4.5c0-2-1-3-2.5-3-1.2 0-1.8.7-2 1V10h-3v8h3v-4.2c0-1 .4-1.5 1.3-1.5s1.2.7 1.2 1.5V18h2z"/></svg></a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16v12H4z"/><path d="M4 6l8 7 8-7"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="sec-eyebrow">תוכניות · Programs</div>
+  <h2 class="sec-title">ארבע <em>תוכניות</em>, מטרה אחת.</h2>
+  <div class="programs-grid">
+    <div class="program">
+      <div class="p-num">P01 — ACCELERATOR</div>
+      <h3>Resilience<br>Accelerator</h3>
+      <p>מאיץ בינלאומי לסטארטאפים בתחומי החוסן ובריאות הנפש. 16 שבועות, ליווי צמוד, חיבור לקרנות עולמיות.</p>
+      <span class="p-arrow">קראו עוד ←</span>
+    </div>
+    <div class="program">
+      <div class="p-num">P02 — CLINICAL TO FIELD</div>
+      <h3>Sheba<br>to Sderot</h3>
+      <p>תוכנית ייחודית המחברת בין מחקר רפואי מתקדם של בית החולים שיבא לבין הצרכים בשטח בשדרות והעוטף.</p>
+      <span class="p-arrow">קראו עוד ←</span>
+    </div>
+    <div class="program">
+      <div class="p-num">P03 — RAPID DEPLOYMENT</div>
+      <h3>Immediate<br>Implementation</h3>
+      <p>זרוע יישום מהיר של פתרונות מוכחים — מטכנולוגיה למסגרת טיפולית תוך שבועות, לא שנים.</p>
+      <span class="p-arrow">קראו עוד ←</span>
+    </div>
+    <div class="program">
+      <div class="p-num">P04 — PLATFORM</div>
+      <h3>MEITAL</h3>
+      <p>פלטפורמה רב-תכניתית הכוללת ארבע יוזמות: מחקר, הכשרה, קהילה והערכת אימפקט — בית אחד לכל יוזמה.</p>
+      <span class="p-arrow">קראו עוד ←</span>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="sec-eyebrow">אירועים · Events</div>
+  <h2 class="sec-title"><em>נפגשים</em>, בונים, משנים.</h2>
+  <div class="events-grid">
+    <div class="event-card">
+      <div class="e-card-tag">קרוב</div>
+      <div class="e-date"><span class="e-day">02</span><span class="e-mo">יוני 2026</span></div>
+      <div class="e-title">Resilience Summit 2026 — הכנס השנתי</div>
+      <div class="e-loc">שיבא, תל השומר</div>
+      <span class="e-go">הרשמה ←</span>
+    </div>
+    <div class="event-card">
+      <div class="e-card-tag">קרוב</div>
+      <div class="e-date"><span class="e-day">14</span><span class="e-mo">מאי 2026</span></div>
+      <div class="e-title">Demo Day — מחזור III של ה-Accelerator</div>
+      <div class="e-loc">שדרות</div>
+      <span class="e-go">הרשמה ←</span>
+    </div>
+    <div class="event-card">
+      <div class="e-card-tag past">עבר</div>
+      <div class="e-date"><span class="e-day">28</span><span class="e-mo">אפריל 2026</span></div>
+      <div class="e-title">Open Lab — סדנת חוסן קהילתי</div>
+      <div class="e-loc">ירושלים</div>
+      <span class="e-go">סיכום ←</span>
+    </div>
+  </div>
+</section>
+
+<!-- UPDATES -->
+<section class="updates" id="updates">
+  <div class="sec-eyebrow">עדכונים · Updates</div>
+  <h2 class="sec-title">מה <em>חדש</em> אצלנו.</h2>
+  <div class="updates-grid">
+    <div class="press-card">
+      <h3>בעיתונות <span>04.2026 – 02.2026</span></h3>
+      <div class="press-item">
+        <div>
+          <div class="press-src">Calcalist</div>
+          <div class="press-title">"חוסן ובריאות" גייסו 12 מ' ש' להאצת סטארטאפים</div>
+        </div>
+        <div class="press-date">04.2026</div>
+      </div>
+      <div class="press-item">
+        <div>
+          <div class="press-src">TheMarker</div>
+          <div class="press-title">ההאב החדש בשדרות שמייצא ידע ישראלי לעולם</div>
+        </div>
+        <div class="press-date">03.2026</div>
+      </div>
+      <div class="press-item">
+        <div>
+          <div class="press-src">YNET</div>
+          <div class="press-title">איך הופכים טראומה להזדמנות?</div>
+        </div>
+        <div class="press-date">02.2026</div>
+      </div>
+    </div>
+    <div class="news-card">
+      <h3>הצטרפו לניוזלטר</h3>
+      <p>אחת לחודש — סיכומי תוכניות, אירועים קרובים והזדמנויות שותפות.</p>
+      <form onsubmit="event.preventDefault();this.querySelector('button').innerText='✓ נרשמתם'">
+        <input type="text" placeholder="שם מלא">
+        <input type="email" placeholder="כתובת אימייל">
+        <button type="submit">הרשמה לניוזלטר →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section id="ecosystem">
+  <div style="text-align:center">
+    <div class="sec-eyebrow">אקוסיסטם · Ecosystem</div>
+    <h2 class="sec-title" style="margin-left:auto;margin-right:auto">הרשת <em>שמאחורינו</em>.</h2>
+  </div>
+  <div class="eco-control">
+    <div class="eco-tab active">פורטפוליו סטארטאפים</div>
+    <div class="eco-tab">חבילות ערך</div>
+    <div class="eco-tab">שותפים</div>
+  </div>
+  <div class="eco-grid">
+    <div class="eco-cell">MindBridge</div>
+    <div class="eco-cell">Resilio</div>
+    <div class="eco-cell">HealHive</div>
+    <div class="eco-cell">Calmly</div>
+    <div class="eco-cell">Neuravia</div>
+    <div class="eco-cell">Otef Tech</div>
+    <div class="eco-cell">StableMind</div>
+    <div class="eco-cell">Aurora Health</div>
+    <div class="eco-cell">TraumaIQ</div>
+    <div class="eco-cell">+12 נוספים →</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="foot-brand">
+        <svg><use href="#logo"/></svg>
+        <div>
+          <h4>חוסן ובריאות</h4>
+          <small>From Trauma to Opportunity</small>
+        </div>
+      </div>
+      <p style="color:rgba(255,255,255,.55);font-size:14px;max-width:340px;line-height:1.6">
+        מאיצים פתרונות חדשנות בתחום החוסן והבריאות בישראל ובעולם.
+      </p>
+    </div>
+    <div class="foot-col">
+      <h5>ניווט</h5>
+      <a href="#about">אודות</a>
+      <a href="#team">צוות</a>
+      <a href="#programs">תוכניות</a>
+      <a href="#events">אירועים</a>
+    </div>
+    <div class="foot-col">
+      <h5>תוכניות</h5>
+      <a href="#">Resilience Accelerator</a>
+      <a href="#">Sheba to Sderot</a>
+      <a href="#">Immediate Implementation</a>
+      <a href="#">MEITAL</a>
+    </div>
+    <div class="foot-col">
+      <h5>צרו קשר</h5>
+      <a href="mailto:hello@rhihub.org">hello@rhihub.org</a>
+      <a href="#">+972 8 123 4567</a>
+      <a href="#">שדרות, ישראל</a>
+      <a href="#">LinkedIn ↗</a>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span>© 2026 Resilience & Health Innovation Hub</span>
+    <span>נגישות · תנאי שימוש · פרטיות</span>
+  </div>
+</footer>
+
+<div class="cta-pop" id="ctaPop">
+  <div class="cta-pop-text"><b>Join us</b> in redefining the future of resilience innovation</div>
+  <button onclick="document.getElementById('ctaPop').classList.remove('show')">הצטרפו ←</button>
+  <button class="close" onclick="document.getElementById('ctaPop').classList.remove('show')">×</button>
+</div>
+
+<div class="a11y" title="נגישות">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="5" r="2"/><path d="M5 8h14M12 8v6M9 14l-3 7M15 14l3 7"/></svg>
+</div>
+
+<script>
+  setTimeout(() => document.getElementById('ctaPop').classList.add('show'), 2000);
+  document.querySelectorAll('.tab,.eco-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      t.parentElement.querySelectorAll(t.classList.contains('eco-tab')?'.eco-tab':'.tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

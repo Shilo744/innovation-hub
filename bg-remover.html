@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הסרת רקע מלוגו</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --border: #e3e8ef;
+    --text: #0f172a;
+    --muted: #64748b;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-soft: #eff4ff;
+    --danger: #dc2626;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Heebo", Arial, sans-serif;
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+  .container { max-width: 1000px; margin: 0 auto; padding: 36px 20px; }
+  header { margin-bottom: 24px; }
+  h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 14px; }
+
+  .dropzone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 56px 24px;
+    text-align: center;
+    background: var(--card);
+    transition: all 0.15s ease;
+    cursor: pointer;
+  }
+  .dropzone:hover, .dropzone.dragover {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+  }
+  .dropzone-icon { width: 44px; height: 44px; margin: 0 auto 12px; color: var(--primary); }
+  .dropzone h2 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .dropzone p { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.12s ease;
+    font-family: inherit;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: var(--primary-hover); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-secondary {
+    background: white;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-small { padding: 6px 12px; font-size: 12px; }
+
+  .workspace { display: none; }
+  .workspace.active { display: block; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+
+  .progress-card { text-align: center; padding: 24px 18px; }
+  .progress-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid #e3e8ef;
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .progress-bar {
+    width: 100%; max-width: 360px; margin: 0 auto;
+    height: 5px; background: #e3e8ef; border-radius: 999px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--primary); width: 0%;
+    transition: width 0.2s ease; border-radius: 999px;
+  }
+  .progress-text { color: var(--muted); font-size: 12px; margin-top: 10px; }
+
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 680px) { .comparison { grid-template-columns: 1fr; } }
+
+  .image-card { padding: 0; overflow: hidden; }
+  .image-card-header {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+  }
+  .image-card-header strong { color: var(--text); font-weight: 600; }
+  .image-card-header span { color: var(--muted); }
+  .image-preview {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background-image:
+      linear-gradient(45deg, #f1f5f9 25%, transparent 25%),
+      linear-gradient(-45deg, #f1f5f9 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #f1f5f9 75%),
+      linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, 8px 0;
+    background-color: #fafbfc;
+    position: relative;
+  }
+  .image-preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .image-preview.picking { cursor: crosshair; }
+
+  h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+
+  .mode-tabs {
+    display: flex;
+    gap: 6px;
+    background: var(--bg);
+    padding: 4px;
+    border-radius: 9px;
+    margin-bottom: 14px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: all 0.12s ease;
+    font-family: inherit;
+  }
+  .tab-btn.active { background: white; color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+
+  .control-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .control-row > label {
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 80px;
+    font-weight: 500;
+  }
+  .options { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+  .opt-btn {
+    padding: 7px 12px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.12s ease;
+    font-family: inherit;
+  }
+  .opt-btn:hover { border-color: var(--primary); color: var(--primary); }
+  .opt-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+
+  .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .slider-row label { font-size: 12px; color: var(--muted); min-width: 80px; }
+  .slider-row input[type="range"] { flex: 1; accent-color: var(--primary); }
+  .slider-row .value {
+    min-width: 38px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .color-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .color-row label { font-size: 12px; color: var(--muted); min-width: 80px; }
+  .color-swatch {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+  }
+  .color-hex {
+    font-family: ui-monospace, "SF Mono", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--bg);
+    padding: 4px 8px;
+    border-radius: 5px;
+  }
+
+  .custom-size {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 6px;
+    padding-right: 90px;
+  }
+  .custom-size input {
+    width: 80px;
+    padding: 6px 8px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: inherit;
+  }
+  .custom-size input:focus { outline: none; border-color: var(--primary); }
+  .custom-size span { color: var(--muted); font-size: 12px; }
+
+  .info-line {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 10px 0 4px;
+    padding: 8px 12px;
+    background: var(--bg);
+    border-radius: 7px;
+  }
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: var(--danger);
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-top: 12px;
+    font-size: 12px;
+  }
+  .hidden { display: none !important; }
+  .hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  footer { margin-top: 20px; color: var(--muted); font-size: 11px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>הסרת רקע מלוגו</h1>
+    <p class="subtitle">גרור תמונה, קבל לוגו עם רקע שקוף.</p>
+  </header>
+
+  <div id="dropzone" class="dropzone">
+    <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="17 8 12 3 7 8"/>
+      <line x1="12" y1="3" x2="12" y2="15"/>
+    </svg>
+    <h2>גרור לכאן את הלוגו</h2>
+    <p>PNG, JPG, WEBP · כל רזולוציה</p>
+    <button class="btn btn-primary" id="browseBtn" type="button">בחר קובץ</button>
+    <input type="file" id="fileInput" accept="image/*" style="display:none">
+  </div>
+
+  <div class="workspace" id="workspace">
+    <div class="card progress-card hidden" id="progressCard">
+      <div class="progress-status">
+        <div class="spinner"></div>
+        <span id="progressTitle">מעבד...</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText"></div>
+    </div>
+
+    <div class="comparison hidden" id="comparison">
+      <div class="card image-card">
+        <div class="image-card-header">
+          <strong>מקור</strong>
+          <span id="originalSize">—</span>
+        </div>
+        <div class="image-preview" id="originalPreview"><img id="originalImg" alt=""></div>
+      </div>
+      <div class="card image-card">
+        <div class="image-card-header">
+          <strong>ללא רקע</strong>
+          <span id="processedSize">—</span>
+        </div>
+        <div class="image-preview"><img id="processedImg" alt=""></div>
+      </div>
+    </div>
+
+    <div class="card hidden" id="controls">
+      <div class="mode-tabs" id="modeTabs">
+        <button class="tab-btn active" data-mode="color">רקע אחיד (לוגו)</button>
+        <button class="tab-btn" data-mode="ai">תמונה מורכבת (AI)</button>
+      </div>
+
+      <div id="colorControls">
+        <div class="color-row">
+          <label>צבע רקע</label>
+          <input type="color" id="bgColor" class="color-swatch" value="#000000">
+          <span class="color-hex" id="bgColorHex">#000000</span>
+          <button class="btn btn-secondary btn-small" id="pickerBtn">🎯 בחר מהתמונה</button>
+          <button class="btn btn-secondary btn-small" id="autoBtn">זיהוי אוטומטי</button>
+        </div>
+        <div class="slider-row">
+          <label>טווח צבע</label>
+          <input type="range" id="tolerance" min="0" max="200" value="60">
+          <span class="value" id="toleranceVal">60</span>
+        </div>
+        <div class="slider-row">
+          <label>ריכוך קצוות</label>
+          <input type="range" id="feather" min="0" max="80" value="20">
+          <span class="value" id="featherVal">20</span>
+        </div>
+        <div class="slider-row">
+          <label>ניקוי הילה</label>
+          <input type="range" id="despill" min="0" max="100" value="40">
+          <span class="value" id="despillVal">40</span>
+        </div>
+        <div class="hint">💡 טיפ: לחץ "בחר מהתמונה" וקליק על הרקע, או הסט את "טווח צבע" עד שהרקע נעלם לגמרי.</div>
+      </div>
+
+      <div id="aiControls" class="hidden">
+        <p class="hint" style="margin-bottom:10px;">מצב AI — מתאים לתמונות מורכבות. בפעם הראשונה יורד מודל ~80MB.</p>
+        <button class="btn btn-primary btn-small" id="runAiBtn">הפעל AI</button>
+      </div>
+
+      <h3 style="margin-top:18px;border-top:1px solid var(--border);padding-top:14px;">הורדה</h3>
+      <div class="control-row">
+        <label>פורמט</label>
+        <div class="options" id="formatOptions">
+          <button class="opt-btn active" data-format="png">PNG</button>
+          <button class="opt-btn" data-format="webp">WEBP</button>
+        </div>
+      </div>
+      <div class="control-row">
+        <label>גודל</label>
+        <div class="options" id="resolutionOptions">
+          <button class="opt-btn active" data-scale="1">מקור</button>
+          <button class="opt-btn" data-scale="2">×2</button>
+          <button class="opt-btn" data-scale="0.5">חצי</button>
+          <button class="opt-btn" data-scale="custom">מותאם</button>
+        </div>
+      </div>
+      <div class="custom-size hidden" id="customSize">
+        <input type="number" id="customWidth" min="1" max="8192">
+        <span>×</span>
+        <input type="number" id="customHeight" min="1" max="8192">
+        <span>px</span>
+      </div>
+      <div class="info-line" id="downloadInfo">—</div>
+      <div class="actions">
+        <button class="btn btn-primary" id="downloadBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          הורד
+        </button>
+        <button class="btn btn-secondary" id="newBtn">תמונה חדשה</button>
+      </div>
+    </div>
+
+    <div id="errorBox" class="error hidden"></div>
+  </div>
+
+  <footer>הכל רץ מקומית · התמונה לא נשלחת לשום שרת</footer>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const dropzone = $('dropzone');
+const fileInput = $('fileInput');
+const browseBtn = $('browseBtn');
+const workspace = $('workspace');
+const progressCard = $('progressCard');
+const progressFill = $('progressFill');
+const progressTitle = $('progressTitle');
+const progressText = $('progressText');
+const comparison = $('comparison');
+const controls = $('controls');
+const originalImg = $('originalImg');
+const originalPreview = $('originalPreview');
+const processedImg = $('processedImg');
+const originalSize = $('originalSize');
+const processedSize = $('processedSize');
+const downloadBtn = $('downloadBtn');
+const newBtn = $('newBtn');
+const errorBox = $('errorBox');
+const customSize = $('customSize');
+const customWidth = $('customWidth');
+const customHeight = $('customHeight');
+const downloadInfo = $('downloadInfo');
+const bgColor = $('bgColor');
+const bgColorHex = $('bgColorHex');
+const tolerance = $('tolerance');
+const toleranceVal = $('toleranceVal');
+const feather = $('feather');
+const featherVal = $('featherVal');
+const despill = $('despill');
+const despillVal = $('despillVal');
+const colorControls = $('colorControls');
+const aiControls = $('aiControls');
+const pickerBtn = $('pickerBtn');
+const autoBtn = $('autoBtn');
+const runAiBtn = $('runAiBtn');
+
+let state = {
+  originalBlob: null,
+  originalUrl: null,
+  originalBitmap: null,
+  sourceCanvas: null,
+  sourceData: null,
+  processedCanvas: null,
+  processedUrl: null,
+  originalName: 'logo',
+  scale: 1,
+  format: 'png',
+  customMode: false,
+  mode: 'color',
+  bgRgb: [0, 0, 0],
+  picking: false,
+  aiResultCanvas: null
+};
+
+function showError(msg) { errorBox.textContent = msg; errorBox.classList.remove('hidden'); }
+function hideError() { errorBox.classList.add('hidden'); }
+function formatBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1024*1024) return (b/1024).toFixed(1) + ' KB';
+  return (b/(1024*1024)).toFixed(2) + ' MB';
+}
+function hexToRgb(hex) {
+  const m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+  return m ? [parseInt(m[1],16), parseInt(m[2],16), parseInt(m[3],16)] : [0,0,0];
+}
+function rgbToHex(r,g,b) {
+  return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
+}
+
+['dragenter','dragover'].forEach(e => dropzone.addEventListener(e, (ev) => {
+  ev.preventDefault(); dropzone.classList.add('dragover');
+}));
+['dragleave','drop'].forEach(e => dropzone.addEventListener(e, (ev) => {
+  ev.preventDefault(); dropzone.classList.remove('dragover');
+}));
+dropzone.addEventListener('drop', (ev) => {
+  const file = ev.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+dropzone.addEventListener('click', (e) => {
+  if (e.target.tagName !== 'BUTTON') fileInput.click();
+});
+browseBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) handleFile(file);
+});
+
+window.addEventListener('paste', (e) => {
+  const items = e.clipboardData?.items;
+  if (!items) return;
+  for (const it of items) {
+    if (it.type.startsWith('image/')) {
+      const file = it.getAsFile();
+      if (file) handleFile(file);
+      break;
+    }
+  }
+});
+
+async function handleFile(file) {
+  if (!file.type.startsWith('image/')) { showError('הקובץ אינו תמונה'); return; }
+  hideError();
+  dropzone.style.display = 'none';
+  workspace.classList.add('active');
+  comparison.classList.add('hidden');
+  controls.classList.add('hidden');
+
+  state.originalBlob = file;
+  state.originalName = file.name.replace(/\.[^.]+$/, '') || 'logo';
+  if (state.originalUrl) URL.revokeObjectURL(state.originalUrl);
+  state.originalUrl = URL.createObjectURL(file);
+  originalImg.src = state.originalUrl;
+
+  state.originalBitmap = await createImageBitmap(file);
+  const c = document.createElement('canvas');
+  c.width = state.originalBitmap.width;
+  c.height = state.originalBitmap.height;
+  const ctx = c.getContext('2d', { willReadFrequently: true });
+  ctx.drawImage(state.originalBitmap, 0, 0);
+  state.sourceCanvas = c;
+  state.sourceData = ctx.getImageData(0, 0, c.width, c.height);
+
+  originalSize.textContent = `${c.width} × ${c.height} · ${formatBytes(file.size)}`;
+  customWidth.value = c.width;
+  customHeight.value = c.height;
+
+  autoDetectBg();
+  applyColorRemoval();
+
+  comparison.classList.remove('hidden');
+  controls.classList.remove('hidden');
+  updateDownloadInfo();
+}
+
+function autoDetectBg() {
+  const d = state.sourceData.data;
+  const w = state.sourceData.width;
+  const h = state.sourceData.height;
+  const samples = [];
+  const margin = 3;
+  const points = [
+    [margin, margin], [w-1-margin, margin],
+    [margin, h-1-margin], [w-1-margin, h-1-margin],
+    [w>>1, margin], [w>>1, h-1-margin],
+    [margin, h>>1], [w-1-margin, h>>1]
+  ];
+  for (const [x,y] of points) {
+    const i = (y*w + x) * 4;
+    samples.push([d[i], d[i+1], d[i+2]]);
+  }
+  const avg = samples.reduce((a,s) => [a[0]+s[0], a[1]+s[1], a[2]+s[2]], [0,0,0])
+                    .map(v => Math.round(v/samples.length));
+  state.bgRgb = avg;
+  bgColor.value = rgbToHex(avg[0], avg[1], avg[2]);
+  bgColorHex.textContent = bgColor.value;
+}
+
+function applyColorRemoval() {
+  if (!state.sourceData) return;
+  const src = state.sourceData.data;
+  const w = state.sourceData.width;
+  const h = state.sourceData.height;
+  const [br, bg2, bb] = state.bgRgb;
+  const tol = parseInt(tolerance.value);
+  const feath = parseInt(feather.value);
+  const despillAmt = parseInt(despill.value) / 100;
+
+  const out = new ImageData(w, h);
+  const dst = out.data;
+
+  const lower = tol;
+  const upper = tol + feath;
+
+  for (let i = 0; i < src.length; i += 4) {
+    const r = src[i], g = src[i+1], b = src[i+2];
+    const dr = r - br, dg = g - bg2, db = b - bb;
+    const dist = Math.sqrt(dr*dr + dg*dg + db*db);
+
+    let alpha;
+    if (dist <= lower) {
+      alpha = 0;
+    } else if (dist >= upper) {
+      alpha = 255;
+    } else {
+      alpha = Math.round(((dist - lower) / (upper - lower)) * 255);
+    }
+
+    let nr = r, ng = g, nb = b;
+    if (alpha < 255 && alpha > 0 && despillAmt > 0) {
+      const t = (1 - alpha/255) * despillAmt;
+      nr = Math.round(r - (br * t) / (1 - t + 0.001) * 0 + (r - br) * t);
+      ng = Math.round(g - (bg2 * t) / (1 - t + 0.001) * 0 + (g - bg2) * t);
+      nb = Math.round(b - (bb * t) / (1 - t + 0.001) * 0 + (b - bb) * t);
+      nr = Math.max(0, Math.min(255, nr));
+      ng = Math.max(0, Math.min(255, ng));
+      nb = Math.max(0, Math.min(255, nb));
+    }
+
+    dst[i] = nr;
+    dst[i+1] = ng;
+    dst[i+2] = nb;
+    dst[i+3] = alpha;
+  }
+
+  const c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+  c.getContext('2d').putImageData(out, 0, 0);
+  state.processedCanvas = c;
+
+  c.toBlob((blob) => {
+    if (state.processedUrl) URL.revokeObjectURL(state.processedUrl);
+    state.processedUrl = URL.createObjectURL(blob);
+    processedImg.src = state.processedUrl;
+    processedSize.textContent = `${w} × ${h} · ${formatBytes(blob.size)}`;
+  }, 'image/png');
+}
+
+let debounceTimer;
+function scheduleUpdate() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    if (state.mode === 'color') applyColorRemoval();
+  }, 50);
+}
+
+bgColor.addEventListener('input', () => {
+  state.bgRgb = hexToRgb(bgColor.value);
+  bgColorHex.textContent = bgColor.value;
+  scheduleUpdate();
+});
+tolerance.addEventListener('input', () => {
+  toleranceVal.textContent = tolerance.value;
+  scheduleUpdate();
+});
+feather.addEventListener('input', () => {
+  featherVal.textContent = feather.value;
+  scheduleUpdate();
+});
+despill.addEventListener('input', () => {
+  despillVal.textContent = despill.value;
+  scheduleUpdate();
+});
+autoBtn.addEventListener('click', () => {
+  autoDetectBg();
+  scheduleUpdate();
+});
+
+pickerBtn.addEventListener('click', () => {
+  state.picking = !state.picking;
+  originalPreview.classList.toggle('picking', state.picking);
+  pickerBtn.textContent = state.picking ? '✕ ביטול' : '🎯 בחר מהתמונה';
+});
+
+originalPreview.addEventListener('click', (e) => {
+  if (!state.picking || !state.sourceData) return;
+  const rect = originalImg.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
+  const imgX = Math.round((x / rect.width) * state.sourceData.width);
+  const imgY = Math.round((y / rect.height) * state.sourceData.height);
+  const i = (imgY * state.sourceData.width + imgX) * 4;
+  const r = state.sourceData.data[i];
+  const g = state.sourceData.data[i+1];
+  const b = state.sourceData.data[i+2];
+  state.bgRgb = [r, g, b];
+  bgColor.value = rgbToHex(r, g, b);
+  bgColorHex.textContent = bgColor.value;
+  state.picking = false;
+  originalPreview.classList.remove('picking');
+  pickerBtn.textContent = '🎯 בחר מהתמונה';
+  scheduleUpdate();
+});
+
+document.querySelectorAll('#modeTabs .tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#modeTabs .tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.mode = btn.dataset.mode;
+    if (state.mode === 'color') {
+      colorControls.classList.remove('hidden');
+      aiControls.classList.add('hidden');
+      applyColorRemoval();
+    } else {
+      colorControls.classList.add('hidden');
+      aiControls.classList.remove('hidden');
+      if (state.aiResultCanvas) {
+        showAiResult();
+      }
+    }
+  });
+});
+
+runAiBtn.addEventListener('click', async () => {
+  if (!state.originalBlob) return;
+  runAiBtn.disabled = true;
+  progressCard.classList.remove('hidden');
+  progressFill.style.width = '0%';
+  progressTitle.textContent = 'טוען מודל AI...';
+  progressText.textContent = 'בפעם הראשונה הורדה של ~80MB';
+  hideError();
+
+  try {
+    const mod = await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.6.0/+esm');
+    const blob = await mod.removeBackground(state.originalBlob, {
+      publicPath: 'https://staticimgly.com/@imgly/background-removal-data/1.6.0/dist/',
+      model: 'isnet',
+      output: { format: 'image/png', quality: 1.0 },
+      progress: (key, current, total) => {
+        const pct = total ? Math.round((current/total)*100) : 0;
+        progressFill.style.width = pct + '%';
+        if (key.startsWith('fetch')) progressTitle.textContent = 'מוריד מודל...';
+        else progressTitle.textContent = 'מסיר רקע...';
+        progressText.textContent = pct + '%';
+      }
+    });
+
+    const bitmap = await createImageBitmap(blob);
+    const c = document.createElement('canvas');
+    c.width = bitmap.width;
+    c.height = bitmap.height;
+    c.getContext('2d').drawImage(bitmap, 0, 0);
+    state.aiResultCanvas = c;
+    progressCard.classList.add('hidden');
+    showAiResult();
+  } catch (err) {
+    console.error(err);
+    progressCard.classList.add('hidden');
+    showError('שגיאת AI: ' + (err.message || err));
+  } finally {
+    runAiBtn.disabled = false;
+  }
+});
+
+function showAiResult() {
+  if (!state.aiResultCanvas) return;
+  state.processedCanvas = state.aiResultCanvas;
+  state.aiResultCanvas.toBlob((blob) => {
+    if (state.processedUrl) URL.revokeObjectURL(state.processedUrl);
+    state.processedUrl = URL.createObjectURL(blob);
+    processedImg.src = state.processedUrl;
+    processedSize.textContent = `${state.aiResultCanvas.width} × ${state.aiResultCanvas.height} · ${formatBytes(blob.size)}`;
+  }, 'image/png');
+}
+
+document.querySelectorAll('#formatOptions .opt-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#formatOptions .opt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.format = btn.dataset.format;
+    updateDownloadInfo();
+  });
+});
+
+document.querySelectorAll('#resolutionOptions .opt-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#resolutionOptions .opt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const s = btn.dataset.scale;
+    if (s === 'custom') {
+      state.customMode = true;
+      customSize.classList.remove('hidden');
+    } else {
+      state.customMode = false;
+      state.scale = parseFloat(s);
+      customSize.classList.add('hidden');
+    }
+    updateDownloadInfo();
+  });
+});
+
+[customWidth, customHeight].forEach((inp, idx) => {
+  inp.addEventListener('input', () => {
+    if (!state.processedCanvas) return;
+    const ratio = state.processedCanvas.width / state.processedCanvas.height;
+    if (idx === 0) customHeight.value = Math.round(customWidth.value / ratio);
+    else customWidth.value = Math.round(customHeight.value * ratio);
+    updateDownloadInfo();
+  });
+});
+
+function getOutputDims() {
+  if (!state.processedCanvas) return { w: 0, h: 0 };
+  if (state.customMode) {
+    return {
+      w: Math.max(1, parseInt(customWidth.value) || 1),
+      h: Math.max(1, parseInt(customHeight.value) || 1)
+    };
+  }
+  return {
+    w: Math.max(1, Math.round(state.processedCanvas.width * state.scale)),
+    h: Math.max(1, Math.round(state.processedCanvas.height * state.scale))
+  };
+}
+
+function updateDownloadInfo() {
+  const { w, h } = getOutputDims();
+  downloadInfo.textContent = `פלט: ${w} × ${h} · ${state.format.toUpperCase()}`;
+}
+
+downloadBtn.addEventListener('click', () => {
+  if (!state.processedCanvas) return;
+  const { w, h } = getOutputDims();
+  const canvas = document.createElement('canvas');
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(state.processedCanvas, 0, 0, w, h);
+
+  const mime = state.format === 'webp' ? 'image/webp' : 'image/png';
+  const quality = state.format === 'webp' ? 0.95 : undefined;
+  canvas.toBlob((blob) => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${state.originalName}-no-bg-${w}x${h}.${state.format}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }, mime, quality);
+});
+
+newBtn.addEventListener('click', () => {
+  workspace.classList.remove('active');
+  dropzone.style.display = 'block';
+  comparison.classList.add('hidden');
+  controls.classList.add('hidden');
+  progressCard.classList.add('hidden');
+  hideError();
+  fileInput.value = '';
+  if (state.originalUrl) URL.revokeObjectURL(state.originalUrl);
+  if (state.processedUrl) URL.revokeObjectURL(state.processedUrl);
+  state.originalBlob = null;
+  state.originalBitmap = null;
+  state.sourceCanvas = null;
+  state.sourceData = null;
+  state.processedCanvas = null;
+  state.aiResultCanvas = null;
+  state.originalUrl = null;
+  state.processedUrl = null;
+});
+</script>
+</body>
+</html>

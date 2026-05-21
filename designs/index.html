@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · 10 Design Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;500;700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06091F;
+    --bg-2:#0B1233;
+    --ink:#EEF2FF;
+    --dim:#9AA6CC;
+    --cyan:#3CD2F0;
+    --blue:#4274FF;
+    --violet:#8A5BFF;
+    --line:rgba(180,200,255,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{font-family:'Heebo','Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:
+    radial-gradient(900px 700px at 80% 10%, rgba(66,116,255,.18), transparent 60%),
+    radial-gradient(800px 700px at 15% 90%, rgba(138,91,255,.16), transparent 60%),
+    radial-gradient(ellipse at center, var(--bg-2), var(--bg) 80%)}
+
+  header{position:relative;z-index:5;padding:64px 6vw 36px;display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .h-l{max-width:760px}
+  .badge{display:inline-flex;align-items:center;gap:10px;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-family:'Inter';font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .badge .d{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+  h1{font-family:'Heebo';font-weight:900;font-size:clamp(36px,5.5vw,68px);line-height:1;letter-spacing:-.025em;margin:18px 0 10px}
+  h1 .g{background:linear-gradient(110deg,var(--cyan),var(--blue) 50%, var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--dim);font-size:16.5px;line-height:1.7;max-width:680px}
+  .h-r{font-family:'Inter';font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);text-align:left}
+  .h-r div{margin:6px 0}
+  .h-r strong{color:var(--ink);font-weight:700}
+
+  .grid{position:relative;z-index:5;padding:24px 6vw 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:22px}
+  .card{position:relative;overflow:hidden;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid var(--line);transition:transform .25s, box-shadow .25s, border-color .25s}
+  .card:hover{transform:translateY(-4px);border-color:rgba(180,200,255,.22);box-shadow:0 30px 70px -20px rgba(0,0,0,.55)}
+  .frame{position:relative;width:100%;aspect-ratio:16/10;background:#000;overflow:hidden}
+  .frame iframe{position:absolute;left:0;top:0;width:200%;height:200%;transform:scale(.5);transform-origin:top left;border:0;pointer-events:none}
+  .frame .veil{position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%, rgba(6,9,31,.85));pointer-events:none}
+  .frame .num{position:absolute;top:14px;right:16px;font-family:'Inter';font-size:11px;letter-spacing:2.5px;color:var(--ink);font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(6,9,31,.6);border:1px solid var(--line);backdrop-filter:blur(8px);z-index:2}
+  .meta{padding:16px 18px 18px}
+  .meta .row{display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .meta h3{font-family:'Heebo';font-weight:800;font-size:19px;letter-spacing:-.01em}
+  .meta .tag{font-family:'Inter';font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .meta p{margin-top:8px;font-size:13.5px;line-height:1.6;color:var(--dim)}
+  .open{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:9px 14px;border-radius:10px;background:linear-gradient(110deg,var(--cyan),var(--blue) 60%, var(--violet));color:#06091F;font-family:'Inter';font-weight:800;font-size:12.5px;letter-spacing:.5px;text-decoration:none;transition:transform .15s}
+  .open:hover{transform:translateX(-3px)}
+  .card a.cover{position:absolute;inset:0;z-index:5}
+
+  footer{position:relative;z-index:5;padding:20px 6vw 30px;display:flex;justify-content:space-between;font-family:'Inter';font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);border-top:1px solid var(--line)}
+
+  @media (max-width:600px){
+    header{flex-direction:column;align-items:flex-start}
+    .h-r{text-align:right}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="h-l">
+      <span class="badge"><span class="d"></span>10 Design Directions · Home Page Only</span>
+      <h1>בחרו את <span class="g">הסגנון</span> שמתאים<br>למרכז החדשנות.</h1>
+      <p class="lead">עשר אופציות עיצוב לעמוד הבית — כל אחת בעולם ויזואלי אחר, כולן בנויות סביב לוגו הפניקס, מותאמות לעברית/RTL, עם אופציית EN ונגישות. בחרו את הכיוון שאוהבים — ונמשיך משם לאתר המלא.</p>
+    </div>
+    <div class="h-r">
+      <div><strong>Logo</strong> · Phoenix gradient</div>
+      <div><strong>Slogan</strong> · From Trauma to Opportunity</div>
+      <div><strong>Layout</strong> · Single viewport hero</div>
+      <div><strong>v.</strong> 01 → 10</div>
+    </div>
+  </header>
+
+  <section class="grid" id="grid"></section>
+
+  <footer>
+    <span>© 2026 Innovation Hub</span>
+    <span>10 directions · click to open</span>
+  </footer>
+
+<script>
+  const items = [
+    {n:'01', file:'01-aurora-tech.html',     title:'Aurora Tech',      tag:'Dark · Animated Aurora',
+     desc:'רקע אורורה דינמית בכחול-סגול, נווט צף שקוף, טיפוגרפיה גדולה עם גרדיאנט. עדכני, טכנולוגי.'},
+    {n:'02', file:'02-glass-cosmos.html',    title:'Glass Cosmos',     tag:'Glassmorphism · Stars',
+     desc:'כדורי אור מטושטשים על שמי כוכבים, כרטיס זכוכית מרכזי עם הלוגו, חלוקה דו־טורית.'},
+    {n:'03', file:'03-editorial-pearl.html', title:'Editorial Pearl',  tag:'Light · Magazine',
+     desc:'אסתטיקה של מגזין עם נייר קרם, סריפים גדולים, חלוקה דו־טורית עם פוסטר אומנותי.'},
+    {n:'04', file:'04-neon-grid.html',       title:'Neon Grid',        tag:'Cyber · Terminal',
+     desc:'תחושת מסך CRT עם רשת ניאון, מונוספייס, HUD פינתי וטקסט זוהר — לוק עתידני-טכני.'},
+    {n:'05', file:'05-liquid-mesh.html',     title:'Liquid Mesh',      tag:'Vibrant · Gradient',
+     desc:'מש גרדיאנט נוזלי בצבעים חיים בתוך מסגרת מעוגלת, טיפוגרפיה ענקית, ניגוד גבוה.'},
+    {n:'06', file:'06-split-stage.html',     title:'Split Stage',      tag:'Editorial · Duo',
+     desc:'חלוקה אנכית: שמאל בהיר עם הטקסט, ימין כהה־סגול עם הלוגו והילה. שקט ועוצמתי.'},
+    {n:'07', file:'07-constellation.html',   title:'Constellation',    tag:'Network · Particles',
+     desc:'רשת חלקיקים חיה שמתחברת בקווי גרדיאנט, מטאפורה לקהילה. מרכזי, מאוזן ומודרני.'},
+    {n:'08', file:'08-brutalist-tech.html',  title:'Brutalist Tech',   tag:'Modular · Bold',
+     desc:'גריד ברוטליסטי של בלוקים עם בורדרים עבים, ניגוד גבוה, מונו, צבעים אסיד — שונה, נועז.'},
+    {n:'09', file:'09-cinematic-dawn.html',  title:'Cinematic Dawn',   tag:'Story · Sunrise',
+     desc:'שמיים שעוברים מלילה לזריחה, סילואט הר ולוגו זוהר — מטאפורה ישירה ל"מטראומה להזדמנות".'},
+    {n:'10', file:'10-soft-pearl.html',      title:'Soft Pearl',       tag:'Premium · Minimal',
+     desc:'בהיר ויוקרתי, פנינה במרכז עם טבעת מסתובבת, מספרים ומטה־מידע. נקי, מוסדי, מעודן.'}
+  ];
+  const grid=document.getElementById('grid');
+  grid.innerHTML=items.map(i=>`
+    <article class="card">
+      <a class="cover" href="${i.file}" target="_blank" aria-label="פתח ${i.title}"></a>
+      <div class="frame">
+        <span class="num">v.${i.n}</span>
+        <iframe src="${i.file}" loading="lazy" title="${i.title}" sandbox="allow-same-origin allow-scripts"></iframe>
+        <div class="veil"></div>
+      </div>
+      <div class="meta">
+        <div class="row"><h3>${i.title}</h3><span class="tag">${i.tag}</span></div>
+        <p>${i.desc}</p>
+        <a class="open" href="${i.file}" target="_blank">פתח במסך מלא →</a>
+      </div>
+    </article>
+  `).join('');
+</script>
+</body>
+</html>

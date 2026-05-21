@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Ecosystem Events</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#061B30;--ink:#FFFFFF;--ink-2:#D6E2EE;
+  --bg-light:#FFFFFF;--bg-alt:#F5F8FA;
+  --ink-dark:#0D2436;--ink-mid:#3F546A;
+  --teal-deep:#287E78;--teal:#46C9C2;--teal-2:#5EE0D5;--gold:#F2C94C;
+  --line:rgba(13,36,54,.08);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-0);color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+.reveal{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}
+.reveal.d2{transition-delay:.3s}
+
+.hero-banner{
+  background: var(--bg-0);
+  color: var(--ink);
+  padding: 130px var(--pad) 70px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-banner .eyebrow{color:var(--teal-2)}
+.hero-banner h2.headline{color:var(--ink)}
+.hero-banner h2.headline .accent{color:var(--teal-2)}
+.hero-banner .section-head .right{color:var(--ink-2)}
+
+.bg-glow{
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 30%, rgba(94,224,213,.08), transparent 50%), radial-gradient(circle at 20% 80%, rgba(242,201,76,.04), transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.events-content{
+  position: relative;
+  padding: 56px var(--pad) 96px;
+  background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-alt) 100%);
+}
+.container{max-width:1200px;margin:0 auto}
+
+.section-head{max-width:1200px;margin:0 auto 56px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:end}
+.section-head .left{max-width:640px}
+.section-head .right{align-self:end;font-size:15.5px;line-height:1.7;max-width:440px;color:var(--ink-mid)}
+.eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--teal-deep);font-weight:800;margin-bottom:16px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor;opacity:.7}
+h2.headline{font-family:'Manrope';font-weight:800;font-size:clamp(32px,3.8vw,52px);line-height:1.05;letter-spacing:-.02em}
+h2.headline .accent{color:var(--teal-deep)}
+
+.events-tabs{position:relative;z-index:2;display:flex;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px;width:fit-content;margin:0 auto 50px;box-shadow:0 10px 24px -14px rgba(13,36,54,.15)}
+.events-tab{position:relative;z-index:2;padding:11px 28px;border-radius:999px;background:transparent;color:var(--ink-mid);font-size:12.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;transition:color .25s}
+.events-tab.active{color:#fff}
+.ev-pill{position:absolute;top:6px;bottom:6px;border-radius:999px;background:var(--ink-dark);transition:left .3s cubic-bezier(.2,.7,.2,1),width .3s cubic-bezier(.2,.7,.2,1);z-index:1;left:6px;width:0}
+
+.events-grid{position:relative;z-index:2;display:flex;flex-direction:column;gap:18px;max-width:1200px;margin:0 auto}
+.event{display:grid;grid-template-columns:200px 1fr auto;gap:32px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px 32px;cursor:pointer;transition:all .3s cubic-bezier(.25,.8,.25,1);position:relative;overflow:hidden;box-shadow:0 8px 30px -10px rgba(13,36,54,.06)}
+.event:hover{transform:translateX(-6px);border-color:var(--teal);box-shadow:0 30px 60px -25px rgba(13,36,54,.15)}
+.event::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--teal);transform:scaleY(0);transform-origin:bottom;transition:transform .25s}
+.event:hover::before{transform:scaleY(1);transform-origin:top}
+
+.event .date-block{display:flex;flex-direction:column;gap:4px;border-right:1px solid var(--line);padding-right:24px}
+.event .day{font-family:'Manrope';font-weight:800;font-size:46px;color:var(--ink-dark);letter-spacing:-.03em;line-height:1}
+.event .month-year{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-mid);font-weight:700;margin-top:6px}
+.event .pill{margin-top:10px;display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal-deep);background:rgba(70,201,194,.12);border:1px solid rgba(40,126,120,.25);padding:4px 10px;border-radius:6px;font-weight:700;width:fit-content}
+
+.event .body h3{font-family:'Manrope';font-weight:800;font-size:22px;line-height:1.2;letter-spacing:-.012em;color:var(--ink-dark)}
+.event .body h3.he{font-family:'Heebo',sans-serif;direction:rtl;text-align:right}
+.event .body p{margin-top:8px;color:var(--ink-mid);font-size:14.5px;line-height:1.6;max-width:700px}
+.event .body p.he{font-family:'Heebo',sans-serif;direction:rtl;text-align:right}
+.event .body .meta{margin-top:12px;display:flex;gap:14px;font-size:12.5px;color:var(--ink-mid);font-weight:600}
+.event .body .meta.he{direction:rtl;justify-content:flex-start}
+.event .body .meta span{display:inline-flex;align-items:center;gap:6px}
+.event .body .meta svg{opacity:.6}
+
+.event .arrow{width:48px;height:48px;border-radius:50%;background:var(--bg-alt);display:grid;place-items:center;color:var(--ink-dark);transition:.3s;flex-shrink:0}
+.event:hover .arrow{background:var(--ink-dark);color:#fff;transform:rotate(-12deg)}
+
+@media (max-width:900px){
+  .section-head{grid-template-columns:1fr;gap:20px}
+  .event{grid-template-columns:1fr;gap:20px;padding:24px}
+  .event .date-block{border-right:0;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:16px;flex-direction:row;align-items:center;gap:18px}
+  .event .day{font-size:36px}
+  .event .arrow{display:none}
+}
+</style>
+</head>
+<body>
+<header class="hero-banner">
+  <div class="bg-glow"></div>
+  <div class="container" style="position:relative; z-index:2;">
+    <div class="section-head">
+      <div class="left">
+        <div class="eyebrow">Ecosystem Events</div>
+        <h2 class="headline reveal">Where the <span class="accent">Community Gathers.</span></h2>
+      </div>
+      <div class="right reveal d1">Conferences, professional summits, academic lectures and local meetup events that bring together the global resilience tech network.</div>
+    </div>
+  </div>
+</header>
+
+<section class="events-content">
+  <div class="container">
+    <div class="events-tabs" role="tablist">
+      <span class="ev-pill" id="evPill"></span>
+      <button class="events-tab active" data-evt="upcoming">Upcoming</button>
+      <button class="events-tab" data-evt="recent">Recent</button>
+    </div>
+
+    <div class="events-grid" id="eventsGrid"></div>
+  </div>
+</section>
+
+<script>
+// This is overwritten by the Python compiler in production
+let EVENTS = null; 
+
+// Simple parser for plain-text events_data.txt
+function parseEventsText(text) {
+  const sections = text.split(/\[(UPCOMING|RECENT)\]/i);
+  const events = { upcoming: [], recent: [] };
+  let currentKey = null;
+  
+  for (let part of sections) {
+    part = part.trim();
+    if (!part) continue;
+    if (part.toLowerCase() === 'upcoming') {
+      currentKey = 'upcoming';
+      continue;
+    }
+    if (part.toLowerCase() === 'recent') {
+      currentKey = 'recent';
+      continue;
+    }
+    
+    if (currentKey) {
+      const blocks = part.split('---');
+      for (let block of blocks) {
+        block = block.trim();
+        if (!block) continue;
+        const lines = block.split('\n');
+        const ev = {};
+        for (let line of lines) {
+          const colonIdx = line.indexOf(':');
+          if (colonIdx === -1) continue;
+          const k = line.substring(0, colonIdx).trim().toLowerCase();
+          const v = line.substring(colonIdx + 1).trim();
+          if (k === 'date') {
+            const spaceIdx = v.indexOf(' ');
+            if (spaceIdx !== -1) {
+              ev.day = v.substring(0, spaceIdx).trim();
+              ev.monthYear = v.substring(spaceIdx + 1).trim();
+            } else {
+              ev.day = v;
+              ev.monthYear = '';
+            }
+          } else if (k === 'category') {
+            ev.pill = v;
+          } else if (k === 'location') {
+            ev.city = v;
+          } else if (k === 'title') {
+            ev.title = v;
+          } else if (k === 'description') {
+            ev.desc = v;
+          }
+        }
+        if (ev.title) {
+          events[currentKey].push(ev);
+        }
+      }
+    }
+  }
+  return events;
+}
+
+// Fallback events data in case file loading fails and we are not compiled
+const DEFAULT_EVENTS = {
+  upcoming:[
+    {day:'18',monthYear:'JUN 2026',pill:'Summit',city:'Tel Aviv · Hilton',title:'Resilience Innovation Summit 2026',desc:'Three days of programming with global founders, clinicians and partners — keynotes, workshops, demo day.'},
+    {day:'22',monthYear:'SEP 2026',pill:'Demo Day',city:'Boston · Innovation Wing',title:'Boston Cohort · Demo Day',desc:'The second Boston cohort presents pilot results to investors and strategic partners.'},
+    {day:'05',monthYear:'NOV 2026',pill:'Community',city:'Sderot · Innovation Center',title:'שיבא לשדרות · Community Day',desc:'A day of co-creation with the Sderot community and local entrepreneurs.'},
+  ],
+  recent:[
+    {day:'19',monthYear:'MAR 2026',pill:'Forum',     city:'Tel Aviv',title:'From Investors to Engines of Creation — Avner Halperin Takeaways',desc:'Highlights and reflections from the spring leadership forum.'},
+    {day:'22',monthYear:'FEB 2026',pill:'Milestone', city:'Boston',  title:'Starget Pharma raises $18M Series B',desc:'A portfolio milestone for one of our flagship startups.'},
+    {day:'10',monthYear:'JAN 2026',pill:'Roundtable',city:'Geneva',  title:'WHO Resilience Roundtable',desc:'Closed-door session on global resilience policy frameworks.'},
+  ],
+};
+
+(function(){
+  const grid=document.getElementById('eventsGrid');
+  let dataToUse = EVENTS;
+
+  function isHebrew(text) {
+    return /[\u0590-\u05FF]/.test(text);
+  }
+
+  function render(key){
+    const items = (dataToUse && dataToUse[key]) ? dataToUse[key] : DEFAULT_EVENTS[key];
+    grid.innerHTML=items.map(e=>{
+      const isTitleHeb = isHebrew(e.title);
+      const isDescHeb = isHebrew(e.desc);
+      return `
+      <article class="event" style="opacity:0;transform:translateY(20px)" data-action="open-modal">
+        <div class="date-block">
+          <div class="day">${e.day}</div>
+          <div class="month-year">${e.monthYear}</div>
+          <span class="pill">${e.pill}</span>
+        </div>
+        <div class="body">
+          <h3 class="${isTitleHeb ? 'he' : ''}">${e.title}</h3>
+          <p class="${isDescHeb ? 'he' : ''}">${e.desc}</p>
+          <div class="meta ${isTitleHeb ? 'he' : ''}">
+            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-7.5-7-12a7 7 0 0114 0c0 4.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>${e.city}</span>
+          </div>
+        </div>
+        <div class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      </article>`;
+    }).join('');
+
+    requestAnimationFrame(()=>{
+      grid.querySelectorAll('.event').forEach((el,i)=>{
+        setTimeout(()=>{
+          el.style.opacity=1;el.style.transform='translateX(0)';
+          el.style.transition='opacity .5s ease, transform .4s cubic-bezier(.2,.7,.2,1), border-color .3s, box-shadow .3s';
+          if(window.__frameReport) window.__frameReport();
+        },i*70);
+      });
+    });
+  }
+
+  function positionPill(){
+    const active=document.querySelector('.events-tab.active');
+    const pill=document.getElementById('evPill');
+    if(active&&pill){pill.style.left=active.offsetLeft+'px';pill.style.width=active.offsetWidth+'px';}
+  }
+
+  document.querySelectorAll('.events-tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.events-tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');positionPill();render(t.dataset.evt);
+  }));
+
+  // Attempt to fetch file dynamically
+  if (!EVENTS) {
+    fetch('../events_data.txt')
+      .then(r => r.text())
+      .then(text => {
+        dataToUse = parseEventsText(text);
+        render('upcoming');
+        positionPill();
+      })
+      .catch(err => {
+        console.warn("Could not fetch events_data.txt dynamically (standard for local files), falling back to default.", err);
+        dataToUse = DEFAULT_EVENTS;
+        render('upcoming');
+        positionPill();
+      });
+  } else {
+    render('upcoming');
+    requestAnimationFrame(positionPill);
+  }
+
+  addEventListener('resize',positionPill);
+})();
+</script>
+<script src="_bridge.js" data-frame="events"></script>
+</body>
+</html>

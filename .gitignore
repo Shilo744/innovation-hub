@@ -1,0 +1,23 @@
+# Compiled output (large files)
+dist/
+node_modules/
+__pycache__/
+*.pyc
+
+# Temp/scratch
+site_v2/scratch/
+site/scratch/
+scratch/
+
+# Backup (optional - uncomment to exclude)
+# backup/
+# sections_backup/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/

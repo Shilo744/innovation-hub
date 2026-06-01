@@ -51,7 +51,15 @@ echo ========================================
 echo   ✅ העדכון הושלם בהצלחה!
 echo ========================================
 echo.
-timeout /t 5 >nul
+
+REM פתיחת ה-GitHub בדפדפן
+echo פותח את GitHub בדפדפן...
+for /f "tokens=*" %%U in ('git remote get-url origin') do set REPO_URL=%%U
+REM הסרת .git מסוף ה-URL אם קיים
+set REPO_URL=%REPO_URL:.git=%
+start "" "%REPO_URL%"
+
+timeout /t 3 >nul
 exit /b 0
 
 :error

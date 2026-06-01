@@ -24,9 +24,20 @@ Write-Host "[1/4] בודק שינויים..." -ForegroundColor Yellow
 $changes = git status --porcelain
 if ([string]::IsNullOrWhiteSpace($changes)) {
     Write-Host ""
-    Write-Host "אין שינויים לעדכון. הכל מסונכרן עם GitHub." -ForegroundColor Green
-    Write-Host ""
-    Start-Sleep -Seconds 3
+    Write-Host "אין שינויים מקומיים." -ForegroundColor Green
+    # בכל זאת ננסה לדחוף commits שלא הועלו עדיין
+    $ahead = git rev-list --count "@{u}..HEAD" 2>$null
+    if ($ahead -and [int]$ahead -gt 0) {
+        Write-Host "יש $ahead commits שעוד לא הועלו - דוחף ל-GitHub..." -ForegroundColor Yellow
+        git push origin main
+        if ($?) {
+            Write-Host "✓ הועלה בהצלחה!" -ForegroundColor Green
+            $repoUrl = (git remote get-url origin).Trim() -replace '\.git$', ''
+            Start-Process $repoUrl
+        }
+    } else {
+        Write-Host "הכל מסונכרן עם GitHub." -ForegroundColor Green
+    }
     exit 0
 }
 
@@ -74,4 +85,3 @@ $repoUrl = (git remote get-url origin).Trim()
 $repoUrl = $repoUrl -replace '\.git$', ''
 Start-Process $repoUrl
 
-Start-Sleep -Seconds 3

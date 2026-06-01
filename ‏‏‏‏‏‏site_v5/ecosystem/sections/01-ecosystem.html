@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub Ecosystem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-light:#FFFFFF;--bg-alt:#F5F8FA;
+  --ink-dark:#0D2436;--ink-mid:#3F546A;
+  --teal-deep:#00588B;--teal:#0074B5;--teal-2:#38B6FF;--gold:#A6ECFF;
+  --line:rgba(13,36,54,.08);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-light);color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+ul{list-style:none}
+
+.reveal{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}
+.reveal.d2{transition-delay:.3s}
+
+section{position:relative;padding:64px var(--pad) 90px;background:linear-gradient(180deg, var(--bg-light) 0%, var(--bg-alt) 100%)}
+.container{max-width:1200px;margin:0 auto}
+
+.section-head{max-width:1200px;margin:0 auto 56px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:end}
+.section-head .left{max-width:640px}
+.section-head .right{align-self:end;font-size:15.5px;line-height:1.7;max-width:440px;color:var(--ink-mid)}
+.eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--teal-deep);font-weight:800;margin-bottom:16px;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor;opacity:.7}
+h2.headline{font-family:'Manrope';font-weight:800;font-size:clamp(32px,3.8vw,52px);line-height:1.05;letter-spacing:-.02em}
+h2.headline .accent{color:var(--teal-deep)}
+
+/* IMPACT METRICS */
+.impact-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1200px;margin:0 auto 80px;padding:34px 36px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 15px 40px -20px rgba(13,36,54,.08);position:relative;z-index:2}
+.impact-item{text-align:center;position:relative}
+.impact-item:not(:last-child)::after{content:"";position:absolute;right:-12px;top:10%;bottom:10%;width:1px;background:var(--line)}
+.impact-item .v{font-family:'Manrope';font-weight:800;font-size:clamp(36px,4vw,54px);letter-spacing:-.025em;line-height:1;color:var(--teal-deep);display:flex;align-items:baseline;justify-content:center;gap:2px}
+.impact-item .v .sm{font-size:.55em;color:var(--ink-mid);font-weight:700}
+.impact-item .l{margin-top:10px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--ink-mid)}
+
+.eco-block{max-width:1200px;margin:0 auto 90px;position:relative;z-index:2}
+.eco-block:last-child{margin-bottom:0}
+.eco-block-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:32px;gap:30px}
+.eco-title{font-family:'Manrope';font-weight:800;font-size:28px;line-height:1.15;letter-spacing:-.015em;color:var(--ink-dark);display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.eco-title .num{color:var(--teal-deep);font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:800}
+.eco-sub{color:var(--ink-mid);font-size:14.5px;max-width:480px;line-height:1.6;text-align:left}
+
+/* PORTFOLIO GRID */
+.portfolio{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.pf{position:relative;aspect-ratio:1.6/1;border:1px solid var(--line);border-radius:14px;background:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:22px;cursor:pointer;transition:all .3s cubic-bezier(.25,.8,.25,1);color:var(--ink-dark);overflow:hidden;box-shadow:0 4px 15px -8px rgba(13,36,54,.05)}
+.pf::before{content:"";position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;background:rgba(0,116,181,.1);transition:.3s}
+.pf::after{content:"→";position:absolute;top:16px;right:16px;width:28px;height:28px;display:grid;place-items:center;color:transparent;transition:.3s;font-size:14px}
+.pf:hover{transform:translateY(-4px);border-color:var(--teal);box-shadow:0 20px 40px -20px rgba(13,36,54,.12)}
+.pf:hover::before{background:var(--teal);transform:scale(1.4)}
+.pf:hover::after{color:#fff}
+.pf .meta .name{font-family:'Manrope';font-weight:800;font-size:18px;letter-spacing:-.015em;color:var(--ink-dark)}
+.pf .meta .tag{font-size:12.5px;color:var(--ink-mid);margin-top:4px}
+
+/* VALUE PACKS GRID */
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pack{position:relative;padding:36px;border-radius:var(--radius);background:#fff;border:1px solid var(--line);transition:all .3s cubic-bezier(.25,.8,.25,1);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 8px 30px -10px rgba(13,36,54,.06)}
+.pack.featured{background:linear-gradient(160deg, #051221, #114577);color:#fff;border-color:transparent;box-shadow:0 15px 40px -15px rgba(8,38,54,.3)}
+.pack:hover{transform:translateY(-6px);box-shadow:0 30px 60px -25px rgba(13,36,54,.15)}
+.pack.featured:hover{box-shadow:0 35px 70px -25px rgba(8,38,54,.5)}
+.pack.featured::before{content:"";position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle, rgba(0,116,181,.25), transparent 60%);pointer-events:none}
+.pack .tier{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal-deep);font-weight:800}
+.pack.featured .tier{color:var(--teal-2)}
+.pack h4{font-family:'Manrope';font-weight:800;font-size:28px;letter-spacing:-.015em;margin-top:10px;margin-bottom:6px;color:var(--ink-dark)}
+.pack.featured h4{color:#fff}
+.pack .price{font-size:13.5px;color:var(--ink-mid);margin-bottom:24px}
+.pack.featured .price{color:var(--ink-2)}
+.pack ul{flex:1;margin-bottom:12px}
+.pack li{padding:9px 0;font-size:14px;color:var(--ink-mid);line-height:1.55;display:flex;align-items:flex-start;gap:10px}
+.pack.featured li{color:var(--ink-2)}
+.pack li::before{content:"";flex:0 0 16px;height:16px;margin-top:3px;border-radius:50%;background:rgba(0,116,181,.18) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2346C9C2'><path d='M9 16.2L4.8 12l-1.4 1.4L9 19l12-12-1.4-1.4z'/></svg>") center/12px no-repeat}
+
+.pack .pkbtn{margin-top:24px;height:48px;padding:0 24px;border-radius:999px;border:1px solid var(--ink-dark);background:transparent;color:var(--ink-dark);font-weight:700;font-size:13.5px;transition:.2s;letter-spacing:.3px}
+.pack .pkbtn:hover{background:var(--ink-dark);color:#fff}
+.pack.featured .pkbtn{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 10px 24px -10px rgba(0,116,181,.4)}
+.pack.featured .pkbtn:hover{background:var(--teal-2);border-color:var(--teal-2);transform:translateY(-1px)}
+
+/* MARQUEE */
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;padding:28px 0;position:relative;border-radius:14px}
+.marquee::before,.marquee::after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.marquee::before{left:0;background:linear-gradient(90deg, #fff, transparent)}
+.marquee::after{right:0;background:linear-gradient(-90deg, #fff, transparent)}
+.marquee-track{display:flex;gap:70px;animation:eco-scroll 38s linear infinite;width:max-content}
+@keyframes eco-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.partner{display:flex;align-items:center;justify-content:center;font-family:'Manrope';font-weight:800;font-size:17px;letter-spacing:1.5px;color:var(--ink-mid);cursor:pointer;transition:.25s;white-space:nowrap}
+.partner:hover{color:var(--ink-dark)}
+
+@media (max-width:1200px){
+  .section-head{grid-template-columns:1fr;gap:20px}
+  .value-grid{grid-template-columns:1fr;gap:20px}
+  .impact-row{grid-template-columns:repeat(2,1fr);gap:30px;padding:28px}
+  .impact-item:not(:last-child)::after{display:none}
+}
+@media (max-width:900px){
+  .eco-block-head{flex-direction:column;align-items:flex-start;gap:12px}
+  .eco-sub{text-align:left}
+}
+</style>
+</head>
+<body>
+<section>
+  <div class="container">
+    <!-- METRICS -->
+    <div class="impact-row reveal">
+      <div class="impact-item">
+        <div class="v" data-count="150"><span class="sm">+</span></div>
+        <div class="l">Startups Vetted</div>
+      </div>
+      <div class="impact-item">
+        <div class="v" data-count="36"></div>
+        <div class="l">Global Partners</div>
+      </div>
+      <div class="impact-item">
+        <div class="v" data-count="240" data-prefix="$" data-suffix="M+"></div>
+        <div class="l">Capital Raised</div>
+      </div>
+      <div class="impact-item">
+        <div class="v" data-count="12"></div>
+        <div class="l">Countries Active</div>
+      </div>
+    </div>
+
+    <!-- STARTUPS -->
+    <div class="eco-block">
+      <div class="eco-block-head">
+        <div class="eco-title"><span class="num">01 / Portfolio</span> Startups we support</div>
+        <p class="eco-sub">A growing group of startups pioneering technology in critical care, mental wellness, and societal resilience.</p>
+      </div>
+      <div class="portfolio reveal" id="portfolioGrid"></div>
+    </div>
+
+    <!-- VALUE PACKAGES -->
+    <div class="eco-block">
+      <div class="eco-block-head">
+        <div class="eco-title"><span class="num">02 / Value Packages</span> Cohort entry tiers</div>
+        <p class="eco-sub">Three levels of direct collaboration, tailored around clinical, municipal, and commercial milestones.</p>
+      </div>
+      <div class="value-grid">
+        <article class="pack reveal" data-action="open-modal">
+          <div class="tier">Seedling</div>
+          <h4>Connect</h4>
+          <div class="price">Pre-seed · 3 months</div>
+          <ul>
+            <li>Mentor pairing with clinical & operational experts</li>
+            <li>Access to the Resilience community channels</li>
+            <li>Workshops on validation and field methodology</li>
+            <li>Direct intro to the Sheba clinical wing</li>
+          </ul>
+          <button class="pkbtn">Apply Now</button>
+        </article>
+
+        <article class="pack featured reveal d1" data-action="open-modal">
+          <div class="tier">Most Popular</div>
+          <h4>Accelerate</h4>
+          <div class="price">Seed → Series A · 6 months</div>
+          <ul>
+            <li>Everything in Connect package, plus</li>
+            <li>Dedicated clinical pilot roadmap creation</li>
+            <li>Strategic investor & corporate introductions</li>
+            <li>Co-developed go-to-market validation</li>
+            <li>Dedicated desks in Sderot and at Sheba</li>
+          </ul>
+          <button class="pkbtn">Apply Now</button>
+        </article>
+
+        <article class="pack reveal d2" data-action="open-modal">
+          <div class="tier">Scale</div>
+          <h4>Deploy</h4>
+          <div class="price">Series A+ · Custom</div>
+          <ul>
+            <li>Multi-site clinical deployment support</li>
+            <li>International expansion through partner hubs</li>
+            <li>Regulatory submission & policy advisory</li>
+            <li>Long-term clinical study co-authorship</li>
+          </ul>
+          <button class="pkbtn">Get in touch</button>
+        </article>
+      </div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div class="eco-block">
+      <div class="eco-block-head">
+        <div class="eco-title"><span class="num">03 / Partners</span> Institutional Alliance</div>
+        <p class="eco-sub">The medical centers, state authorities, and corporate leaders facilitating our clinical sandbox.</p>
+      </div>
+      <div class="marquee">
+        <div class="marquee-track" id="partnersTrack"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const PORTFOLIO = [
+  {n:'Starget',     t:'Targeted oncology'},
+  {n:'Calmind',     t:'Mental health AI'},
+  {n:'NovaPulse',   t:'Cardiac monitoring'},
+  {n:'Resilio',     t:'Community trauma platform'},
+  {n:'Ember',       t:'Burn care robotics'},
+  {n:'Nirim',       t:'Pediatric mental health'},
+  {n:'Atid Health', t:'Triage AI'},
+  {n:'Halo Bio',    t:'Recovery diagnostics'},
+  {n:'Or Health',   t:'Mobile primary care'},
+  {n:'Beit Yad',    t:'Caregiver platform'},
+];
+const PARTNERS = ['Sheba','Mayo Clinic','Cleveland Clinic','Pfizer','Microsoft','Google Health','Israel MoH','BIRD','Start-Up Nation Central','WHO','Stanford Medicine','Karolinska'];
+
+document.getElementById('portfolioGrid').innerHTML=PORTFOLIO.map(p=>
+  `<a class="pf" data-action="open-modal"><div class="meta"><div class="name">${p.n}</div><div class="tag">${p.t}</div></div></a>`
+).join('');
+document.getElementById('partnersTrack').innerHTML=[...PARTNERS,...PARTNERS].map(p=>`<div class="partner">${p}</div>`).join('');
+
+(function(){
+  const cio=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const el=e.target;
+      const end=+el.dataset.count;
+      const pfx=el.dataset.prefix||'';
+      const sfx=el.dataset.suffix||'';
+      const hasSpan=el.querySelector('.sm');
+      const tail=hasSpan?hasSpan.outerHTML:sfx;
+      let t0=null;const dur=1400;
+      function step(t){
+        if(!t0) t0=t;
+        const p=Math.min(1,(t-t0)/dur);
+        const eased=1-Math.pow(1-p,3);
+        el.innerHTML=pfx+Math.round(end*eased)+tail;
+        if(p<1) requestAnimationFrame(step);
+        if(window.__frameReport) window.__frameReport();
+      }
+      requestAnimationFrame(step);
+      cio.unobserve(el);
+    });
+  },{threshold:0.4});
+  document.querySelectorAll('[data-count]').forEach(el=>cio.observe(el));
+})();
+</script>
+<script src="_bridge.js" data-frame="ecosystem"></script>
+</body>
+</html>

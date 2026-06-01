@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · Dimensions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#061B30;--bg-1:#0C2D52;--bg-2:#144577;--bg-3:#1F5DA0;
+  --paper:#FFFFFF;--paper-2:#F4F7FA;--paper-3:#EEF3F7;
+  --ink:#FFFFFF;--ink-2:#D6E2EE;--dim:#9AB1C7;--ink-dark:#0D2436;--ink-mid:#3F546A;
+  --teal:#46C9C2;--teal-2:#5EE0D5;--teal-deep:#287E78;--gold:#7BE0FF;
+  --line:rgba(180,210,225,.13);--rule:rgba(13,36,54,.10);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--paper);color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+body.fs-lg{font-size:18px}body.fs-xl{font-size:20px}
+body.hc{filter:contrast(1.12) saturate(1.15)}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+.reveal{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}
+
+section{position:relative;padding:96px var(--pad);background:linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%)}
+.section-head{max-width:1240px;margin:0 auto 56px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:end}
+.section-head .left{max-width:640px}
+.section-head .right{align-self:end;font-size:15.5px;line-height:1.7;max-width:440px;color:var(--ink-mid)}
+.eyebrow{font-size:11.5px;letter-spacing:4.5px;text-transform:uppercase;font-weight:800;margin-bottom:16px;display:inline-flex;align-items:center;gap:10px;color:var(--teal-deep)}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+h2.headline{font-family:'Manrope';font-weight:800;font-size:clamp(32px,3.8vw,52px);line-height:1.05;letter-spacing:-.02em}
+h2.headline .accent{color:var(--teal-deep)}
+
+.dim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1280px;margin:0 auto;position:relative;z-index:2}
+.dim-card{position:relative;padding:40px 32px;border-radius:var(--radius);background:#fff;border:1px solid var(--rule);box-shadow:0 15px 35px -15px rgba(13,36,54,.08);transition:transform .3s, border-color .3s, box-shadow .3s;display:flex;flex-direction:column}
+.dim-card:hover{transform:translateY(-6px);border-color:rgba(70,201,194,.5);box-shadow:0 30px 60px -25px rgba(13,36,54,.16)}
+.dim-card .icon-box{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;margin-bottom:24px;background:rgba(70,201,194,.10);color:var(--teal-deep);transition:background .3s, color .3s}
+.dim-card:hover .icon-box{background:var(--teal-deep);color:#fff}
+.dim-card h3{font-family:'Manrope';font-weight:800;font-size:22px;letter-spacing:-.01em;margin-bottom:14px;color:var(--ink-dark)}
+.dim-card p{font-size:14.5px;line-height:1.6;color:var(--ink-mid);flex-grow:1}
+
+@media (max-width:900px){
+  .section-head{grid-template-columns:1fr;gap:20px}
+  .dim-grid{grid-template-columns:1fr;gap:20px}
+}
+</style>
+</head>
+<body>
+<section id="dimensions">
+  <div class="section-head">
+    <div class="left">
+      <div class="eyebrow">Framework</div>
+      <h2 class="headline reveal">Three dimensions of <span class="accent">sustainable resilience.</span></h2>
+    </div>
+  </div>
+
+  <div class="dim-grid">
+    <article class="dim-card reveal">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2.5 3.19-2.5 5.5h20c0-2.31-1-4.24-2.5-5.5M12 2v10M9 8l3 3 3-3"/></svg>
+      </div>
+      <h3>Resilience Research ARM</h3>
+      <p>Provides infrastructure for sustainable impact, including advanced lab equipment, an incubator, and a research center. It funds clinical studies and pilot programs to accelerate proof of concept, using blended funding models that support local entrepreneurship and long-term regional impact.</p>
+    </article>
+
+    <article class="dim-card reveal d1">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <h3>Investment Arm</h3>
+      <p>Offers strategic value for investors through early access to promising startups validated in Israel’s unique resilience "sandbox." It enables piloting based on extensive regional data, with a de-risked model leveraging public and philanthropic funding. The goal: dual returns of broad social impact and a stronger Israeli innovation economy.</p>
+    </article>
+
+    <article class="dim-card reveal d2">
+      <div class="icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
+      </div>
+      <h3>Knowledge & Training ARM</h3>
+      <p>Builds capacity through professional courses and training for entrepreneurs, practitioners, and policymakers. It promotes collaboration with academic and research institutions and enables the sharing of insights, research, and pilot outcomes to support dissemination and scaling.</p>
+    </article>
+  </div>
+</section>
+<script src="_bridge.js" data-frame="dimensions"></script>
+</body>
+</html>

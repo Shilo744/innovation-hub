@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Our Ecosystem · Innovation Hub</title>
+<meta name="description" content="Explore the Resilience & Health Innovation Hub ecosystem in Sderot. Learn how we connect startups, researchers, municipalities, and global partners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/shell.css">
+</head>
+<body>
+
+<!-- SCREENS -->
+<div class="screen dark" id="ecosystem-hero">
+  <iframe data-id="ecosystem-hero" src="sections/01-ecosystem-hero.html" title="Ecosystem Intro" style="height:100vh;min-height:100vh" scrolling="no"></iframe>
+</div>
+
+<div class="screen light" id="ecosystem">
+  <iframe data-id="ecosystem" loading="lazy" src="sections/01-ecosystem.html" title="Ecosystem" style="height:100vh;min-height:750px" scrolling="no"></iframe>
+</div>
+
+<script>
+window.IH_PAGE = {
+  base: '../',
+  active: 'ecosystem',
+  sections: [
+    {id:'ecosystem-hero',label:'Ecosystem'},{id:'ecosystem',label:'Portfolio'}
+  ],
+  darkIds: ['ecosystem-hero']
+};
+</script>
+<script src="../shared/shell.js"></script>
+</body>
+</html>

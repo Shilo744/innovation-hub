@@ -1,0 +1,37 @@
+[UPCOMING]
+Date: 18 JUN 2026
+Category: Summit
+Location: Tel Aviv · Hilton
+Title: Resilience Innovation Summit 2026
+Description: Three days of programming with global founders, clinicians and partners — keynotes, workshops, demo day.
+---
+Date: 22 SEP 2026
+Category: Demo Day
+Location: Boston · Innovation Wing
+Title: Boston Cohort · Demo Day
+Description: The second Boston cohort presents pilot results to investors and strategic partners.
+---
+Date: 05 NOV 2026
+Category: Community
+Location: Sderot · Innovation Center
+Title: Sheba to Sderot · Community Day
+Description: A day of co-creation with the Sderot community and local entrepreneurs.
+
+[RECENT]
+Date: 19 MAR 2026
+Category: Forum
+Location: Tel Aviv
+Title: From Investors to Engines of Creation — Avner Halperin Takeaways
+Description: Highlights and reflections from the spring leadership forum.
+---
+Date: 22 FEB 2026
+Category: Milestone
+Location: Boston
+Title: Starget Pharma raises $18M Series B
+Description: A portfolio milestone for one of our flagship startups.
+---
+Date: 10 JAN 2026
+Category: Roundtable
+Location: Geneva
+Title: WHO Resilience Roundtable
+Description: Closed-door session on global resilience policy frameworks.

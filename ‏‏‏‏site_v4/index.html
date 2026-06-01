@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · From Trauma to Opportunity</title>
+<meta name="description" content="A global resilience innovation hub connecting clinicians, entrepreneurs, and strategic partners to turn trauma into opportunity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/shell.css">
+<style>
+/* page-specific: partner logo marquee (home only) */
+.partners-band{position:relative;background:var(--bg-0);padding:12px 16px 42px}
+.partners-head{text-align:center;margin-bottom:8px}
+.partners-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--teal-2);font-weight:800}
+.partners-strip{max-width:1680px;margin:0 auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 24px 50px -30px rgba(0,0,0,.5);padding:18px 0}
+.partners-viewport{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%)}
+.partners-track{display:flex;align-items:center;gap:10px;width:max-content;animation:partners-scroll 80s linear infinite}
+.partners-track:hover{animation-play-state:paused}
+@keyframes partners-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.partner-logo{flex:0 0 auto;width:168px;height:58px;display:flex;align-items:center;justify-content:center;padding:0 16px}
+.partner-logo img{max-width:100%;max-height:46px;width:auto;height:auto;object-fit:contain;display:block;transition:transform .3s ease}
+.partner-logo:hover img{transform:scale(1.08)}
+.partner-logo.on-dark{height:54px;background:#000;border-radius:9px;padding:0 18px}
+body.reduce-motion .partners-track{animation:none}
+</style>
+</head>
+<body>
+
+<!-- SCREENS -->
+<div class="screen dark" id="top">
+  <iframe data-id="hero" data-fixed src="home/sections/01-hero.html" title="Hero" style="height:100vh;min-height:680px" scrolling="no"></iframe>
+</div>
+
+<section class="partners-band" aria-label="Our partners and supporters">
+  <div class="partners-head"><span class="partners-eyebrow">Our Partners &amp; Supporters</span></div>
+  <div class="partners-strip">
+    <div class="partners-viewport">
+      <div class="partners-track" id="partnersTrack"></div>
+    </div>
+  </div>
+</section>
+
+<div class="screen light" id="dimensions">
+  <iframe data-id="dimensions" loading="lazy" src="home/sections/02-dimensions.html" title="Dimensions" style="height:80vh" scrolling="no"></iframe>
+</div>
+
+<div class="screen light" id="advantages">
+  <iframe data-id="advantages" loading="lazy" src="home/sections/03-advantages.html" title="Advantages" style="height:90vh" scrolling="no"></iframe>
+</div>
+
+<div class="screen dark" id="closing">
+  <iframe data-id="closing" loading="lazy" src="home/sections/04-closing.html" title="Contact" style="height:70vh" scrolling="no"></iframe>
+</div>
+
+<script>
+window.IH_PAGE = {
+  base: '',
+  active: 'home',
+  sections: [
+    {id:'top',label:'Home'},{id:'dimensions',label:'Framework'},
+    {id:'advantages',label:'Advantages'},{id:'closing',label:'Contact'}
+  ],
+  darkIds: ['top','closing']
+};
+</script>
+<script>
+/* partner logo marquee · order follows the numeric filename prefix */
+(function(){
+  var logos = [
+    '1.sderot.jpg','2.sheba.png','3.arc.png','4.bituah-leumi.png','5.metaplim-banefesh.png',
+    '6.mafat.png','7.rafael.png','8.iris.jpg','9.hosen.png','11.negev-galil.png',
+    '12.keren-sderot.png','13.sapir.png','14.innovation-authority.png','15.clalit-darom.jpg',
+    '16.hamatbah.jpg','17.adwot.jpg','18.jade.png','19.nrw.jpg','20.stadt-bochum.png',
+    '21.brm.png','22.reignup.jpg','23.maof-economy.png','24.science-ministry.png','25.agriculture.jpg'
+  ];
+  function name(f){
+    return f.replace(/^\d+\./,'').replace(/\.(png|jpe?g|webp|avif|svg)$/i,'')
+            .replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+  }
+  /* logos that are light-on-dark and need their own dark lockup tile */
+  var darkBg = {'17.adwot.jpg':1};
+  var track = document.getElementById('partnersTrack');
+  if(!track) return;
+  function cards(){
+    return logos.map(function(f){
+      var cls = 'partner-logo' + (darkBg[f] ? ' on-dark' : '');
+      return '<div class="'+cls+'"><img src="assets/partnersLogos/'+f+'" alt="'+name(f)+'" loading="lazy"></div>';
+    }).join('');
+  }
+  /* two copies so the -50% scroll loops seamlessly */
+  track.innerHTML = cards() + cards();
+})();
+</script>
+<script src="shared/shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · Advantages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#061B30;--bg-1:#0C2D52;--bg-2:#144577;--bg-3:#1F5DA0;
+  --paper:#FFFFFF;--paper-2:#F4F7FA;--paper-3:#EEF3F7;
+  --ink:#FFFFFF;--ink-2:#D6E2EE;--dim:#9AB1C7;--ink-dark:#0D2436;--ink-mid:#3F546A;
+  --teal:#46C9C2;--teal-2:#5EE0D5;--teal-deep:#287E78;--gold:#7BE0FF;
+  --line:rgba(180,210,225,.13);--rule:rgba(13,36,54,.10);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--paper-3);color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+body.fs-lg{font-size:18px}body.fs-xl{font-size:20px}
+body.hc{filter:contrast(1.12) saturate(1.15)}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+.reveal{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}
+
+section{position:relative;padding:96px var(--pad);background:linear-gradient(180deg, var(--paper-2) 0%, var(--paper-3) 100%)}
+.section-head{max-width:1240px;margin:0 auto 56px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:end}
+.section-head .left{max-width:640px}
+.section-head .right{align-self:end;font-size:15.5px;line-height:1.7;max-width:440px;color:var(--ink-mid)}
+.eyebrow{font-size:11.5px;letter-spacing:4.5px;text-transform:uppercase;font-weight:800;margin-bottom:16px;display:inline-flex;align-items:center;gap:10px;color:var(--teal-deep)}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+h2.headline{font-family:'Manrope';font-weight:800;font-size:clamp(32px,3.8vw,52px);line-height:1.05;letter-spacing:-.02em}
+h2.headline .accent{color:var(--teal-deep)}
+
+.adv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:1280px;margin:0 auto;position:relative;z-index:2}
+.adv-card{position:relative;padding:36px;border-radius:var(--radius);background:#fff;border:1px solid var(--rule);box-shadow:0 15px 35px -15px rgba(13,36,54,.08);transition:transform .3s, border-color .3s, box-shadow .3s;display:flex;gap:24px;align-items:start}
+.adv-card:hover{transform:translateY(-4px);border-color:rgba(70,201,194,.45);box-shadow:0 24px 50px -20px rgba(13,36,54,.12)}
+.adv-card .num-badge{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(70,201,194,.12);color:var(--teal-deep);font-family:'Manrope';font-weight:800;font-size:16px;flex-shrink:0}
+.adv-card .info{display:flex;flex-direction:column;gap:10px}
+.adv-card h3{font-family:'Manrope';font-weight:800;font-size:20px;letter-spacing:-.01em;color:var(--ink-dark)}
+.adv-card p{font-size:14px;line-height:1.6;color:var(--ink-mid)}
+
+@media (max-width:900px){
+  .section-head{grid-template-columns:1fr;gap:20px}
+  .adv-grid{grid-template-columns:1fr;gap:20px}
+}
+</style>
+</head>
+<body>
+<section id="advantages">
+  <div class="section-head">
+    <div class="left">
+      <div class="eyebrow">Sandbox</div>
+      <h2 class="headline reveal">Our unique <span class="accent">advantages.</span></h2>
+    </div>
+  </div>
+
+  <div class="adv-grid">
+    <article class="adv-card reveal">
+      <div class="num-badge">01</div>
+      <div class="info">
+        <h3>Sderot: City of Resilience</h3>
+        <p>Sderot is Israel’s leading innovation hub for resilience. Where most see crisis, we see fertile ground for global solutions, bridging urgent needs with technological excellence.</p>
+      </div>
+    </article>
+
+    <article class="adv-card reveal d1">
+      <div class="num-badge">02</div>
+      <div class="info">
+        <h3>Strategic Location</h3>
+        <p>A real-world laboratory where entrepreneurs can develop, validate, and test resilience solutions under real-time conditions with direct feedback from users.</p>
+      </div>
+    </article>
+
+    <article class="adv-card reveal">
+      <div class="num-badge">03</div>
+      <div class="info">
+        <h3>Unique Integration</h3>
+        <p>A powerful combination of hands-on local experience and modern technology, creating practical, innovative, and validated solutions for trauma and crisis management.</p>
+      </div>
+    </article>
+
+    <article class="adv-card reveal d1">
+      <div class="num-badge">04</div>
+      <div class="info">
+        <h3>Strategic Partner Network</h3>
+        <p>An extensive network connecting entrepreneurs with industry leaders, healthcare organizations (like Sheba Medical Center), academia, and government to accelerate innovation.</p>
+      </div>
+    </article>
+  </div>
+</section>
+<script src="_bridge.js" data-frame="advantages"></script>
+</body>
+</html>

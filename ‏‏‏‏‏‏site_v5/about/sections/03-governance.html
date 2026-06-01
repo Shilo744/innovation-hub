@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>About — Governance & Credits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-light:#FFFFFF;--bg-alt:#EEF2F6;
+  --ink-dark:#0D2436;--ink-mid:#3F546A;
+  --teal-deep:#00588B;--teal:#0074B5;--teal-2:#38B6FF;--gold:#A6ECFF;
+  --line:rgba(13,36,54,.08);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-alt);color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+.reveal{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}
+.reveal.d2{transition-delay:.3s}
+
+section{position:relative;padding:90px var(--pad);background:var(--bg-alt)}
+.container{max-width:1200px;margin:0 auto}
+
+.section-head{margin-bottom:50px;max-width:800px}
+.eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--teal-deep);font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor;opacity:.7}
+h2{font-family:'Manrope';font-weight:800;font-size:clamp(28px,3.5vw,44px);line-height:1.15;letter-spacing:-.015em;color:var(--ink-dark)}
+h2 .accent{color:var(--teal-deep)}
+
+.grid{display:block}
+
+/* Partner Grid */
+.partner-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.partner-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px;box-shadow:0 6px 20px -10px rgba(13,36,54,.06);transition:all .3s ease}
+.partner-card:hover{transform:translateY(-3px);border-color:rgba(0,116,181,.3);box-shadow:0 12px 25px -10px rgba(13,36,54,.12)}
+.partner-tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--teal-deep);margin-bottom:8px}
+.partner-title{font-size:17px;font-weight:800;color:var(--ink-dark);margin-bottom:8px}
+.partner-desc{font-size:13.5px;line-height:1.55;color:var(--ink-mid)}
+
+@media (max-width:900px){
+  .partner-grid{gap:16px}
+}
+</style>
+</head>
+<body>
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Governance & Ecosystem leadership</div>
+      <h2>Strategic backing from industry and municipal <span class="accent">governance.</span></h2>
+    </div>
+
+    <div class="grid">
+      <!-- Partners Left -->
+      <div class="partner-grid reveal d1">
+        <article class="partner-card">
+          <div class="partner-tag">Municipal</div>
+          <h3 class="partner-title">Sderot Municipality</h3>
+          <p class="partner-desc">Providing direct pilot opportunities and economic development incentives to encourage local establishment and scaling of resilience startups.</p>
+        </article>
+
+        <article class="partner-card">
+          <div class="partner-tag">Medical & Clinical</div>
+          <h3 class="partner-title">Sheba Medical Center</h3>
+          <p class="partner-desc">Uniting clinicians, researchers, and operational facilities to support advanced health, physical rehabilitation, and clinical studies validation.</p>
+        </article>
+
+        <article class="partner-card">
+          <div class="partner-tag">Academic</div>
+          <h3 class="partner-title">Sapir Academic College</h3>
+          <p class="partner-desc">Contributing scientific research, student entrepreneurship programs, and specialized academic collaborations in economic and employment growth.</p>
+        </article>
+
+        <article class="partner-card">
+          <div class="partner-tag">Non-Profit</div>
+          <h3 class="partner-title">The Sderot Foundation</h3>
+          <p class="partner-desc">Empowering localized community growth and deploying philanthropic initiatives to foster long-term regional development in the Western Negev.</p>
+        </article>
+      </div>
+
+    </div>
+  </div>
+</section>
+<script src="_bridge.js" data-frame="governance"></script>
+</body>
+</html>

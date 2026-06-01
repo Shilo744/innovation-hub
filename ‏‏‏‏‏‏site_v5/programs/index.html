@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Our Programs · Innovation Hub</title>
+<meta name="description" content="Explore our health and resilience accelerator cohorts, municipal partnership programs, and research pilot schemes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/shell.css">
+</head>
+<body>
+
+<!-- SCREENS -->
+<div class="screen dark" id="programs-intro">
+  <iframe data-id="programs-intro" src="sections/01-programs-intro.html" title="Programs Intro" style="height:100vh;min-height:100vh" scrolling="no"></iframe>
+</div>
+
+<div class="screen light" id="programs-list">
+  <iframe data-id="programs-list" loading="lazy" src="sections/02-programs-list.html" title="Our Programs" style="height:100vh;min-height:780px" scrolling="no"></iframe>
+</div>
+
+<script>
+window.IH_PAGE = {
+  base: '../',
+  active: 'programs',
+  sections: [
+    {id:'programs-intro',label:'Programs'},{id:'programs-list',label:'Listings'}
+  ],
+  darkIds: ['programs-intro']
+};
+</script>
+<script src="../shared/shell.js"></script>
+</body>
+</html>

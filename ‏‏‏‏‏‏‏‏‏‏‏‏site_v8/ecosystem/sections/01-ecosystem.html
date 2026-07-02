@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub Ecosystem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-light:#FFFFFF;--bg-alt:#F5F8FA;
+  --ink-dark:#0D2436;--ink-mid:#3F546A;--ink-2:#D6E2EE;
+  --teal-deep:#00588B;--teal:#0074B5;--teal-2:#38B6FF;--gold:#A6ECFF;
+  --line:rgba(13,36,54,.08);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-light);color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+ul{list-style:none}
+
+.reveal{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}
+.reveal.d2{transition-delay:.3s}
+
+section{position:relative;padding:64px var(--pad) 90px;background:linear-gradient(180deg, var(--bg-light) 0%, var(--bg-alt) 100%)}
+.container{max-width:1200px;margin:0 auto}
+
+.eco-block{max-width:1200px;margin:0 auto 90px;position:relative;z-index:2}
+.eco-block:last-child{margin-bottom:0}
+.eco-block-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:32px;gap:30px}
+.eco-title{font-family:'Manrope';font-weight:800;font-size:28px;line-height:1.15;letter-spacing:-.015em;color:var(--ink-dark);display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.eco-title .num{color:var(--teal-deep);font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:800}
+.eco-sub{color:var(--ink-mid);font-size:14.5px;max-width:480px;line-height:1.6;text-align:left}
+
+/* WHO — four photo cards, real footage from the field */
+.who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.who{position:relative;border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 8px 24px -12px rgba(13,36,54,.08);transition:all .3s cubic-bezier(.25,.8,.25,1);display:flex;flex-direction:column}
+.who:hover{transform:translateY(-4px);border-color:var(--teal);box-shadow:0 24px 45px -20px rgba(13,36,54,.14)}
+.who .ph{position:relative;height:180px;overflow:hidden;background:#0a1c2e}
+.who .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.who:hover .ph img{transform:scale(1.05)}
+.who .tx{padding:20px 22px 24px}
+.who .tx h3{font-family:'Manrope';font-weight:800;font-size:17px;letter-spacing:-.01em;color:var(--ink-dark);margin-bottom:8px}
+.who .tx p{font-size:13.5px;line-height:1.55;color:var(--ink-mid)}
+
+/* JOIN — one honest split: startups apply, partners talk to us */
+.join-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;align-items:stretch}
+.join{position:relative;padding:38px;border-radius:var(--radius);background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 8px 30px -10px rgba(13,36,54,.06)}
+.join.featured{background:linear-gradient(160deg, #051221, #114577);color:#fff;border-color:transparent;box-shadow:0 15px 40px -15px rgba(8,38,54,.3)}
+.join.featured::before{content:"";position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle, rgba(0,116,181,.28), transparent 60%);pointer-events:none}
+.join .tier{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal-deep);font-weight:800}
+.join.featured .tier{color:var(--teal-2)}
+.join h4{font-family:'Manrope';font-weight:800;font-size:27px;letter-spacing:-.015em;margin-top:10px;margin-bottom:10px;color:var(--ink-dark)}
+.join.featured h4{color:#fff}
+.join .blurb{font-size:14.5px;line-height:1.65;color:var(--ink-mid);margin-bottom:18px}
+.join.featured .blurb{color:var(--ink-2)}
+.join ul{flex:1;margin-bottom:12px}
+.join li{padding:9px 0;font-size:14px;color:var(--ink-mid);line-height:1.55;display:flex;align-items:flex-start;gap:10px}
+.join.featured li{color:var(--ink-2)}
+.join li::before{content:"";flex:0 0 16px;height:16px;margin-top:3px;border-radius:50%;background:rgba(0,116,181,.18) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2346C9C2'><path d='M9 16.2L4.8 12l-1.4 1.4L9 19l12-12-1.4-1.4z'/></svg>") center/12px no-repeat}
+.join .fine{font-size:12px;color:var(--ink-mid);margin-bottom:16px}
+.join.featured .fine{color:rgba(214,226,238,.7)}
+.join .jbtn{margin-top:auto;height:48px;padding:0 24px;border-radius:999px;border:1px solid var(--ink-dark);background:transparent;color:var(--ink-dark);font-weight:700;font-size:13.5px;transition:.2s;letter-spacing:.3px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.join .jbtn:hover{background:var(--ink-dark);color:#fff}
+.join.featured .jbtn{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 10px 24px -10px rgba(0,116,181,.4)}
+.join.featured .jbtn:hover{background:var(--teal-2);border-color:var(--teal-2);transform:translateY(-1px)}
+
+/* PARTNERS — the real logos, same marquee as the homepage */
+.marquee{overflow:hidden;border:1px solid var(--line);background:#fff;padding:22px 0;position:relative;border-radius:14px;box-shadow:0 10px 30px -18px rgba(13,36,54,.15)}
+.marquee::before,.marquee::after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.marquee::before{left:0;background:linear-gradient(90deg, #fff, transparent)}
+.marquee::after{right:0;background:linear-gradient(-90deg, #fff, transparent)}
+.marquee-track{display:flex;align-items:center;gap:12px;animation:eco-scroll 80s linear infinite;width:max-content}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes eco-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+body.reduce-motion .marquee-track{animation:none}
+.partner-logo{flex:0 0 auto;width:168px;height:58px;display:flex;align-items:center;justify-content:center;padding:0 16px}
+.partner-logo img{max-width:100%;max-height:46px;width:auto;height:auto;object-fit:contain;display:block;transition:transform .3s ease}
+.partner-logo:hover img{transform:scale(1.08)}
+.partner-logo.on-dark{height:54px;background:#000;border-radius:9px;padding:0 18px}
+
+@media (max-width:1100px){
+  .who-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:900px){
+  .eco-block-head{flex-direction:column;align-items:flex-start;gap:12px}
+  .join-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .who-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<section>
+  <div class="container">
+
+    <!-- WHO'S HERE -->
+    <div class="eco-block">
+      <div class="eco-block-head">
+        <div class="eco-title"><span class="num">01 / The People</span> Who you'll work with</div>
+        <p class="eco-sub">Not a directory — a working community. These are the people in the building, every week.</p>
+      </div>
+      <div class="who-grid reveal">
+        <article class="who">
+          <div class="ph"><img src="../../assets/photos/workshop.jpg" alt="Clinicians running a workshop at the hub" loading="lazy"></div>
+          <div class="tx">
+            <h3>Clinicians &amp; Researchers</h3>
+            <p>Sheba Medical Center clinicians and Sapir researchers who validate technologies against real clinical practice.</p>
+          </div>
+        </article>
+        <article class="who">
+          <div class="ph"><img src="../../assets/photos/web-coding.jpg" alt="Founders building at the hub" loading="lazy"></div>
+          <div class="tx">
+            <h3>Startups &amp; Founders</h3>
+            <p>Early-stage teams building trauma-care, mental-health and community-continuity technologies from the hub.</p>
+          </div>
+        </article>
+        <article class="who">
+          <div class="ph"><img src="../../assets/photos/hub-building.jpg" alt="The innovation hub building in Sderot" loading="lazy"></div>
+          <div class="tx">
+            <h3>Municipal &amp; Public Partners</h3>
+            <p>The Sderot Municipality and national agencies that open real deployment sites and back the region's growth.</p>
+          </div>
+        </article>
+        <article class="who">
+          <div class="ph"><img src="../../assets/photos/web-youth.jpg" alt="Young people from the Sderot community at the hub" loading="lazy"></div>
+          <div class="tx">
+            <h3>The Community</h3>
+            <p>Sderot residents — the first users, the sharpest critics, and the reason the work matters.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- JOIN -->
+    <div class="eco-block">
+      <div class="eco-block-head">
+        <div class="eco-title"><span class="num">02 / Join</span> Ways in</div>
+        <p class="eco-sub">Startups apply directly; institutions and investors start with a conversation.</p>
+      </div>
+      <div class="join-grid">
+        <article class="join featured reveal">
+          <div class="tier">For Startups</div>
+          <h4>Build with the hub</h4>
+          <p class="blurb">Apply to join the ecosystem — from the equity-free Resilience Accelerator to clinical validation with Sheba to Sderot and rapid field deployment through Immediate Implementation.</p>
+          <ul>
+            <li>Clinical pilot pathways with Sheba Medical Center clinicians</li>
+            <li>Real-world validation with the Sderot community</li>
+            <li>Mentoring from operators, clinicians and municipal leaders</li>
+            <li>Introductions to investors and strategic partners</li>
+          </ul>
+          <p class="fine">One application covers all hub programs — we'll route you to the right track.</p>
+          <a class="jbtn" href="https://airtable.com/appGirDdIpYfWMhbL/paghbTLw4yKv6c3SG/form" target="_blank" rel="noopener noreferrer">Apply to join →</a>
+        </article>
+
+        <article class="join reveal d1">
+          <div class="tier">For Partners &amp; Investors</div>
+          <h4>Partner with us</h4>
+          <p class="blurb">Hospitals, municipalities, foundations, corporates and investors join the ecosystem through tailored collaborations — pilots, research programs, co-investment and deployment.</p>
+          <ul>
+            <li>Co-develop pilots with the hub's clinical network</li>
+            <li>Early access to validated resilience technologies</li>
+            <li>Join a partner network spanning healthcare, government and industry</li>
+          </ul>
+          <button class="jbtn" data-action="open-modal">Start a conversation</button>
+        </article>
+      </div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div class="eco-block">
+      <div class="eco-block-head">
+        <div class="eco-title"><span class="num">03 / Partners</span> The institutions behind the hub</div>
+        <p class="eco-sub">The medical centers, authorities, academic institutions and funders working with us today.</p>
+      </div>
+      <div class="marquee reveal">
+        <div class="marquee-track" id="partnersTrack"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* real partner logos — same set and ordering as the homepage strip */
+(function(){
+  var logos = [
+    '1.sderot.jpg','2.sheba.png','3.arc.png','4.bituah-leumi.png','5.metaplim-banefesh.png',
+    '6.mafat.png','7.rafael.png','8.iris.jpg','9.hosen.png','11.negev-galil.png',
+    '12.keren-sderot.png','13.sapir.png','14.innovation-authority.png','15.clalit-darom.jpg',
+    '16.hamatbah.jpg','17.adwot.jpg','18.jade.png','19.nrw.jpg','20.stadt-bochum.png',
+    '21.brm.png','22.reignup.jpg','23.maof-economy.png','24.science-ministry.png','25.agriculture.jpg'
+  ];
+  function name(f){
+    return f.replace(/^\d+\./,'').replace(/\.(png|jpe?g|webp|avif|svg)$/i,'')
+            .replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+  }
+  var darkBg = {'17.adwot.jpg':1};
+  var track = document.getElementById('partnersTrack');
+  if(!track) return;
+  function cards(){
+    return logos.map(function(f){
+      var cls = 'partner-logo' + (darkBg[f] ? ' on-dark' : '');
+      return '<div class="'+cls+'"><img src="../../assets/partnersLogos/'+f+'" alt="'+name(f)+'" loading="lazy"></div>';
+    }).join('');
+  }
+  track.innerHTML = cards() + cards();
+})();
+</script>
+<script src="_bridge.js" data-frame="ecosystem"></script>
+</body>
+</html>

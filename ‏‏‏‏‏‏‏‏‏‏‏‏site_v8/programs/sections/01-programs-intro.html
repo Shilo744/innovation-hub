@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Strategic Pillars — Intro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#051221;--bg-1:#0a1c2e;--bg-2:#112c47;
+  --ink:#FFFFFF;--ink-2:#D6E2EE;--dim:#9AB1C7;
+  --teal:#0074B5;--teal-2:#38B6FF;--teal-deep:#00588B;--gold:#A6ECFF;
+  --line:rgba(180,210,225,.13);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-0);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+.reveal{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}
+.reveal.d2{transition-delay:.3s}
+
+section{position:relative;padding:120px var(--pad) 80px;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.bg-glow{position:absolute;inset:0;background:radial-gradient(circle at 80% 20%, rgba(56,182,255,.09), transparent 50%), radial-gradient(circle at 10% 90%, rgba(123,224,255,.04), transparent 50%);pointer-events:none;z-index:0}
+
+.content{max-width:1100px;margin:0 auto;position:relative;z-index:2;width:100%}
+
+h1{font-family:'Manrope';font-weight:800;font-size:clamp(34px,5.2vw,62px);line-height:1.1;letter-spacing:-.025em;margin-bottom:24px}
+h1 .gradient{background:linear-gradient(120deg, var(--teal-2), #a8f3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:60px;margin-top:32px;align-items:start}
+.text-lead{font-size:clamp(17px,1.8vw,21px);line-height:1.65;color:var(--ink-2);font-weight:400}
+.text-lead .highlight{color:#fff;font-weight:600}
+.photo-card{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 60px -20px rgba(0,0,0,.4)}
+.photo-card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+.photo-card figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 20px 14px;background:linear-gradient(0deg,rgba(5,18,33,.85),transparent);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-2);font-weight:700}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr;gap:40px}
+  section{padding-top:100px;padding-bottom:60px}
+}
+</style>
+</head>
+<body>
+<section>
+  <div class="bg-glow"></div>
+  <div class="content">
+    <h1 class="reveal">Four Strategic Pillars<br><span class="gradient">of sustainable resilience</span></h1>
+    <div class="grid">
+      <div class="text-lead reveal d1">
+        <p>Each pillar of the Resilience & Health Innovation Hub is purpose-built for a different stage in the innovation lifecycle. From early-stage investment and applied R&D to venture creation, clinical validations, municipal deployments, and policy formulation.</p>
+        <br>
+        <p>Through our close partnerships with healthcare leaders and municipality resources, we enable innovators to co-develop, test, and deploy solutions in real-world scenarios.</p>
+      </div>
+      <figure class="photo-card reveal d2">
+        <img src="../../assets/photos/web-clinical.jpg" alt="Clinical validation work at the hub">
+        <figcaption>Clinical validation · Sheba to Sderot</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+<script src="_bridge.js" data-frame="programs-intro"></script>
+</body>
+</html>

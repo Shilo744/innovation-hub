@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>About Us · Innovation Hub</title>
+<meta name="description" content="Learn about the vision and mission of the Resilience & Health Innovation Hub in Sderot.">
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RISE.HUB — Resilience & Health Innovation Hub">
+<meta property="og:title" content="About Us · Innovation Hub">
+<meta property="og:description" content="Learn about the vision and mission of the Resilience & Health Innovation Hub in Sderot.">
+<meta property="og:image" content="../assets/logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#051221">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/shell.css">
+</head>
+<body>
+
+<!-- SCREENS -->
+<div class="screen dark" id="about-hero">
+  <iframe data-id="about-hero" src="sections/01-about-hero.html" title="About Hero" style="height:100vh;min-height:100vh" scrolling="no"></iframe>
+</div>
+
+<div class="screen light" id="vision-mission">
+  <iframe data-id="vision-mission" loading="lazy" src="sections/02-vision-mission.html" title="Vision & Mission" style="height:75vh" scrolling="no"></iframe>
+</div>
+
+<script>
+window.IH_PAGE = {
+  base: '../',
+  active: 'about',
+  sections: [
+    {id:'about-hero',label:'About'},{id:'vision-mission',label:'Vision'}
+  ],
+  darkIds: ['about-hero']
+};
+</script>
+<script src="../shared/shell.js"></script>
+</body>
+</html>

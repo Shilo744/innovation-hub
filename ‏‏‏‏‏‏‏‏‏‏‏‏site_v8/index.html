@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Innovation Hub · From Trauma to Opportunity</title>
+<meta name="description" content="A global resilience innovation hub connecting clinicians, entrepreneurs, and strategic partners to turn trauma into opportunity.">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="RISE.HUB — Resilience & Health Innovation Hub">
+<meta property="og:title" content="Innovation Hub · From Trauma to Opportunity">
+<meta property="og:description" content="A global resilience innovation hub connecting clinicians, entrepreneurs, and strategic partners to turn trauma into opportunity.">
+<meta property="og:image" content="assets/logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#051221">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Resilience & Health Innovation Hub (RISE.HUB)",
+  "alternateName": "Innovation Hub Sderot",
+  "email": "Rh.innovationhub@gmail.com",
+  "telephone": "+972-50-976-0346",
+  "logo": "assets/logo.png",
+  "address": {"@type": "PostalAddress", "addressLocality": "Sderot", "addressCountry": "IL"},
+  "sameAs": [
+    "https://il.linkedin.com/company/resilience-health-innovation-hub",
+    "https://www.facebook.com/profile.php?id=61560256910952",
+    "https://www.resiliencetechhub.org/"
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/shell.css">
+<style>
+/* page-specific: ecosystem film screen (home only) — light/white */
+.bridge{position:relative;overflow:hidden;background:linear-gradient(180deg,#FFFFFF 0%,#F5F8FA 100%);color:var(--ink-dark);padding:clamp(48px,7vh,76px) clamp(20px,5vw,70px) clamp(28px,4vh,44px)}
+.bridge-inner{position:relative;z-index:2;width:100%;max-width:1180px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:clamp(20px,3vh,32px)}
+.bridge-head{max-width:820px;margin:0 auto;text-align:center}
+.bridge-head h2{font-family:'Manrope';font-weight:800;font-size:clamp(24px,2.9vw,36px);line-height:1.15;letter-spacing:-.02em;color:var(--ink-dark)}
+.bridge-sub{margin-top:10px;font-size:15px;line-height:1.6;color:var(--ink-mid,#3F546A);max-width:680px;margin-left:auto;margin-right:auto}
+.bridge-head h2 .b{color:var(--teal-deep)}
+/* the film is 16:9 — the frame keeps that ratio exactly, capped so it never
+   overflows a short viewport, and the video is never cropped */
+.video-frame{position:relative;width:min(1020px,94vw,calc((100vh - 320px) * 16 / 9));aspect-ratio:16/9;margin:0 auto;border-radius:20px;overflow:hidden;background:#000;border:1px solid rgba(13,36,54,.10);box-shadow:0 40px 80px -38px rgba(13,36,54,.42)}
+.video-frame video{display:block;width:100%;height:100%;background:#000}
+.video-cap{position:absolute;left:16px;top:14px;z-index:3;font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;color:#fff;font-weight:700;background:rgba(5,18,33,.55);backdrop-filter:blur(6px);padding:6px 12px;border-radius:999px;pointer-events:none;transition:opacity .3s}
+.video-frame.playing .video-cap{opacity:0}
+
+/* page-specific: partner logo marquee (home only) */
+.partners-band{position:relative;background:transparent;padding:clamp(14px,2.4vh,26px) 16px 0;width:100%}
+.partners-head{text-align:center;margin-bottom:8px}
+.partners-eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--teal-deep);font-weight:800}
+.partners-strip{max-width:1680px;margin:0 auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 24px 50px -32px rgba(13,36,54,.35);border:1px solid rgba(13,36,54,.06);padding:18px 0}
+.partners-viewport{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%)}
+.partners-track{display:flex;align-items:center;gap:10px;width:max-content;animation:partners-scroll 80s linear infinite}
+.partners-track:hover{animation-play-state:paused}
+@keyframes partners-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.partner-logo{flex:0 0 auto;width:168px;height:58px;display:flex;align-items:center;justify-content:center;padding:0 16px}
+.partner-logo img{max-width:100%;max-height:46px;width:auto;height:auto;object-fit:contain;display:block;transition:transform .3s ease}
+.partner-logo:hover img{transform:scale(1.08)}
+.partner-logo.on-dark{height:54px;background:#000;border-radius:9px;padding:0 18px}
+body.reduce-motion .partners-track{animation:none}
+</style>
+</head>
+<body>
+
+<!-- SCREENS -->
+<div class="screen dark" id="top">
+  <iframe data-id="hero" data-fixed src="home/sections/01-hero.html" title="Hero" style="height:100vh;min-height:680px" scrolling="no"></iframe>
+</div>
+
+<section class="bridge" id="ecosystem-bridge" aria-label="RISE.HUB Ecosystem">
+  <div class="bridge-inner">
+    <div class="bridge-head">
+      <h2>RISE.HUB <span class="b">Ecosystem</span></h2>
+      <p class="bridge-sub">Clinicians, startups, investors and public partners working side by side in Sderot — a living lab where resilience solutions are built, piloted with the community and scaled to the world. See it for yourself:</p>
+    </div>
+
+    <div class="video-frame">
+      <video controls preload="metadata" playsinline poster="assets/field-poster.jpg">
+        <source src="assets/video/field-web.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <span class="video-cap">From the field · 2 min</span>
+    </div>
+  </div>
+
+  <div class="partners-band">
+    <div class="partners-head"><span class="partners-eyebrow">Our Partners &amp; Supporters</span></div>
+    <div class="partners-strip">
+      <div class="partners-viewport">
+        <div class="partners-track" id="partnersTrack"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="screen light" id="dimensions">
+  <iframe data-id="dimensions" loading="lazy" src="home/sections/02-dimensions.html" title="Dimensions" style="height:80vh" scrolling="no"></iframe>
+</div>
+
+<div class="screen light" id="advantages">
+  <iframe data-id="advantages" loading="lazy" src="home/sections/03-advantages.html" title="Advantages" style="height:90vh" scrolling="no"></iframe>
+</div>
+
+<div class="screen dark" id="closing">
+  <iframe data-id="closing" data-fixed loading="lazy" src="home/sections/04-closing.html" title="Contact" style="height:44vh;min-height:380px" scrolling="no"></iframe>
+</div>
+
+<script>
+window.IH_PAGE = {
+  base: '',
+  active: 'home',
+  sections: [
+    {id:'top',label:'Home'},{id:'ecosystem-bridge',label:'Ecosystem'},
+    {id:'dimensions',label:'Framework'},
+    {id:'advantages',label:'Advantages'},{id:'closing',label:'Contact'}
+  ],
+  darkIds: ['top','closing']
+};
+</script>
+<script>
+/* partner logo marquee · order follows the numeric filename prefix */
+(function(){
+  var logos = [
+    '1.sderot.jpg','2.sheba.png','3.arc.png','4.bituah-leumi.png','5.metaplim-banefesh.png',
+    '6.mafat.png','7.rafael.png','8.iris.jpg','9.hosen.png','11.negev-galil.png',
+    '12.keren-sderot.png','13.sapir.png','14.innovation-authority.png','15.clalit-darom.jpg',
+    '16.hamatbah.jpg','17.adwot.jpg','18.jade.png','19.nrw.jpg','20.stadt-bochum.png',
+    '21.brm.png','22.reignup.jpg','23.maof-economy.png','24.science-ministry.png','25.agriculture.jpg'
+  ];
+  function name(f){
+    return f.replace(/^\d+\./,'').replace(/\.(png|jpe?g|webp|avif|svg)$/i,'')
+            .replace(/-/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});
+  }
+  /* logos that are light-on-dark and need their own dark lockup tile */
+  var darkBg = {'17.adwot.jpg':1};
+  var track = document.getElementById('partnersTrack');
+  if(!track) return;
+  function cards(){
+    return logos.map(function(f){
+      var cls = 'partner-logo' + (darkBg[f] ? ' on-dark' : '');
+      return '<div class="'+cls+'"><img src="assets/partnersLogos/'+f+'" alt="'+name(f)+'" loading="lazy"></div>';
+    }).join('');
+  }
+  /* two copies so the -50% scroll loops seamlessly */
+  track.innerHTML = cards() + cards();
+})();
+/* hide decorative play badge once the field video starts */
+(function(){
+  var f=document.querySelector('.video-frame'), v=f&&f.querySelector('video');
+  if(!v) return;
+  v.addEventListener('play',function(){f.classList.add('playing');});
+  v.addEventListener('pause',function(){f.classList.remove('playing');});
+})();
+</script>
+<script src="shared/shell.js"></script>
+</body>
+</html>

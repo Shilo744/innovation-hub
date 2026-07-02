@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ניהול תוכן · RISE.HUB</title>
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1c2e;--bg-2:#0f2742;--panel:#ffffff;--panel-2:#f4f7fa;
+  --ink:#0d2436;--ink-mid:#3f546a;--dim:#7d93a8;--line:#e3eaf1;
+  --teal:#0074b5;--teal-deep:#00588b;--teal-2:#38b6ff;
+  --green:#1f9d6b;--red:#d8475a;--amber:#d98a1f;--radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Heebo',system-ui,sans-serif;background:var(--panel-2);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh}
+button,input,textarea,select{font-family:inherit}
+button{cursor:pointer;border:0;background:none;color:inherit}
+
+/* ---------- topbar ---------- */
+.topbar{position:sticky;top:0;z-index:30;background:linear-gradient(120deg,var(--bg) 0%,var(--bg-2) 100%);color:#fff;display:flex;align-items:center;gap:12px;padding:13px 22px;box-shadow:0 10px 30px -18px rgba(0,0,0,.6);flex-wrap:wrap}
+.brand{font-weight:800;font-size:17px;display:flex;align-items:center;gap:10px}
+.brand img{width:26px;height:26px;object-fit:contain}
+.spacer{flex:1}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#cfe0ef;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:6px 12px;border-radius:999px;transition:.2s}
+.chip .d{width:8px;height:8px;border-radius:50%;background:var(--green);transition:.2s}
+.chip.saving .d{background:var(--amber)}
+.chip.err .d{background:var(--red)}
+.btn{height:40px;padding:0 18px;border-radius:10px;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:.18s;white-space:nowrap;text-decoration:none}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.16)}
+.btn-ghost:hover{background:rgba(255,255,255,.16)}
+.btn-primary{background:linear-gradient(135deg,var(--teal) 0%,var(--teal-deep) 100%);color:#fff;box-shadow:0 10px 22px -10px rgba(0,116,181,.7)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn[disabled]{opacity:.5;cursor:default}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1060px;margin:0 auto;padding:24px 22px 100px}
+.intro{font-size:13.5px;color:var(--ink-mid);background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:20px;line-height:1.7}
+.intro b{color:var(--ink)}
+.tabs{display:flex;gap:8px;margin-bottom:22px}
+.tab{padding:9px 20px;border-radius:999px;font-weight:700;font-size:14px;color:var(--ink-mid);background:#fff;border:1px solid var(--line)}
+.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+.group-title{display:flex;align-items:center;gap:12px;margin:26px 0 14px}
+.group-title h2{font-size:16px;font-weight:800}
+.group-title .count{font-size:12px;color:var(--dim);font-weight:600;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.group-title .line{flex:1;height:1px;background:var(--line)}
+
+.cards{display:flex;flex-direction:column;gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:grid;grid-template-columns:150px 1fr auto;gap:16px;box-shadow:0 6px 22px -14px rgba(13,36,54,.18)}
+.card.no-media{grid-template-columns:1fr auto}
+
+.media{position:relative;border-radius:11px;overflow:hidden;min-height:132px;background:linear-gradient(150deg,var(--teal-deep),var(--bg));display:grid;place-items:center}
+.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.media .ph{color:rgba(255,255,255,.75);font-size:12px;font-weight:600;text-align:center;padding:8px;z-index:1}
+.media .over{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;gap:6px;padding:8px;opacity:0;transition:.2s;background:linear-gradient(0deg,rgba(5,18,33,.6),transparent 60%);z-index:2}
+.media:hover .over{opacity:1}
+.over .ib{font-size:11.5px;font-weight:700;color:#fff;background:rgba(0,116,181,.92);padding:6px 10px;border-radius:7px}
+.over .ib.rm{background:rgba(216,71,90,.92)}
+
+.fields{display:flex;flex-direction:column;gap:9px;min-width:0}
+.row{display:flex;gap:9px;flex-wrap:wrap}
+.field{display:flex;flex-direction:column;gap:3px}
+.field.grow{flex:1;min-width:120px}
+.field label{font-size:10.5px;font-weight:700;color:var(--dim)}
+.field input,.field textarea{border:1px solid var(--line);background:var(--panel-2);border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink);width:100%}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--teal-2);background:#fff}
+.field textarea{resize:vertical;min-height:46px;line-height:1.5}
+.field.xs input{width:64px}
+.field.sm input{width:118px}
+
+.side{display:flex;flex-direction:column;gap:7px}
+.side .mini{font-size:12px;font-weight:700;color:var(--ink-mid);background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:7px 10px;display:flex;align-items:center;justify-content:center;gap:6px}
+.side .mini:hover{border-color:var(--teal-2);color:var(--teal-deep)}
+.side .mini.del:hover{border-color:var(--red);color:var(--red)}
+
+.btn-add{width:100%;border:1.5px dashed var(--line);background:#fff;border-radius:var(--radius);padding:14px;font-weight:700;color:var(--ink-mid);font-size:14px;transition:.18s;margin-top:14px}
+.btn-add:hover{border-color:var(--teal-2);color:var(--teal-deep);background:#fafdff}
+.empty{color:var(--dim);font-size:14px;text-align:center;padding:22px;background:#fff;border:1px dashed var(--line);border-radius:var(--radius)}
+
+/* ---------- publish drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(8,20,33,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.2s;z-index:40}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;left:0;height:100vh;width:min(480px,94vw);background:#fff;z-index:50;transform:translateX(-104%);transition:transform .28s cubic-bezier(.2,.7,.2,1);box-shadow:0 0 60px -10px rgba(0,0,0,.4);display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.drawer h3{font-size:17px;font-weight:800;padding:20px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.drawer .x{font-size:24px;color:var(--dim);line-height:1}
+.drawer-body{padding:20px 22px;overflow:auto;display:flex;flex-direction:column;gap:14px;flex:1}
+.note{font-size:13px;color:var(--ink-mid);line-height:1.7;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.note b{color:var(--ink)}
+.gitline{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700}
+.gitline .d{width:9px;height:9px;border-radius:50%;background:var(--green)}
+.gitline.bad .d{background:var(--red)}
+.log{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;white-space:pre-wrap;background:#0e1f33;color:#cfe0ef;border-radius:10px;padding:12px;max-height:280px;overflow:auto;direction:ltr;text-align:left}
+
+/* ---------- toasts ---------- */
+.toasts{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center}
+.toast{background:var(--ink);color:#fff;font-size:13.5px;font-weight:600;padding:11px 18px;border-radius:10px;box-shadow:0 14px 30px -12px rgba(0,0,0,.5);opacity:0;transform:translateY(8px);transition:.25s}
+.toast.show{opacity:1;transform:none}
+.toast.ok{background:var(--green)}
+.toast.err{background:var(--red)}
+
+@media (max-width:720px){
+  .card{grid-template-columns:1fr}
+  .media{min-height:150px}
+  .side{flex-direction:row;flex-wrap:wrap}
+  .side .mini{flex:1}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><img src="/assets/logo.png" alt="">ניהול תוכן · RISE.HUB</div>
+  <div class="spacer"></div>
+  <div class="chip" id="saveChip"><span class="d"></span><span id="saveText">טוען…</span></div>
+  <a class="btn btn-ghost" href="/" target="_blank">👁 תצוגת האתר</a>
+  <button class="btn btn-primary" id="openPublish">🚀 פרסם לאינטרנט</button>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    <b>הכל נשמר אצלך במחשב, אוטומטית, תוך כדי הקלדה.</b>
+    שום דבר לא עולה לאינטרנט עד שתלחץ על «פרסם לאינטרנט» — ואז הכל מסונכרן ל-GitHub בבת אחת.
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="events">📅 אירועים</button>
+    <button class="tab" data-tab="news">📰 חדשות</button>
+  </div>
+
+  <!-- EVENTS -->
+  <div id="panel-events">
+    <div class="group-title"><h2>אירועים קרובים</h2><span class="count" id="cnt-upcoming">0</span><div class="line"></div></div>
+    <div class="cards" id="list-upcoming"></div>
+    <button class="btn-add" data-add-event="upcoming">＋ הוסף אירוע קרוב</button>
+
+    <div class="group-title"><h2>אירועים שהיו</h2><span class="count" id="cnt-recent">0</span><div class="line"></div></div>
+    <div class="cards" id="list-recent"></div>
+    <button class="btn-add" data-add-event="recent">＋ הוסף אירוע שהיה</button>
+  </div>
+
+  <!-- NEWS -->
+  <div id="panel-news" style="display:none">
+    <div class="group-title"><h2>כתבות וחדשות</h2><span class="count" id="cnt-news">0</span><div class="line"></div></div>
+    <div class="cards" id="list-news"></div>
+    <button class="btn-add" data-add-news>＋ הוסף כתבה / עדכון</button>
+  </div>
+</div>
+
+<!-- PUBLISH -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer">
+  <h3><span>פרסום לאינטרנט</span><button class="x" id="drawerX">×</button></h3>
+  <div class="drawer-body">
+    <div class="gitline" id="gitLine"><span class="d"></span><span id="gitText">בודק…</span></div>
+    <div class="note" id="pubNote">לחיצה על «פרסם» תעלה את כל השינויים שנשמרו במחשב אל GitHub, והאתר החי יתעדכן.</div>
+    <div class="field grow">
+      <label style="font-size:11px;font-weight:700;color:var(--dim)">תיאור קצר של העדכון (לא חובה)</label>
+      <input id="pubMsg" placeholder="למשל: עדכון אירועי ספטמבר" style="border:1px solid var(--line);background:var(--panel-2);border-radius:8px;padding:9px 11px;font-size:13.5px;width:100%">
+    </div>
+    <button class="btn btn-primary" id="doPublish" style="justify-content:center">פרסם עכשיו</button>
+    <div class="log" id="pubLog">—</div>
+  </div>
+</aside>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ============================================================
+   Local-first admin. All edits are PUT straight to the local
+   server which writes them to disk. Publishing = git push.
+============================================================ */
+const $ = s => document.querySelector(s);
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function toast(msg, kind){
+  const t=document.createElement('div'); t.className='toast '+(kind||''); t.textContent=msg;
+  $('#toasts').appendChild(t); requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),300); },2600);
+}
+
+let EVENTS = { upcoming: [], recent: [] };
+let NEWS = { items: [] };
+
+/* ---------- save (debounced, straight to disk) ---------- */
+const saveTimers = {};
+function setSaveState(state, text){
+  const chip=$('#saveChip'); chip.className='chip '+(state||'');
+  $('#saveText').textContent=text;
+}
+function save(key){
+  clearTimeout(saveTimers[key]);
+  setSaveState('saving','שומר…');
+  saveTimers[key]=setTimeout(async ()=>{
+    const body = key==='events' ? EVENTS : NEWS;
+    try{
+      const r=await fetch('/api/data/'+key,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      const j=await r.json();
+      if(!j.ok) throw new Error(j.error||'save failed');
+      setSaveState('','נשמר במחשב ✓');
+    }catch(e){
+      setSaveState('err','שגיאת שמירה!');
+      toast('השמירה נכשלה: '+e.message,'err');
+    }
+  },450);
+}
+
+/* ---------- events rendering ---------- */
+function blankEvent(){ return {day:'',monthYear:'',pill:'',city:'',title:'',desc:'',image:''}; }
+function eventCard(ev,list,i){
+  const thumb = ev.image
+    ? `<img src="/${esc(ev.image)}" alt="" onerror="this.style.display='none'">`
+    : `<div class="ph">אין תמונה<br>(יוצג רקע ממותג)</div>`;
+  return `
+  <div class="card" data-list="${list}" data-i="${i}">
+    <div class="media">${thumb}
+      <div class="over">
+        <button class="ib" data-act="img">${ev.image?'החלף תמונה':'העלה תמונה'}</button>
+        ${ev.image?'<button class="ib rm" data-act="imgrm">הסר</button>':''}
+      </div>
+    </div>
+    <div class="fields">
+      <div class="row">
+        <div class="field xs"><label>יום</label><input data-f="day" value="${esc(ev.day)}" placeholder="18"></div>
+        <div class="field sm"><label>חודש ושנה</label><input data-f="monthYear" value="${esc(ev.monthYear)}" placeholder="SEP 2026"></div>
+        <div class="field grow"><label>קטגוריה</label><input data-f="pill" value="${esc(ev.pill)}" placeholder="Workshop / Summit / Community"></div>
+      </div>
+      <div class="field grow"><label>שם האירוע</label><input data-f="title" value="${esc(ev.title)}" placeholder="שם האירוע"></div>
+      <div class="field grow"><label>מיקום</label><input data-f="city" value="${esc(ev.city)}" placeholder="Sderot · Innovation Hub"></div>
+      <div class="field grow"><label>תיאור קצר</label><textarea data-f="desc" placeholder="משפט או שניים על האירוע">${esc(ev.desc)}</textarea></div>
+    </div>
+    <div class="side">
+      <button class="mini" data-act="up" title="הזז למעלה">▲</button>
+      <button class="mini" data-act="down" title="הזז למטה">▼</button>
+      <button class="mini" data-act="move">${list==='upcoming'?'העבר לאירועים שהיו':'העבר לקרובים'}</button>
+      <button class="mini del" data-act="del">🗑 מחק</button>
+    </div>
+  </div>`;
+}
+function renderEvents(){
+  ['upcoming','recent'].forEach(list=>{
+    const arr=EVENTS[list]||[];
+    $('#cnt-'+list).textContent=arr.length;
+    $('#list-'+list).innerHTML = arr.length
+      ? arr.map((ev,i)=>eventCard(ev,list,i)).join('')
+      : `<div class="empty">אין אירועים כאן. באתר יוצג מסך "עקבו אחרינו" מסודר — לא חור ריק.</div>`;
+  });
+}
+
+/* ---------- news rendering ---------- */
+function blankNews(){ return {source:'',title:'',tag:'',date:'',url:''}; }
+function newsCard(n,i){
+  return `
+  <div class="card no-media" data-news="${i}">
+    <div class="fields">
+      <div class="row">
+        <div class="field grow"><label>מקור (עיתון / גוף)</label><input data-f="source" value="${esc(n.source)}" placeholder="Calcalist / Ynet / הודעת ההאב"></div>
+        <div class="field grow"><label>תגית</label><input data-f="tag" value="${esc(n.tag)}" placeholder="Feature / Announcement"></div>
+        <div class="field grow"><label>תאריך (טקסט חופשי)</label><input data-f="date" value="${esc(n.date)}" placeholder="July 2026"></div>
+      </div>
+      <div class="field grow"><label>כותרת</label><input data-f="title" value="${esc(n.title)}" placeholder="כותרת הכתבה"></div>
+      <div class="field grow"><label>קישור לכתבה (לא חובה)</label><input data-f="url" value="${esc(n.url)}" placeholder="https://…" dir="ltr"></div>
+    </div>
+    <div class="side">
+      <button class="mini" data-act="up">▲</button>
+      <button class="mini" data-act="down">▼</button>
+      <button class="mini del" data-act="del">🗑 מחק</button>
+    </div>
+  </div>`;
+}
+function renderNews(){
+  const arr=NEWS.items||[];
+  $('#cnt-news').textContent=arr.length;
+  $('#list-news').innerHTML = arr.length
+    ? arr.map((n,i)=>newsCard(n,i)).join('')
+    : `<div class="empty">אין כתבות עדיין. באתר יוצג בלוק "עקבו אחרינו" עם הקישורים האמיתיים.</div>`;
+}
+
+/* ---------- edit wiring ---------- */
+document.body.addEventListener('input', e=>{
+  const f=e.target.closest('[data-f]'); if(!f) return;
+  const evCard=e.target.closest('.card[data-list]');
+  if(evCard){ EVENTS[evCard.dataset.list][+evCard.dataset.i][f.dataset.f]=e.target.value; save('events'); return; }
+  const nCard=e.target.closest('.card[data-news]');
+  if(nCard){ NEWS.items[+nCard.dataset.news][f.dataset.f]=e.target.value; save('news'); }
+});
+
+document.body.addEventListener('click', e=>{
+  const addEv=e.target.closest('[data-add-event]');
+  if(addEv){ EVENTS[addEv.dataset.addEvent].push(blankEvent()); save('events'); renderEvents(); return; }
+  if(e.target.closest('[data-add-news]')){ NEWS.items.push(blankNews()); save('news'); renderNews(); return; }
+
+  const act=e.target.closest('[data-act]'); if(!act) return;
+  const a=act.dataset.act;
+
+  const evCard=e.target.closest('.card[data-list]');
+  if(evCard){
+    const list=evCard.dataset.list, i=+evCard.dataset.i, arr=EVENTS[list];
+    if(a==='del'){ if(confirm('למחוק את האירוע?')){ arr.splice(i,1); } }
+    else if(a==='up'&&i>0){ [arr[i-1],arr[i]]=[arr[i],arr[i-1]]; }
+    else if(a==='down'&&i<arr.length-1){ [arr[i+1],arr[i]]=[arr[i],arr[i+1]]; }
+    else if(a==='move'){ const o=list==='upcoming'?'recent':'upcoming'; EVENTS[o].unshift(arr.splice(i,1)[0]); }
+    else if(a==='imgrm'){ arr[i].image=''; }
+    else if(a==='img'){ pickImage(list,i); return; }
+    save('events'); renderEvents(); return;
+  }
+  const nCard=e.target.closest('.card[data-news]');
+  if(nCard){
+    const i=+nCard.dataset.news, arr=NEWS.items;
+    if(a==='del'){ if(confirm('למחוק את הכתבה?')){ arr.splice(i,1); } }
+    else if(a==='up'&&i>0){ [arr[i-1],arr[i]]=[arr[i],arr[i-1]]; }
+    else if(a==='down'&&i<arr.length-1){ [arr[i+1],arr[i]]=[arr[i],arr[i+1]]; }
+    save('news'); renderNews();
+  }
+});
+
+/* image upload — saved to disk instantly, served locally */
+function pickImage(list,i){
+  const inp=document.createElement('input'); inp.type='file'; inp.accept='image/*';
+  inp.onchange=async ()=>{
+    const file=inp.files[0]; if(!file) return;
+    setSaveState('saving','מעלה תמונה…');
+    try{
+      const r=await fetch('/api/upload?name='+encodeURIComponent(file.name)+'&dir=events',{method:'POST',body:file});
+      const j=await r.json();
+      if(!j.ok) throw new Error(j.error||'upload failed');
+      EVENTS[list][i].image=j.path;
+      save('events'); renderEvents();
+      toast('התמונה נשמרה במחשב ✓','ok');
+    }catch(e){ setSaveState('err','שגיאה'); toast('העלאת התמונה נכשלה: '+e.message,'err'); }
+  };
+  inp.click();
+}
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  $('#panel-events').style.display = t.dataset.tab==='events'?'block':'none';
+  $('#panel-news').style.display = t.dataset.tab==='news'?'block':'none';
+}));
+
+/* ---------- publish ---------- */
+function openDrawer(){ $('#scrim').classList.add('open'); $('#drawer').classList.add('open'); refreshGit(); }
+function closeDrawer(){ $('#scrim').classList.remove('open'); $('#drawer').classList.remove('open'); }
+$('#openPublish').onclick=openDrawer;
+$('#drawerX').onclick=closeDrawer;
+$('#scrim').onclick=closeDrawer;
+
+async function refreshGit(){
+  const line=$('#gitLine'), txt=$('#gitText');
+  try{
+    const r=await fetch('/api/state'); const j=await r.json();
+    const g=j.git||{};
+    if(!g.ok){ line.className='gitline bad'; txt.textContent='git לא זמין: '+(g.error||''); return; }
+    const changes=(g.dirty||[]).length, ahead=g.ahead||0;
+    line.className='gitline';
+    if(!g.remote){ line.className='gitline bad'; txt.textContent='אין חיבור ל-GitHub (remote). אפשר לערוך — הפרסום יחכה.'; }
+    else if(changes===0 && ahead===0){ txt.textContent='הכל מפורסם — אין שינויים שמחכים.'; }
+    else { txt.textContent=changes+' קבצים השתנו'+(ahead?(' · '+ahead+' עדכונים מחכים לדחיפה'):'')+' — מוכן לפרסום.'; }
+  }catch(e){ line.className='gitline bad'; txt.textContent='שגיאה בבדיקת מצב'; }
+}
+
+$('#doPublish').onclick=async ()=>{
+  const btn=$('#doPublish'); btn.disabled=true; btn.textContent='מפרסם…';
+  $('#pubLog').textContent='רץ…';
+  try{
+    const r=await fetch('/api/publish',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:$('#pubMsg').value})});
+    const j=await r.json();
+    $('#pubLog').textContent=j.log||'—';
+    if(j.ok && j.nothing){ toast('אין שינויים לפרסם','ok'); }
+    else if(j.ok){ toast('פורסם בהצלחה! האתר יתעדכן תוך דקה ✓','ok'); }
+    else{ toast('הפרסום נכשל — ראה פירוט בחלון','err'); }
+    refreshGit();
+  }catch(e){ $('#pubLog').textContent='שגיאה: '+e.message; toast('הפרסום נכשל','err'); }
+  btn.disabled=false; btn.textContent='פרסם עכשיו';
+};
+
+/* ---------- boot ---------- */
+(async function(){
+  try{
+    const r=await fetch('/api/state'); const j=await r.json();
+    const d=j.data||{};
+    if(d.events && !d.events._error){ EVENTS={upcoming:d.events.upcoming||[],recent:d.events.recent||[]}; }
+    if(d.news && !d.news._error){ NEWS={items:d.news.items||[]}; }
+    setSaveState('','נשמר במחשב ✓');
+  }catch(e){
+    setSaveState('err','אין חיבור לשרת');
+    toast('פתח את האדמין דרך start-admin.bat','err');
+  }
+  renderEvents(); renderNews();
+})();
+</script>
+</body>
+</html>

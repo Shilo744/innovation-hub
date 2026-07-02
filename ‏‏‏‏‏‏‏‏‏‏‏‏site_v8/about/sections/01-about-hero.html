@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>About — Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#051221;--bg-1:#0a1c2e;--bg-2:#112c47;
+  --ink:#FFFFFF;--ink-2:#D6E2EE;--dim:#9AB1C7;
+  --teal:#0074B5;--teal-2:#38B6FF;--teal-deep:#00588B;--gold:#A6ECFF;
+  --line:rgba(180,210,225,.13);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-0);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+.reveal{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}
+.reveal.d2{transition-delay:.3s}
+
+section{position:relative;padding:120px var(--pad) 80px;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.bg-glow{position:absolute;inset:0;background:radial-gradient(circle at 70% 30%, rgba(56,182,255,.08), transparent 50%), radial-gradient(circle at 20% 80%, rgba(123,224,255,.04), transparent 50%);pointer-events:none;z-index:0}
+
+.content{max-width:1180px;margin:0 auto;position:relative;z-index:2;width:100%;display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(36px,5vw,72px);align-items:center}
+
+/* type scale matches the HOME hero (h1 + lead) */
+h1{font-family:'Manrope';font-weight:800;font-size:clamp(34px,4.2vw,60px);line-height:1.05;letter-spacing:-.02em;margin-bottom:24px}
+h1 .gradient{background:linear-gradient(120deg, var(--teal-2), #a8f3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.text-lead{max-width:640px;margin-top:8px}
+.text-lead p{font-size:15.5px;line-height:1.65;color:var(--ink-2)}
+.text-lead p + p{margin-top:14px}
+.text-lead .highlight{color:#fff;font-weight:600}
+
+/* arched photo of the city — real footage from the brand film */
+.hero-photo{position:relative;justify-self:center;width:min(400px,36vw)}
+.hero-photo .arch{border-radius:220px 220px 22px 22px;overflow:hidden;border:1px solid rgba(166,236,255,.18);box-shadow:0 50px 100px -40px rgba(0,0,0,.65)}
+.hero-photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.hero-photo figcaption{margin-top:14px;text-align:center;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:700}
+
+@media (max-width:900px){
+  section{padding-top:100px;padding-bottom:60px}
+  .content{grid-template-columns:1fr}
+  .hero-photo{display:none}
+}
+</style>
+</head>
+<body>
+<section>
+  <div class="bg-glow"></div>
+  <div class="content">
+    <div>
+      <h1 class="reveal">Redefining Resilience:<br><span class="gradient">From Trauma to Opportunity</span></h1>
+      <div class="text-lead reveal d1">
+        <p>The Resilience & Health Innovation Hub in <span class="highlight">Sderot and the Western Negev</span> was born from a challenging reality. For decades this region has lived on the frontline of community and security crisis — and the people here carry more practical knowledge about resilience than almost anywhere in the world.</p>
+        <p>We believe those closest to the challenge are the most qualified to solve it. The hub brings clinicians, researchers and founders to work alongside the community, turning that hard-earned experience into technologies that save lives and strengthen societies.</p>
+      </div>
+    </div>
+    <figure class="hero-photo reveal d2">
+      <div class="arch"><img src="../../assets/photos/monument-walk.jpg" alt="Walking past the Sderot memorial"></div>
+      <figcaption>Sderot · From the brand film</figcaption>
+    </figure>
+  </div>
+</section>
+<script src="_bridge.js" data-frame="about-hero"></script>
+</body>
+</html>

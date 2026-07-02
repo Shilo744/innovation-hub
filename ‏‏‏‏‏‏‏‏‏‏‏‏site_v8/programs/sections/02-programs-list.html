@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Strategic Pillars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-light:#FFFFFF;--bg-alt:#F5F8FA;
+  --ink-dark:#0D2436;--ink-mid:#3F546A;--ink-2:#D6E2EE;
+  --teal-deep:#00588B;--teal:#0074B5;--teal-2:#38B6FF;--gold:#A6ECFF;
+  --line:rgba(13,36,54,.08);--pad:6vw;--radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope','Heebo',system-ui,sans-serif;background:var(--bg-light);color:var(--ink-dark);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.reduce-motion *{animation-duration:0s!important;transition-duration:0s!important}
+.reveal{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .8s ease, transform .8s cubic-bezier(.16,.84,.28,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}
+.reveal.d2{transition-delay:.3s}
+
+section{position:relative;padding:90px var(--pad);background:linear-gradient(180deg, var(--bg-light) 0%, var(--bg-alt) 100%)}
+.container{max-width:1200px;margin:0 auto}
+
+.pillars-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+
+.prog{position:relative;padding:36px;border-radius:var(--radius);background:#fff;border:1px solid var(--line);overflow:hidden;transition:all .3s cubic-bezier(.25,.8,.25,1);display:flex;flex-direction:column;box-shadow:0 8px 30px -10px rgba(13,36,54,.06)}
+.prog:hover{transform:translateY(-6px);border-color:var(--teal);box-shadow:0 30px 60px -25px rgba(13,36,54,.15)}
+.prog::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 100% 0%, rgba(0,116,181,.08), transparent 50%);opacity:0;transition:.3s;pointer-events:none}
+.prog:hover::before{opacity:1}
+
+.prog.featured{background:linear-gradient(160deg, #082636, #114577);border-color:transparent;color:#fff;box-shadow:0 15px 40px -15px rgba(8,38,54,.4)}
+.prog.featured:hover{box-shadow:0 35px 70px -25px rgba(8,38,54,.55)}
+.prog.featured::before{background:radial-gradient(circle at 100% 0%, rgba(56,182,255,.15), transparent 50%)}
+
+.prog .ix{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;position:relative;z-index:2}
+.prog .badge{font-size:10.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:6px;background:rgba(0,116,181,.07);color:var(--teal-deep);border:1px solid rgba(0,116,181,.15)}
+.prog.featured .badge{background:rgba(56,182,255,.12);color:var(--teal-2);border-color:rgba(56,182,255,.25)}
+.prog .badge.soon{background:rgba(176,138,32,.07);color:#8a6a1c;border:1px dashed rgba(176,138,32,.4)}
+.prog .num{font-family:'Manrope';font-weight:800;font-size:38px;color:rgba(0,116,181,.18);line-height:1;letter-spacing:-.03em}
+.prog.featured .num{color:rgba(56,182,255,.25)}
+
+.prog .icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(0,116,181,.07);color:var(--teal);margin-bottom:18px;position:relative;z-index:2}
+.prog .icon svg{width:24px;height:24px;stroke:currentColor;stroke-width:1.75;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.prog.featured .icon{background:rgba(56,182,255,.12);color:var(--teal-2)}
+
+.prog h3{font-family:'Manrope';font-weight:800;font-size:26px;line-height:1.2;letter-spacing:-.015em;margin-bottom:14px;position:relative;z-index:2;color:var(--ink-dark)}
+.prog.featured h3{color:#fff}
+
+.prog p{color:var(--ink-mid);font-size:14.5px;line-height:1.65;flex:1;position:relative;z-index:2}
+.prog.featured p{color:var(--ink-2);font-size:15.5px}
+
+.prog .more{margin-top:24px;display:inline-flex;align-items:center;gap:8px;color:var(--teal-deep);font-size:13.5px;font-weight:700;letter-spacing:.3px;width:fit-content;background:transparent;border:0;cursor:pointer;padding:0;transition:.2s;font-family:inherit;position:relative;z-index:2}
+.prog.featured .more{color:var(--teal-2)}
+.prog .more::after{content:"→";transition:transform .2s;display:inline-block}
+.prog .more:hover::after{transform:translateX(5px)}
+
+.prog .plist{margin-top:22px;border-top:1px solid var(--line);padding-top:6px;position:relative;z-index:2}
+.prog .plist .plabel{font-size:10.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--ink-mid);margin:14px 0 4px}
+.plink{display:flex;align-items:center;gap:12px;padding:13px 12px;margin:6px -12px 0;border-radius:12px;text-decoration:none;border:1px solid transparent;transition:.2s}
+.plink:hover{background:rgba(0,116,181,.05);border-color:rgba(0,116,181,.15)}
+.plink .pbody{flex:1;min-width:0}
+.plink .pbody strong{display:block;font-size:14.5px;font-weight:700;color:var(--ink-dark);line-height:1.3}
+.plink .pbody span{display:block;font-size:12.5px;color:var(--ink-mid);line-height:1.45;margin-top:2px}
+.plink .out{flex:0 0 auto;width:16px;height:16px;color:var(--teal);opacity:.7;transition:.2s}
+.plink:hover .out{opacity:1;transform:translate(2px,-2px)}
+.plink .out svg{width:16px;height:16px;stroke:currentColor;stroke-width:1.75;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+.prog.featured .vis{position:absolute;right:-40px;bottom:-40px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle at 35% 35%, rgba(0,116,181,.18), transparent 60%);z-index:1;pointer-events:none}
+.prog.featured .vis::before{content:"";position:absolute;inset:25px;border-radius:50%;border:1px dashed rgba(56,182,255,.35);animation:prog-spin 30s linear infinite}
+.prog.featured .vis::after{content:"";position:absolute;inset:70px;border-radius:50%;border:1px dashed rgba(123,224,255,.25);animation:prog-spin 18s linear infinite reverse}
+@keyframes prog-spin{to{transform:rotate(360deg)}}
+
+@media (max-width:700px){
+  .pillars-grid{grid-template-columns:1fr}
+  .prog{padding:28px}
+}
+</style>
+</head>
+<body>
+<section>
+  <div class="container">
+    <div class="pillars-grid">
+
+      <!-- PILLAR 1 · INVESTMENTS FUND -->
+      <article class="prog featured reveal" id="investments-fund">
+        <div class="vis" aria-hidden="true"></div>
+        <div class="ix">
+          <span class="badge">Capital</span>
+          <span class="num">01</span>
+        </div>
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 15l4-4 3 3 5-6"/><path d="M15.5 8H19v3.5"/></svg>
+        </div>
+        <h3>Investments Fund</h3>
+        <p>A dedicated investment vehicle backing the most promising resilience and health ventures emerging from the ecosystem. The fund provides catalytic capital alongside strategic guidance, connecting founders with co-investors and long-term partners committed to sustainable community resilience.</p>
+        <button class="more" data-action="open-modal">Contact us</button>
+      </article>
+
+      <!-- PILLAR 2 · R&D -->
+      <article class="prog reveal d1" id="rnd">
+        <div class="ix">
+          <span class="badge">Research &amp; Development</span>
+          <span class="num">02</span>
+        </div>
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M10 2v6.5L4.7 17.6a2 2 0 0 0 1.7 3h11.2a2 2 0 0 0 1.7-3L14 8.5V2"/><path d="M8.5 2h7"/><path d="M7 15h10"/></svg>
+        </div>
+        <h3>R&amp;D</h3>
+        <p>Applied research and co-development with leading clinical and academic partners, from bedside trauma diagnostics and biosignal validation to field research that strengthens municipal resilience networks.</p>
+        <div class="plist">
+          <div class="plabel">Programs</div>
+          <a class="plink" href="https://www.resiliencetechhub.org/sheba-sderot" target="_blank" rel="noopener">
+            <div class="pbody">
+              <strong>Sheba to Sderot</strong>
+              <span>Flagship collaboration with Sheba Medical Center and the Sderot Municipality — clinicians, researchers, and entrepreneurs on the front line of community health resilience</span>
+            </div>
+            <div class="out" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg></div>
+          </a>
+          <a class="plink" href="https://www.resiliencetechhub.org/blank-7" target="_blank" rel="noopener">
+            <div class="pbody">
+              <strong>Immediate Implementation</strong>
+              <span>Rapid-deployment track routing vetted, ready-to-use clinical and operational solutions straight to the frontlines of community care within weeks</span>
+            </div>
+            <div class="out" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg></div>
+          </a>
+        </div>
+      </article>
+
+      <!-- PILLAR 3 · VENTURE CREATION -->
+      <article class="prog reveal d1" id="venture-creation">
+        <div class="ix">
+          <span class="badge">Company Building</span>
+          <span class="num">03</span>
+        </div>
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+        </div>
+        <h3>Venture Creation</h3>
+        <p>Turning validated concepts into companies. We pair founders with clinical mentors, pilot sites, and operator support to build the next generation of resilience technologies from the ground up.</p>
+        <div class="plist">
+          <div class="plabel">Programs</div>
+          <a class="plink" href="https://www.resilience-accelerator.com/" target="_blank" rel="noopener">
+            <div class="pbody">
+              <strong>Resilience Accelerator</strong>
+              <span>Equity-free program for early-stage startups — six months of deep operator support, clinical pilot pathways, investor introductions, and a global founder community</span>
+            </div>
+            <div class="out" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg></div>
+          </a>
+        </div>
+        <button class="more" data-action="open-modal">Contact us</button>
+      </article>
+
+      <!-- PILLAR 4 · MEITAL PROGRAM -->
+      <article class="prog reveal d2" id="meital">
+        <div class="ix">
+          <span class="badge soon">Under Construction</span>
+          <span class="num">04</span>
+        </div>
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg>
+        </div>
+        <h3>MEITAL Program</h3>
+        <p>A new umbrella initiative for long-term resilience innovation, spanning clinical research, technology validation, community initiatives, and public policy formulation. The program is currently taking shape — full details will be published soon.</p>
+        <button class="more" data-action="open-modal">Get notified</button>
+      </article>
+
+    </div>
+  </div>
+</section>
+<script src="_bridge.js" data-frame="programs-list"></script>
+</body>
+</html>
